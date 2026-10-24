@@ -1,0 +1,375 @@
+{
+  "experiment": "step3-browser-captures",
+  "timestamp": "2026-10-25T03:26:33.714150+05:30",
+  "browser": "Owned scratch Chromium via Browser Use/CDP; no user profile",
+  "blocked_on_all_initial_loads": [
+    "local API port 8000",
+    "all external https requests"
+  ],
+  "local_web_server_required_for_initial_load": true,
+  "uncaught_javascript_errors": [],
+  "captures": [
+    {
+      "url": "http://127.0.0.1:3000/",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": true,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "unloaded"
+        }
+      ],
+      "file": "screenshots/overview-desktop.png",
+      "full_page_height": 1879
+    },
+    {
+      "url": "http://127.0.0.1:3000/report/demo-before",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "loaded"
+        }
+      ],
+      "file": "screenshots/findings-desktop.png",
+      "full_page_height": 2189
+    },
+    {
+      "url": "http://127.0.0.1:3000/report/demo-before/heatmap/helpdesk.answer",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "loaded"
+        }
+      ],
+      "visual_medians_match_saved_run": true,
+      "visual_medians": [
+        "0.304%",
+        "2.557 s",
+        "$0.7893"
+      ],
+      "file": "screenshots/heatmap-before-polished-desktop.png",
+      "full_page_height": 2538
+    },
+    {
+      "url": "http://127.0.0.1:3000/report/demo-before/heatmap/helpdesk.answer",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "loaded"
+        }
+      ],
+      "visual_medians_match_saved_run": true,
+      "visual_medians": [
+        "80.690%",
+        "2.475 s",
+        "$0.7050"
+      ],
+      "file": "screenshots/heatmap-after-polished-desktop.png",
+      "full_page_height": 2612
+    },
+    {
+      "url": "http://127.0.0.1:3000/fix",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "loaded"
+        }
+      ],
+      "file": "screenshots/fix-verify-desktop.png",
+      "full_page_height": 3100
+    },
+    {
+      "url": "http://127.0.0.1:3000/bench",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "unloaded"
+        }
+      ],
+      "file": "screenshots/bench-desktop.png",
+      "full_page_height": 2838
+    },
+    {
+      "url": "http://127.0.0.1:3000/",
+      "width": 390,
+      "scrollWidth": 390,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": true,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "unloaded"
+        }
+      ],
+      "file": "screenshots/overview-mobile.png",
+      "full_page_height": 1967
+    },
+    {
+      "url": "http://127.0.0.1:3000/report/demo-before",
+      "width": 390,
+      "scrollWidth": 390,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "loaded"
+        }
+      ],
+      "file": "screenshots/findings-mobile.png",
+      "full_page_height": 2606
+    },
+    {
+      "url": "http://127.0.0.1:3000/report/demo-before/heatmap/helpdesk.answer",
+      "width": 390,
+      "scrollWidth": 390,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "loaded"
+        }
+      ],
+      "visual_medians_match_saved_run": true,
+      "visual_medians": [
+        "0.304%",
+        "2.557 s",
+        "$0.7893"
+      ],
+      "file": "screenshots/heatmap-before-polished-mobile.png",
+      "full_page_height": 2624
+    },
+    {
+      "url": "http://127.0.0.1:3000/report/demo-before/heatmap/helpdesk.answer",
+      "width": 390,
+      "scrollWidth": 390,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "loaded"
+        }
+      ],
+      "visual_medians_match_saved_run": true,
+      "visual_medians": [
+        "80.690%",
+        "2.475 s",
+        "$0.7050"
+      ],
+      "file": "screenshots/heatmap-after-polished-mobile.png",
+      "full_page_height": 2719
+    },
+    {
+      "url": "http://127.0.0.1:3000/fix",
+      "width": 390,
+      "scrollWidth": 390,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "loaded"
+        }
+      ],
+      "file": "screenshots/fix-verify-mobile.png",
+      "full_page_height": 3367
+    },
+    {
+      "url": "http://127.0.0.1:3000/bench",
+      "width": 390,
+      "scrollWidth": 390,
+      "errors": [],
+      "sourceSaved": true,
+      "lenis": false,
+      "fonts": [
+        {
+          "family": "Inter Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Source Serif 4 Variable",
+          "status": "loaded"
+        },
+        {
+          "family": "Geist Mono Variable",
+          "status": "unloaded"
+        }
+      ],
+      "file": "screenshots/bench-mobile.png",
+      "full_page_height": 3426
+    }
+  ],
+  "note": "Actual saved synthetic records; no generated mock UI. Expected blocked-API resource errors are not uncaught JavaScript exceptions. Full browser-offline interaction and reduced motion are checked separately.",
+  "interaction_checks": {
+    "fully_offline_after_medians": [
+      "80.690%",
+      "2.475 s",
+      "$0.7050"
+    ],
+    "reduced_motion_before_medians": [
+      "0.304%",
+      "2.557 s",
+      "$0.7893"
+    ],
+    "reduced_motion_after_medians": [
+      "80.690%",
+      "2.475 s",
+      "$0.7050"
+    ],
+    "prompt_pane_scrolls_natively_without_scrolling_page": true,
+    "chart_medians": {
+      "measured_hit_rate": [
+        "0.304%",
+        "80.690%"
+      ],
+      "ttft_p95_s": [
+        "2.557 s",
+        "2.475 s"
+      ],
+      "gpu_window_usd_per_1000": [
+        "$0.7893",
+        "$0.7050"
+      ]
+    },
+    "touch_320_overview_no_overflow": true,
+    "touch_pointer_coarse": true,
+    "touch_overview_lenis_disabled": true,
+    "touch_320_full_hash_visually_truncated_without_page_overflow": true,
+    "offline_write_actions_disabled": true,
+    "desktop_overview_lenis_enabled": true,
+    "reduced_motion_destroys_lenis": true
+  },
+  "real_mobile_hardware_tested": false,
+  "mobile_menu": {
+    "opens": true,
+    "touch_targets_at_least_44px": true,
+    "escape_closes_and_returns_focus": true
+  },
+  "implementation_commit": "290cfc664960020f5d1446b1279541a96779b8be",
+  "source_sha256": "55a7fbeedbb36f773403c4e60f7e6afc3e5b474e39c91fa1b6979e88924283fd",
+  "capture_source_note": "These actual captures show the source published in the implementation commit. Frozen behavioral verification is separate.",
+  "mechanical_detector_exceptions": "The explicitly requested licensed Inter/Geist font choices are retained. No waiver of functional or contrast checks."
+}

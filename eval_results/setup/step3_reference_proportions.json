@@ -1,0 +1,67 @@
+{
+  "experiment": "live-reference-proportion-check",
+  "reference_url": "https://cognition.com/",
+  "reference_desktop_1440": {
+    "h1_x": 413.84375,
+    "h1_y": 180,
+    "intro_width": 612.28125,
+    "heading_size_px": 36,
+    "heading_weight": 400,
+    "serif_size_px": 15,
+    "serif_line_height_px": 22.5
+  },
+  "app_desktop_1440": {
+    "h1": {
+      "x": 413.859375,
+      "y": 180,
+      "w": 612.265625,
+      "h": 79.1875,
+      "size": "36px",
+      "line": "39.6px",
+      "font": "\"Inter Variable\", sans-serif",
+      "weight": "400"
+    },
+    "intro": {
+      "x": 413.859375,
+      "y": 180,
+      "w": 612.265625,
+      "h": 302.1875,
+      "size": "15px",
+      "line": "22.5px",
+      "font": "\"Inter Variable\", sans-serif",
+      "weight": "400"
+    },
+    "body": {
+      "x": 413.859375,
+      "y": 277.1875,
+      "w": 612.265625,
+      "h": 67.5,
+      "size": "15px",
+      "line": "22.5px",
+      "font": "\"Source Serif 4 Variable\", serif",
+      "weight": "400"
+    },
+    "sidebar": {
+      "x": 64,
+      "y": 148,
+      "w": 262.390625,
+      "h": 211.5,
+      "size": "15px",
+      "line": "22.5px",
+      "font": "\"Inter Variable\", sans-serif",
+      "weight": "400"
+    },
+    "navigation": {
+      "x": 64,
+      "y": 184,
+      "w": 100.546875,
+      "h": 175.5,
+      "size": "15px",
+      "line": "22.5px",
+      "font": "\"Inter Variable\", sans-serif",
+      "weight": "400"
+    },
+    "overflow": false
+  },
+  "fonts": "Licensed Inter/Source Serif 4 substitutes; actual licensed Geist Mono. No proprietary font file or company logo copied."
+}

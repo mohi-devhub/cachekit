@@ -1,41 +1,26 @@
 # Actual UI captures
 
-Captured from the running local production web app using actual saved public
-synthetic evidence. Screenshots establish rendered behavior; human approval is
-separate. They contain no private dataset logs.
+The current captures come from the running production web app with the local API
+and external services blocked. They show saved public synthetic evidence, never
+private logs or generated mock screens. Capture identity, viewport checks and
+offline/reduced-motion results are recorded in
+[the browser check](../eval_results/setup/step3_browser.json).
 
-## Current candidate and measured replay
+| Surface | Desktop | Mobile |
+| --- | --- | --- |
+| Overview | [Open](overview-desktop.png) | [Open](overview-mobile.png) |
+| Findings | [Open](findings-desktop.png) | [Open](findings-mobile.png) |
+| Heatmap BEFORE | [Open](heatmap-before-polished-desktop.png) | [Open](heatmap-before-polished-mobile.png) |
+| Heatmap AFTER | [Open](heatmap-after-polished-desktop.png) | [Open](heatmap-after-polished-mobile.png) |
+| Fix / verify | [Open](fix-verify-desktop.png) | [Open](fix-verify-mobile.png) |
+| Benchmarks | [Open](bench-desktop.png) | [Open](bench-mobile.png) |
 
-- [Paired sequential replay, desktop](benchmark-paired-desktop.png)
-- [Paired sequential replay, mobile](benchmark-paired-mobile.png)
-- [Current candidate AFTER heatmap](heatmap-after-desktop.png)
-- [Five passing case checks, human review required](fix-quality-review-required-desktop.png)
+The heatmap grid and marker are SIMULATED from saved aligned bins and the earliest
+divergence finding. The cards below it are MEASURED only for matching request bytes;
+latency and dollar values are not inferred from token colors. Saved approval belongs
+to its recorded source, and offline write actions remain disabled.
 
-The time comparison now correctly marks the 34-day-old delivery outside the
-30-day window. All five AFTER assertions, required schema and completion checks
-pass. Changed outputs await human review, so the application fix remains
-unapproved. See the [actual output review packet](../eval_results/quality_review_packet.md),
-[current verification](../eval_results/current_fix_summary.md) and
-[measured run summary](../eval_results/benchmark_summary.md).
-
-The measured table fits desktop and a 390-pixel mobile viewport. A known cosmetic
-limitation remains on the narrow fix page: its long exact-diff hash overflows the
-viewport. The saved fix page was checked with API requests blocked: actual saved case checks
-remain visible and write actions stay disabled. API access was then restored.
-
-## Earlier captures
-
-These preserve what the UI showed before the final candidate:
-
-- [Measured baseline, desktop](benchmark-before-desktop.png)
-- [Measured baseline, mobile](benchmark-before-mobile.png)
-- [Synthetic BEFORE report, desktop](report-before-desktop.png)
-- [Synthetic BEFORE report, mobile](report-before-mobile.png)
-- [Earlier candidate blocked by the date guard](fix-quality-blocked-desktop.png)
-
-The blocked capture shows an earlier real failed attempt: both sides returned
-an incorrect within-window value. It is historical failure evidence and does
-not describe the final candidate. All original raw attempts remain saved.
-
-Generated captures do not enter source identity. UI and exporter code remain
-audited; actual evaluation artifacts supply displayed values.
+Earlier files in this folder retain previous interfaces and blocked/review-required
+states. They are historical captures, not the current status. Original failed runs
+remain in eval_results/attempts. Generated screenshots do not enter source identity;
+UI/exporter code stays audited. Final frozen-source checks are recorded separately.

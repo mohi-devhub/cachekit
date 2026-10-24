@@ -1,0 +1,13 @@
+{
+  "experiment": "actual-heatmap-motion",
+  "before_boundary": 0.001402524544179523,
+  "after_boundary": 0.8507670850767085,
+  "network": "Browser fully offline after initial local page load; local API and https already blocked at initial load.",
+  "observed_marker_positions": 33,
+  "observed_token_colors": 22,
+  "sampled_frames": 55,
+  "after_matching_measured_ttft_p95_s": 2.475,
+  "after_matching_measured_usd_per_1000": 0.705,
+  "test_note": "Scratch Chromium with focus emulation for background RAF; original hidden-tab sampling did not advance until visibility emulation. No foreground activation or user profile used.",
+  "reduced_motion_before_target_applied": true
+}

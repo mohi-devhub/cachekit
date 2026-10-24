@@ -1,0 +1,30 @@
+{
+  "experiment": "light-theme-browser-check",
+  "desktop": {
+    "bg": "rgb(247, 246, 245)",
+    "ink": "rgb(0, 0, 0)",
+    "ui": "\"Inter Variable\", sans-serif",
+    "body": "\"Source Serif 4 Variable\", serif",
+    "fonts": [
+      {
+        "family": "Inter Variable",
+        "status": "loaded"
+      },
+      {
+        "family": "Source Serif 4 Variable",
+        "status": "loaded"
+      },
+      {
+        "family": "Geist Mono Variable",
+        "status": "unloaded"
+      }
+    ],
+    "overflow": false,
+    "buttonRadius": "0px",
+    "nav": "Workspace"
+  },
+  "mobile_width": 390,
+  "mobile_overflow": false,
+  "font_loading": "Local Inter and Source Serif 4 loaded; Geist Mono loads on code surfaces.",
+  "source_scope": "Pinned self-hosted font assets, no font service request."
+}
