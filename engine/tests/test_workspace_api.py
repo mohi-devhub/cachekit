@@ -163,5 +163,88 @@ def test_public_demo_snapshot_matches_saved_evidence():
     assert exported["report"]["metadata"]["report_sha256"] == file_sha(report_path)
     assert exported["report"]["metadata"]["dataset"] == ["synthetic-helpdesk"]
     assert exported["bench"]["smoke"]["sha256"] == file_sha(root / "eval_results/modal_smoke.json")
-    assert exported["bench"]["benchmarks"] == []
+    for artifact in exported["bench"]["benchmarks"]:
+        path = root / artifact["source"]
+        assert artifact["sha256"] == file_sha(path)
+        assert artifact["run"] == json.loads(path.read_text())
+    assert any(a["run"]["variant"] == "before" for a in exported["bench"]["benchmarks"])
     assert not exported["fix"]["verification_current"]
+
+
+def test_current_candidate_is_hash_bound_and_stale_source_is_not_served(
+    tmp_path, qwen_tokenizer, config
+):
+    from fix_helpers import CANDIDATE
+
+    repo, _, _, _ = temporary_bundle(tmp_path, qwen_tokenizer, config)
+    for name in ("CHANGELOG.md", "AI_USAGE.md"):
+        (repo / name).write_text("Fixture record\n")
+    client, workspace = client_for(repo, qwen_tokenizer, config)
+    raw = (repo / "data/demo/requests_before.jsonl").read_bytes()
+    report_id = client.post("/analyze/upload", content=raw).json()["report_id"]
+    assert client.get(f"/reports/{report_id}/after").json() is None
+    task_id = client.post(f"/reports/{report_id}/task", json={}).json()["task"]["id"]
+    (repo / "demo_app/helpdesk/prompt.py").write_text(CANDIDATE)
+    response = client.post("/verify", json={"task_id": task_id})
+    assert response.status_code == 200, response.text
+    assert response.json()["result"]["quality_guard"]["status"] == "not_run"
+    candidate = client.get(f"/reports/{report_id}/after")
+    assert candidate.status_code == 200, candidate.text
+    assert candidate.json()["approval"] is None
+    assert not candidate.json()["verification"]["passed"]
+    path = workspace.results / "candidates" / f"{task_id}.json"
+    original = path.read_bytes()
+    assert candidate.json()["metadata"]["candidate_report_sha256"] == file_sha(path)
+    from cachekit.fix.models import FixResult
+    from cachekit.ingest.fix import write_model
+    from cachekit.ingest.fix_workflow import load_bundle
+    from fix_helpers import fake_quality
+
+    baseline, _ = load_bundle(workspace.task_path(task_id))
+    quality = fake_quality(repo, workspace.task_path(task_id).parent, baseline, qwen_tokenizer)
+    quality_path = repo / "eval_results/quality_guard/unit-fixture.json"
+    write_model(quality_path, quality)
+    verified = client.post(
+        "/verify", json={"task_id": task_id, "quality_run_id": file_sha(quality_path)}
+    )
+    assert verified.status_code == 200, verified.text
+    view = client.get(f"/fix/{task_id}").json()
+    assert len(view["quality_outputs"]) == 5
+    assert {o["id"] for o in view["quality_outputs"]} == {o.id for o in quality.outputs}
+    reference = FixResult(
+        task_id="f" * 24, status="finished", pr_url="https://github.com/mohi-devhub/cachekit/pull/2"
+    )
+    write_model(workspace.task_path(task_id).parent / "handoff_reference.json", reference)
+    view = client.get(f"/fix/{task_id}").json()
+    assert view["handoff"]["reference_only"]
+    assert view["handoff"]["task_id"] == reference.task_id != task_id
+    path.write_bytes(original + b" ")
+    assert client.get(f"/reports/{report_id}/after").status_code == 400
+    path.write_bytes(original)
+    (repo / "unrelated.py").write_text("changed source\n")
+    assert client.get(f"/reports/{report_id}/after").json() is None
+
+
+def test_real_before_benchmark_is_available_without_smoke_file(tmp_path, qwen_tokenizer, config):
+    import shutil
+    from pathlib import Path
+
+    client, _ = client_for(tmp_path, qwen_tokenizer, config)
+    root = Path(__file__).resolve().parents[2]
+    out = tmp_path / "eval_results/before_replay.json"
+    out.parent.mkdir()
+    shutil.copyfile(root / "eval_results/before_replay.json", out)
+    response = client.get("/bench")
+    assert response.status_code == 200, response.text
+    assert response.json()["smoke"] is None
+    assert not response.json()["comparison_ready"]
+    assert response.json()["benchmarks"][0]["sha256"] == file_sha(out)
+    before = json.loads(out.read_text())
+    assert response.json()["benchmarks"][0]["run"]["summary"] == before["summary"]
+    # Isolated metadata-compatibility fixture; this copy is never published as a measurement.
+    before["variant"] = "after"
+    (out.parent / "after_replay.json").write_text(json.dumps(before))
+    assert client.get("/bench").json()["comparison_ready"]
+    before["schedule_sha256"] = "0" * 64
+    (out.parent / "after_replay.json").write_text(json.dumps(before))
+    assert not client.get("/bench").json()["comparison_ready"]

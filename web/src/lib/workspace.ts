@@ -32,17 +32,31 @@ export type TaskView = {
   task: { id: string; allowed_files: string[]; target_hit_rate: number; [key: string]: unknown };
   markdown: string; state: "prepared" | "candidate" | "stale";
   verification: Verification | null; verification_current: boolean;
-  handoff: { status: string; pr_url: string | null; session_url: string | null } | null;
+  handoff: { status: string; task_id?: string; reference_only?: boolean; pr_url: string | null; session_url: string | null } | null;
   golden_cases: { id: string; category: string; assertions: string[]; expects_json: boolean }[];
+  quality_outputs: { id: string; before: { text: string; tool_calls: unknown[] }; after: { text: string; tool_calls: unknown[] } }[];
   note: string;
 };
 export type BenchView = {
   smoke: { status: string; model: string; revision: string; gpu: string; vllm_version: string;
     timestamp: string; block_size: number; capacity_tokens: number; source: string; sha256: string;
     requests: { request: number; prompt_tokens: number; cached_tokens: number; queried_tokens: number }[] } | null;
-  benchmarks: Record<string, unknown>[]; note: string;
+  benchmarks: { source: string; sha256: string; run: BenchmarkRun }[]; comparison_ready: boolean; note: string;
 };
-export type Demo = { report: ReportBundle; fix: TaskView | null; bench: BenchView };
+export type BenchmarkRun = {
+  variant: "before" | "after"; timestamp: string; git_sha: string | null;
+  n_requests: number; schedule_sha256: string; input_sha256: string; source_sha256: string;
+  deployment: { model: string; revision: string; gpu: string; vllm_version: string };
+  summary: Record<string, { median: number; min: number; max: number }>;
+  runs: { repetition: number; queried_tokens: number; cached_tokens: number;
+    measured_hit_rate: number; simulated_hit_rate: number; ttft_p50_s: number; ttft_p95_s: number;
+    requests: { scheduling_delay_s: number }[] }[];
+  note: string;
+};
+export type CandidateView = { task_id: string; report: ReportBundle["report"];
+  verification: Verification; metadata: { timestamp: string; source_sha256: string };
+  approval: { reviewer: string } | null };
+export type Demo = { report: ReportBundle; after?: CandidateView | null; fix: TaskView | null; bench: BenchView };
 export type Loaded<T> = { data: T; source: "API" | "SAVED" };
 export type Dataset = { id: string; name: string; available: boolean; description: string };
 
@@ -76,6 +90,10 @@ export async function report(id: string): Promise<Loaded<ReportBundle>> {
     if (saved.report.id !== id) throw new Error("This report needs your local API. Reconnect it, or open the saved helpdesk report.");
     return { data: saved.report, source: "SAVED" };
   }
+}
+export async function candidate(id: string): Promise<Loaded<CandidateView> | null> {
+  try { const current = await api<CandidateView | null>(`/reports/${encodeURIComponent(id)}/after`); return current ? { data: current, source: "API" } : null; }
+  catch { const saved = await demo(); return saved.report.id === id && saved.after ? { data: saved.after, source: "SAVED" } : null; }
 }
 export async function fix(id?: string): Promise<Loaded<TaskView>> {
   const saved = await demo();

@@ -4,7 +4,8 @@ from typing import Literal
 
 from pydantic import Field
 
-from cachekit.fix.models import FixTask, VerifyResult
+from cachekit.benchmark_models import BenchmarkRun
+from cachekit.fix.models import Approval, FixTask, VerificationRun, VerifyResult
 from cachekit.models import AnalysisRun, BoundaryModel, JsonObject, Report
 
 
@@ -45,9 +46,16 @@ class SmokeView(BoundaryModel):
     sha256: str
 
 
+class BenchmarkArtifact(BoundaryModel):
+    source: str
+    sha256: str
+    run: BenchmarkRun
+
+
 class BenchView(BoundaryModel):
     smoke: SmokeView | None
-    benchmarks: list[JsonObject]
+    benchmarks: list[BenchmarkArtifact]
+    comparison_ready: bool = False
     note: str
 
 
@@ -65,6 +73,14 @@ class ReportBundle(BoundaryModel):
     metadata: AnalysisRun
 
 
+class CandidateView(BoundaryModel):
+    task_id: str
+    report: Report
+    verification: VerifyResult
+    metadata: VerificationRun
+    approval: Approval | None = None
+
+
 class TaskRequest(BoundaryModel):
     finding_ids: list[str] | None = None
 
@@ -77,6 +93,7 @@ class TaskView(BoundaryModel):
     verification_current: bool = False
     handoff: JsonObject | None = None
     golden_cases: list[JsonObject] = Field(default_factory=list)
+    quality_outputs: list[JsonObject] = Field(default_factory=list)
     note: str
 
 

@@ -312,8 +312,12 @@ def test_exported_demo_data_does_not_invalidate_audited_source(tmp_path):
     output = tmp_path / "web/public/demo/workspace.json"
     output.parent.mkdir(parents=True)
     output.write_text('{"evidence": "earlier saved run"}')
+    capture = tmp_path / "screenshots/capture.png"
+    capture.parent.mkdir()
+    capture.write_bytes(b"isolated capture fixture")
     before = snapshot(tmp_path)
     output.write_text('{"evidence": "new saved run"}')
+    capture.write_bytes(b"updated isolated capture fixture")
     assert snapshot(tmp_path).sha256 == before.sha256
     (tmp_path / "source.py").write_text("changed")
     assert snapshot(tmp_path).sha256 != before.sha256

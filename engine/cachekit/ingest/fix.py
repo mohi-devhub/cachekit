@@ -56,6 +56,7 @@ def snapshot(repo: Path, excluded: list[str] | tuple[str, ...] = ()) -> SourceSn
             d
             for d in dirs
             if d not in SKIP_DIRS
+            and not (Path(directory) == root and d == "screenshots")
             and (not d.startswith(".") or d == ".github")
             and not d.endswith(".egg-info")
         )

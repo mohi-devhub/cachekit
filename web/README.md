@@ -15,7 +15,7 @@ or external inference is needed.
 | `/report/[id]` | A report saved by the API; unknown reports never substitute the synthetic run |
 | `/report/[id]/heatmap/[route]` | Downsampled stability with reference-token coordinates and redacted template |
 | `/fix` or `/fix/[id]` | Redacted task, source freshness, local verification, golden outcomes and exact-diff approval |
-| `/bench` | Measured serving smoke counters; BEFORE/AFTER performance evidence remains pending |
+| `/bench` | Saved measured replay table and smoke counters; unmatched/missing runs stay explicit |
 | `/how-it-works` | Method, privacy and limits |
 
 Start `bash scripts/run-api.sh` in another terminal for interactive analysis and
@@ -30,9 +30,11 @@ The API is an unauthenticated local operator service; the UI has no launch-Devin
 or GPU button. Review/approval is a local record and does not merge a PR.
 
 Without the API, the committed `public/demo/workspace.json` supplies only the
-reviewed synthetic report, historical task status and measured smoke counters.
+reviewed synthetic report, saved candidate/task status, actual public golden
+outputs and measured counters. A network fallback is labeled SAVED. An available
+API returning no current candidate never falls back to a stale candidate.
 Task generation, verification and approval stay disabled. Refresh the snapshot
-from the named synthetic report using `python scripts/export_demo.py` in the
+from the named synthetic report using `python scripts/export_demo.py --task-id <current-task-id>` in the
 project environment. Uploaded/dataset-derived runs are never exported.
 
 The fix evidence section accepts SHA-256 identities of typed artifacts stored in

@@ -206,6 +206,9 @@ def register(app: typer.Typer) -> None:
                 test_timeout=test_timeout,
             )
             write_model(out, result)
+            candidate_path = out.with_suffix(".report.json")
+            if report is not None:
+                write_model(candidate_path, report)
             records = read_recorded(inputs)
             provenance = VerificationRun(
                 timestamp=datetime.now(UTC).isoformat(),
@@ -216,6 +219,7 @@ def register(app: typer.Typer) -> None:
                 config_sha256=result.config_sha256,
                 inputs_sha256=result.inputs_sha256,
                 verify_sha256=file_sha(out),
+                candidate_report_sha256=file_sha(candidate_path) if report is not None else None,
                 model=saved.config.vllm.model,
                 revision=saved.config.vllm.revision,
                 tokenizer=loaded.identity,
@@ -229,8 +233,6 @@ def register(app: typer.Typer) -> None:
             write_model(out.with_suffix(".run.json"), provenance)
             if after:
                 write_requests(after, rendered_out)
-            if report is not None:
-                write_model(out.with_suffix(".report.json"), report)
             typer.echo(
                 f"Verification: {'passed' if result.passed else 'not approved'}; "
                 f"quality: {result.quality_guard.status}. Result: {out}"
