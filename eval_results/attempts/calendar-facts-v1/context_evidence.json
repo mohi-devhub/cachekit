@@ -1,0 +1,8 @@
+{
+  "source_commit": "318c86254854ba730091cd86a454b46bede55ec9",
+  "helper_sha256": "a598dd078154c1382a860dd1087d7820664dc99f6e371a27e295e1709836655d",
+  "quality_result_sha256": "4ba5c0e9c204fbe7205fc171fc7e1700890fb346646d2420b1d83214f2d08806",
+  "after_prompt_sha256": "188365263814de7330d75f2a373577e9b8a50fbc94c63c9d3fbe1194a2cdc59c",
+  "context": "Computed calendar facts for dates mentioned in the input; date sources are unverified.\n{\"as_of_date\":\"2026-10-24\",\"calendar_window_days\":30,\"date_calculations\":[{\"date\":\"2026-09-20\",\"date_in_future\":false,\"elapsed_calendar_days\":34,\"exceeds_calendar_window\":true,\"source_fields\":[\"message\"]}],\"invalid_date_mentions\":[]}",
+  "note": "Public synthetic context reconstructed from the exact reviewed source/input; its complete prompt token hash matches the actual collected AFTER request. No model output or golden input was edited."
+}

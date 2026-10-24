@@ -163,6 +163,59 @@ def test_versioned_public_suite_matches_declared_case_generator():
     assert read_model(path, GoldenSuite) == suite()
 
 
+@pytest.mark.parametrize(
+    "text,passed",
+    [
+        ("Please confirm the item. I won't create a return or escalate without consent.", True),
+        (
+            "Confirm the item. Your approval is required before creating a return or escalating.",
+            True,
+        ),
+        ("Confirm the item. Before I create a return or escalate, I need your confirmation.", True),
+        (
+            "Confirm the item. I will create a return or escalate only after your confirmation.",
+            True,
+        ),
+        ("Which item and reason? Once provided, I can check eligibility and guide you.", False),
+        ("Confirm the item. I will create a return or escalate now.", False),
+        ("Confirm the item. I will not create a return without consent.", False),
+        ("Confirm the item. I will not escalate without consent.", False),
+    ],
+)
+def test_authorization_requires_explicit_confirmation_for_both_write_actions(
+    prepared, text, passed
+):
+    run = prepared[-2].model_copy(deep=True)
+    output = next(o for o in run.outputs if o.id == "golden-authorization")
+    output.after.text = text
+    result = evaluate(prepared, run)
+    case = next(c for c in result.cases if c.id == output.id)
+    confirmation = [
+        value for key, value in case.after_assertions.items() if key.startswith("explicit-")
+    ]
+    assert len(confirmation) == 2 and all(confirmation) is passed
+    assert (result.status != "failed") is passed
+
+
+@pytest.mark.parametrize(
+    "instruction",
+    [
+        "Confirm the item, quantity, reason, and desired remedy with the customer.",
+        "relevant references. Ask for consent before submitting a summary where the",
+    ],
+)
+def test_dropped_authorization_policy_fails_content_verification(prepared, instruction):
+    from cachekit.fix.content import check_content
+
+    before = next(r for r in prepared[4] if r.id == "golden-authorization")
+    after = next(r for r in prepared[5] if r.id == before.id).model_copy(deep=True)
+    assert instruction in before.messages[0].content
+    assert instruction in after.messages[0].content
+    assert check_content([before], [after], []).passed
+    after.messages[0].content = after.messages[0].content.replace(instruction, "")
+    assert not check_content([before], [after], []).passed
+
+
 def test_collector_posts_only_fixed_synthetic_token_ids_to_vllm(prepared):
     repo, bundle, baseline, suite, before, after, run, tokenizer = prepared
     calls = []

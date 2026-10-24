@@ -232,6 +232,28 @@ def test_current_candidate_is_hash_bound_and_stale_source_is_not_served(
     view = client.get(f"/fix/{task_id}").json()
     assert len(view["quality_outputs"]) == 5
     assert {o["id"] for o in view["quality_outputs"]} == {o.id for o in quality.outputs}
+    assert view["approval"] is None
+    verified_id = verified.json()["id"]
+    approved = client.post(
+        "/approve",
+        json={
+            "task_id": task_id,
+            "verification_id": verified_id,
+            "diff_sha256": verified.json()["result"]["diff_sha256"],
+            "reviewer": "Unit fixture reviewer",
+            "review_ids": [],
+        },
+    )
+    assert approved.status_code == 200, approved.text
+    assert client.get(f"/fix/{task_id}").json()["approval"] == approved.json()
+    assert client.get(f"/reports/{report_id}/after").json()["approval"] == approved.json()
+    approval_path = workspace.results / "approvals" / f"{verified_id}.json"
+    approval_bytes = approval_path.read_bytes()
+    altered = approved.json() | {"quality_result_sha256": "0" * 64}
+    approval_path.write_text(json.dumps(altered))
+    assert client.get(f"/fix/{task_id}").json()["approval"] is None
+    assert client.get(f"/reports/{report_id}/after").json()["approval"] is None
+    approval_path.write_bytes(approval_bytes)
     reference = FixResult(
         task_id="f" * 24, status="finished", pr_url="https://github.com/mohi-devhub/cachekit/pull/2"
     )
@@ -244,6 +266,7 @@ def test_current_candidate_is_hash_bound_and_stale_source_is_not_served(
     path.write_bytes(original)
     (repo / "unrelated.py").write_text("changed source\n")
     assert client.get(f"/reports/{report_id}/after").json() is None
+    assert client.get(f"/fix/{task_id}").json()["approval"] is None
 
 
 def test_real_before_benchmark_is_available_without_smoke_file(tmp_path, qwen_tokenizer, config):
@@ -269,3 +292,18 @@ def test_real_before_benchmark_is_available_without_smoke_file(tmp_path, qwen_to
     before["schedule_sha256"] = "0" * 64
     (out.parent / "after_replay.json").write_text(json.dumps(before))
     assert not client.get("/bench").json()["comparison_ready"]
+    # Prefer the semantic-repair run; never hide a mismatched new run behind the old pair.
+    restored = json.loads(out.read_text())
+    restored["variant"] = "after"
+    older = out.parent / "after_replay.json"
+    older.write_text(json.dumps(restored))
+    original_bytes = older.read_bytes()
+    preferred = out.parent / "after_confirmation_replay.json"
+    preferred.write_text(json.dumps(restored))
+    response = client.get("/bench").json()
+    assert response["comparison_ready"]
+    assert response["benchmarks"][1]["source"] == "eval_results/after_confirmation_replay.json"
+    restored["schedule_sha256"] = "f" * 64
+    preferred.write_text(json.dumps(restored))
+    assert not client.get("/bench").json()["comparison_ready"]
+    assert older.read_bytes() == original_bytes

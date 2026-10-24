@@ -1,8 +1,10 @@
 """Local orchestration around pure task, content, simulation and quality checks."""
 
 import hashlib
+from datetime import datetime
 from pathlib import Path
 
+from cachekit.calendar import calendar_context
 from cachekit.fix.content import check_content
 from cachekit.fix.models import (
     FixBaseline,
@@ -30,6 +32,7 @@ from cachekit.ingest.fix import (
 )
 from cachekit.ingest.jsonl import read_requests, write_requests
 from cachekit.models import Message, Report
+from cachekit.render.canonical import text_content
 from cachekit.report import _templates, analyze
 from cachekit.serialization import canonical_json
 from cachekit.settings import RunConfig
@@ -71,6 +74,8 @@ def prepare_task(
     test_command: list[str],
     finding_ids: list[str] | None,
     generation: GenerationConfig,
+    calendar_window_days: int | None = None,
+    restore_confirmation_commitment: bool = False,
 ) -> FixBaseline:
     if not bundle.resolve().is_relative_to(repo.resolve() / "data"):
         raise ValueError(
@@ -117,6 +122,8 @@ def prepare_task(
         test_command=test_command,
         finding_ids=finding_ids,
         generation=generation,
+        calendar_window_days=calendar_window_days,
+        restore_confirmation_commitment=restore_confirmation_commitment,
     )
     if any(path not in before_source.files for path in task.allowed_files):
         raise ValueError("Every allowed file must exist in the audited source snapshot")
@@ -203,16 +210,40 @@ def verify_bundle(
     if scope_ok and signature_equal:
         after = render_in_repo(repo, records)
         templates = _templates(before, baseline.config.analysis)
+        golden_records = _golden_records(suite)
+        golden_before, _ = read_requests(bundle / "golden_before.jsonl")
+        golden_after = render_in_repo(repo, golden_records)
+        if {r["id"] for r in records} & {r["id"] for r in golden_records}:
+            raise ValueError("Recorded traffic and golden IDs must be distinct")
+        checked_records = records + golden_records
+        checked_before, checked_after = before + golden_before, after + golden_after
         histories = {
-            r["id"]: [Message.model_validate(m) for m in r["input"]["history"]] for r in records
+            r["id"]: [Message.model_validate(m) for m in r["input"]["history"]]
+            for r in checked_records
         }
-        content = check_content(before, after, templates, histories)
+        calendar = {}
+        if task.calendar_window_days is not None:
+            for record in checked_records:
+                inp = record["input"]
+                calendar[record["id"]] = calendar_context(
+                    message=inp["message"],
+                    history=[text_content(m["content"]) for m in inp["history"]],
+                    documents=[d["text"] for d in inp["retrieved_docs"]],
+                    now=datetime.fromisoformat(record["now"]),
+                    window_days=task.calendar_window_days,
+                )
+        content = check_content(
+            checked_before,
+            checked_after,
+            templates,
+            histories,
+            calendar,
+            restore_confirmation_commitment=task.restore_confirmation_commitment,
+        )
         encoded = "".join(canonical_json(r) + "\n" for r in after).encode()
         after_report = analyze(
             after, baseline.config, tokenizer, input_sha256=hashlib.sha256(encoded).hexdigest()
         )
-        golden_before, _ = read_requests(bundle / "golden_before.jsonl")
-        golden_after = render_in_repo(repo, _golden_records(suite))
         run = read_model(quality_path, QualityRun) if quality_path is not None else None
         reviews = [read_model(path, QualityReview) for path in review_paths]
         quality = evaluate_quality(

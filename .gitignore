@@ -15,6 +15,7 @@ __pycache__/
 build/
 dist/
 *.tsbuildinfo
+/web/next-env.d.ts
 .DS_Store
 .impeccable/review/
 
@@ -30,6 +31,7 @@ dist/
 /eval_results/swe_sample_report*.json
 /eval_results/glaive_sample_report*.json
 /eval_results/local/
+/eval_results/quickstart/
 
 # Additional protections inherited from the organizer template.
 *.pem

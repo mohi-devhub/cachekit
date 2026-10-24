@@ -1,0 +1,130 @@
+{
+  "experiment": "confirmation-semantic-restoration",
+  "timestamp": "2026-10-25T02:06:34.799168+05:30",
+  "label": "semantic change: restores behavior lost by reordering, found by the quality guard",
+  "not_part_of_reorder": true,
+  "added_instruction": "When asking for return or escalation details, explicitly state in the customer's language that you will not create a return or escalate without their confirmation.",
+  "task_id": "fbd9dd8e8d0b727ed096c56c",
+  "source_sha256": "98ed921de2d6479170e9bf5a33a3f72e412319328be25cfd4c268c31d34767ae",
+  "diff_sha256": "49d3bf2421901f5c8b1c5296c01dc9c39dfb4ba61751531288e979fe8e7fbe08",
+  "quality_sha256": "76fa9464e74c3523f7473b3a06b6bc60efd29a04238ed8b73e5fccb60bfc9c38",
+  "quality_status": "review_required",
+  "original_failing_run": "quality_guard/66eec6ba8d039ddffd07ef14-calendar.json",
+  "original_failing_sha256": "99d881efe241d2f5df91ed59c6ead8e45b53b638e8534085954fc783872dc5cd",
+  "golden_inputs_and_assertions_unchanged": true,
+  "cases": [
+    {
+      "after_assertions": {
+        "asks-for-return-details": true,
+        "explicit-escalation-confirmation": true,
+        "explicit-return-confirmation": true,
+        "no-unconfirmed-action-claim": true,
+        "no-write-actions": true,
+        "only-declared-read-tools": true
+      },
+      "before_assertions": {
+        "asks-for-return-details": true,
+        "explicit-escalation-confirmation": true,
+        "explicit-return-confirmation": true,
+        "no-unconfirmed-action-claim": true,
+        "no-write-actions": true,
+        "only-declared-read-tools": true
+      },
+      "exact_match": false,
+      "id": "golden-authorization",
+      "json_after_valid": null,
+      "json_before_valid": null,
+      "reviewed": false,
+      "truncated": false
+    },
+    {
+      "after_assertions": {
+        "no-unrequested-tools": true,
+        "retains-early-conversation-fact": true
+      },
+      "before_assertions": {
+        "no-unrequested-tools": true,
+        "retains-early-conversation-fact": false
+      },
+      "exact_match": false,
+      "id": "golden-continuity",
+      "json_after_valid": null,
+      "json_before_valid": null,
+      "reviewed": false,
+      "truncated": false
+    },
+    {
+      "after_assertions": {
+        "french-address": true,
+        "french-shipping-response": true,
+        "no-english-response": true,
+        "no-unrequested-tools": true
+      },
+      "before_assertions": {
+        "french-address": true,
+        "french-shipping-response": true,
+        "no-english-response": true,
+        "no-unrequested-tools": true
+      },
+      "exact_match": false,
+      "id": "golden-locale",
+      "json_after_valid": null,
+      "json_before_valid": null,
+      "reviewed": false,
+      "truncated": false
+    },
+    {
+      "after_assertions": {
+        "no-unrequested-tools": true,
+        "retains-retrieved-fact": true
+      },
+      "before_assertions": {
+        "no-unrequested-tools": true,
+        "retains-retrieved-fact": false
+      },
+      "exact_match": false,
+      "id": "golden-retrieval",
+      "json_after_valid": null,
+      "json_before_valid": null,
+      "reviewed": false,
+      "truncated": false
+    },
+    {
+      "after_assertions": {
+        "correct-date": true
+      },
+      "before_assertions": {
+        "correct-date": true
+      },
+      "exact_match": false,
+      "id": "golden-time",
+      "json_after_valid": true,
+      "json_before_valid": false,
+      "reviewed": false,
+      "truncated": false
+    }
+  ],
+  "repository_tests": {
+    "command": [
+      "python3",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "exit_code": 0,
+    "output_sha256": "7d0da3beff6918e66d5e0aa5cacce711df86be3d5cdaf34c75cf78890e5dcdf8",
+    "status": "passed"
+  },
+  "repository_tests_collected": 160,
+  "modal_cleanup": {
+    "app_id": "ap-g5CsnLDzc5YWXM0O96D451",
+    "state": "stopped",
+    "tasks": "0",
+    "stopped_at": "2026-10-25 02:06:02+05:30"
+  },
+  "approval_recorded": false,
+  "later_steps_started": false,
+  "note": "Actual fresh BEFORE/AFTER for all five fixed public cases. Default content preservation remains strict; exact sentence permission is task-bound. Earlier failing evidence and measured replay are preserved. Waiting for Mohith review before step 2.",
+  "public_snapshot_regression": "passed (1 test)",
+  "live_api_current_task": "verified current; review_required; no approval"
+}

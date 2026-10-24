@@ -1,0 +1,18 @@
+{
+  "experiment": "static-prefix-verification",
+  "timestamp": "2026-10-24T21:22:56.411311+00:00",
+  "task_id": "9fc9012aabdf18de95f76598",
+  "source_sha256": "a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab",
+  "instruction": "When asking for return or escalation details, explicitly state in the customer's language that you will not create a return or escalate without their confirmation.",
+  "n_requests": 32,
+  "identical_static_prefix_sha256": "afed2e7c38b9f5ecb9b11f443cb7239b950f9110651964321b3dd40426e06acd",
+  "instruction_in_static_prefix_before_dynamic_context": true,
+  "human_golden_acceptance": "Mohith accepted all five; final exact-diff approval follows the authorized step-2 checks",
+  "note": "Re-rendered actual 27 recorded synthetic traffic requests plus all five fixed goldens. Original handbook and authorized sentence are a byte-identical leading system prefix; customer/locale/examples/retrieval/clock follow.",
+  "verification_passed": true,
+  "simulated_hit_rate_before": 0.0030399579082751164,
+  "simulated_hit_rate_after": 0.8069048982165246,
+  "target_hit_rate": 0.7316539521857724,
+  "meets_target": true,
+  "verification_sha256": "b109aedea0639460ac63e44eb5ecca81d5883a61571a8efbccd27f62da3ce567"
+}

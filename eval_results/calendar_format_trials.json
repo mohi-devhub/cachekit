@@ -1,0 +1,86 @@
+{
+  "experiment": "calendar-context-format-diagnostics",
+  "measurement": "EXPLORATORY",
+  "full_quality_suite": false,
+  "timestamp": "2026-10-24T19:34:06.334329+00:00",
+  "source_sha256": "9f3b782bc584ba3a0671e2101b2ecc45387613a210dd5fc01b1e87d60f160403",
+  "git_sha": "7ea3bf3267d4b37a23c8a5d9cb9292dcc2b4087e",
+  "script_sha256": "2fae81067e106d92a2988380843f815fdaaabbdfe03a9c34798beed9d5c3c0e9",
+  "golden_suite_sha256": "a1e71b1c527034a041bc4dbe9a3e30033952b586f251a603a508d8825b7917f8",
+  "case_id": "golden-time",
+  "generation": {
+    "temperature": 0,
+    "max_tokens": 512,
+    "seed": 42
+  },
+  "deployment": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "tokenizer_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "vllm_version": "0.31.0",
+    "gpu": "L4",
+    "max_model_len": 16384,
+    "block_size": 16,
+    "capacity_blocks": 5180,
+    "deployment_id": "fu-zaEp71r0DYMtMBZL5Ou8YU"
+  },
+  "results": [
+    {
+      "variant": "flat_json_system",
+      "role": "system",
+      "context": "Computed calendar timing from unverified date mentions. Use within_window for calendar timing only; original product eligibility and action-authorization checks remain in force.\n{\"as_of_date\":\"2026-10-24\",\"calendar_window_days\":30,\"elapsed_calendar_days\":34,\"mentioned_date\":\"2026-09-20\",\"source_fields\":[\"message\"],\"within_window\":false}",
+      "context_sha256": "026cbe163d4475cc899ad1c015ff1a19ec1a4161c4fe438031b7f27deed4b452",
+      "prompt_sha256": "fbdb0350cdc7ebb9aaf57ec70a2e822a660c3d185d34a022dcc7c8c491bed0cf",
+      "text": "{\"date\": \"2026-10-24\", \"within_window\": false}",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 5026,
+        "completion_tokens": 22
+      },
+      "original_schema_valid": true
+    },
+    {
+      "variant": "plain_system",
+      "role": "system",
+      "context": "Computed calendar timing from unverified date mentions. Use within_window for calendar timing only; original product eligibility and action-authorization checks remain in force.\nRecorded current date: 2026-10-24\nMentioned date 2026-09-20: elapsed_calendar_days=34; calendar_window_days=30; within_window=false; source_fields=[\"message\"].",
+      "context_sha256": "59e1f0ba30921fd28ddbea13c4735a3b82bbcefd81368dbfd671b2b9fb309651",
+      "prompt_sha256": "4578af27851c24967a700ebbf114c29f9bbcd6408321234a654e0db1e42017fa",
+      "text": "{\"date\": \"2026-10-24\", \"within_window\": true}",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 5029,
+        "completion_tokens": 22
+      },
+      "original_schema_valid": false
+    },
+    {
+      "variant": "plain_user",
+      "role": "user",
+      "context": "Computed calendar timing from unverified date mentions. Use within_window for calendar timing only; original product eligibility and action-authorization checks remain in force.\nRecorded current date: 2026-10-24\nMentioned date 2026-09-20: elapsed_calendar_days=34; calendar_window_days=30; within_window=false; source_fields=[\"message\"].",
+      "context_sha256": "59e1f0ba30921fd28ddbea13c4735a3b82bbcefd81368dbfd671b2b9fb309651",
+      "prompt_sha256": "e55266f56d914d15309f59d92e11240612ac1cc9cf5230bd48370fc90cdf40bb",
+      "text": "{\"date\": \"2026-10-24\", \"within_window\": false}",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 5028,
+        "completion_tokens": 22
+      },
+      "original_schema_valid": true
+    },
+    {
+      "variant": "flat_json_user",
+      "role": "user",
+      "context": "Computed calendar timing from unverified date mentions. Use within_window for calendar timing only; original product eligibility and action-authorization checks remain in force.\n{\"as_of_date\":\"2026-10-24\",\"calendar_window_days\":30,\"elapsed_calendar_days\":34,\"mentioned_date\":\"2026-09-20\",\"source_fields\":[\"message\"],\"within_window\":false}",
+      "context_sha256": "026cbe163d4475cc899ad1c015ff1a19ec1a4161c4fe438031b7f27deed4b452",
+      "prompt_sha256": "90f8f2b408eb4458fbffcbfcc66f25da981ac4d514f2e3fe156baefeb88a9bff",
+      "text": "{\"date\": \"2026-10-24\", \"within_window\": false}",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 5026,
+        "completion_tokens": 22
+      },
+      "original_schema_valid": true
+    }
+  ],
+  "note": "Actual public synthetic focused diagnostics, with unchanged original input/schema/seed/budget. All tried formats are saved. A selected general formatter still requires fresh baseline, full content/tests and the entire actual fixed suite; these trials never count as approval."
+}

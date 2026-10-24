@@ -53,6 +53,8 @@ class FixTask(BoundaryModel):
     test_command: list[str] = Field(min_length=1)
     builder_module: Literal["demo_app.helpdesk.prompt"] = "demo_app.helpdesk.prompt"
     builder_function: Literal["build_request"] = "build_request"
+    calendar_window_days: int | None = Field(default=None, strict=True, gt=0)
+    restore_confirmation_commitment: bool = Field(default=False, strict=True)
 
 
 class FixBaseline(BoundaryModel):

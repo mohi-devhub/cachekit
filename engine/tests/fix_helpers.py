@@ -44,7 +44,9 @@ def build_request(inp: HelpdeskInput, *, now: datetime, rng: Random) -> JsonObje
 """
 
 
-def temporary_bundle(tmp_path, tokenizer, config):
+def temporary_bundle(
+    tmp_path, tokenizer, config, *, calendar_window_days=None, restore_confirmation_commitment=False
+):
     repo = tmp_path / "repo"
     repo.mkdir()
     ignored = shutil.ignore_patterns("__pycache__", "*.pyc")
@@ -87,6 +89,8 @@ def test_public_request_contract():
         finding_ids=None,
         test_command=[sys.executable, "-m", "pytest", "-q", "fixture_tests.py"],
         generation=GenerationConfig(),
+        calendar_window_days=calendar_window_days,
+        restore_confirmation_commitment=restore_confirmation_commitment,
     )
     write_model(bundle / "fix_task.json", baseline.task)
     write_model(bundle / "fix_baseline.json", baseline)
@@ -104,7 +108,10 @@ def fake_quality(repo, bundle, baseline, tokenizer):
     texts = {
         "golden-time": '{"date":"2026-10-24","within_window":false}',
         "golden-locale": "Quel est le numéro de votre commande pour vérifier la livraison ?",
-        "golden-authorization": "Please confirm the item and reason before creating a return.",
+        "golden-authorization": (
+            "Please confirm the item and reason. I will not create a return or escalate "
+            "without your confirmation."
+        ),
         "golden-retrieval": "RETRIEVAL-SYN-582",
         "golden-continuity": "cobalt",
     }

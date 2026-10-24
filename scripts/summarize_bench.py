@@ -12,7 +12,10 @@ from cachekit.benchmark_models import BenchmarkRun, matched_replays  # noqa: E40
 
 def main():
     directory = ROOT / "eval_results"
-    old_path, new_path = directory / "before_replay.json", directory / "after_replay.json"
+    old_path = directory / "before_replay.json"
+    new_path = directory / "after_confirmation_replay.json"
+    if not new_path.is_file():
+        new_path = directory / "after_replay.json"
     before = BenchmarkRun.model_validate_json(old_path.read_bytes())
     after = BenchmarkRun.model_validate_json(new_path.read_bytes()) if new_path.is_file() else None
     matched = after is not None and matched_replays(before, after)
@@ -31,12 +34,17 @@ def main():
 
     def cell(run, key, format):
         value = run.summary.get(key) if run else None
-        return format(value["median"]) if value is not None else "<pending>"
+        return (
+            f"{format(value['median'])} ({format(value['min'])}–{format(value['max'])})"
+            if value is not None
+            else "<pending>"
+        )
 
     text = [
         "# Saved measured replay results",
         "",
-        "Generated only from the linked saved artifacts; medians across each run's repetitions.",
+        "Generated only from the linked saved artifacts; "
+        "median (min–max) across each run's repetitions.",
         "",
         "| Metric | BEFORE | AFTER |",
         "| --- | ---: | ---: |",

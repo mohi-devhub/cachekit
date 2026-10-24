@@ -1,15 +1,15 @@
-# Devin Hack Kochi — event guidance
+# Devin Hacks Kochi — event guidance
 
 ## Event and template correction
 
-The event is **Devin Hack Kochi**. The organizer shared an older event's GitHub
+The event is **Devin Hacks Kochi**. The organizer shared an older event's GitHub
 template, which is why this repository inherited the wrong event details.
 
-Devin Hack Kochi has no major AI usage constraints. Participants may use Devin and other AI tools, models, and providers; this template does not require Codex or restrict AI usage to OpenAI. AI usage notes are project documentation, not an additional event eligibility requirement.
+Devin Hacks Kochi has no major AI usage constraints. Participants may use Devin and other AI tools, models, and providers; this template does not require Codex or restrict AI usage to OpenAI. AI usage notes are project documentation, not an additional event eligibility requirement.
 
 ## Current event instructions
 
-Follow the Devin Hack Kochi organizers' current instructions for participation
+Follow the Devin Hacks Kochi organizers' current instructions for participation
 format, tracks, eligibility, venue, registration, schedule, submission, and credits.
 The previous template's dates, venue, registration link, team-size limits, and
 Codex/OpenAI credit promises do not establish requirements or entitlements for
@@ -31,3 +31,5 @@ this event.
 verification, and regular commits. These conventions do not add event eligibility
 rules or AI tool restrictions. Organizer instructions take precedence over the
 copied template.
+
+Current participant schedule: feature freeze **05:30 IST**, submission **07:00 IST** on Oct 25, 2026 (Mohith’s updated event instruction).

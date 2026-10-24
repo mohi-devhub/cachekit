@@ -1,0 +1,77 @@
+{
+  "experiment": "E2-E3-replay-provenance",
+  "benchmark_sha256": "aa0084e09193aeba4d169f0e4005874755210270b8e60b45338ea8b78ca8fd7d",
+  "dataset": [
+    "synthetic-helpdesk"
+  ],
+  "subset": "complete saved synthetic helpdesk AFTER log from the reviewed candidate",
+  "n_requests": 27,
+  "repetitions": 3,
+  "measurement_timestamp": "2026-10-24T21:19:06.825063+00:00",
+  "git_sha": "b600ed210749ea1969a2136db6307af457bf4cc5",
+  "source_sha256": "a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab",
+  "config_sha256": "fafe9927c0662322ef33377d0a8a30971c4bce4ed0cbc706413deeb022498b0c",
+  "input_sha256": "3fd17a6029c5a771ed99e44531a17c3884fab1b9637849aa4b9b1518703d890b",
+  "recorded_inputs_sha256": "bc20d2962c1bab2d4fe2fcea68f60acbb5ff6e4f5b7342e1ccd33bcdfb7f64e4",
+  "seed": {
+    "rng_seed": [
+      240251661,
+      298737106,
+      438989805,
+      479112937,
+      698594025,
+      701808367,
+      1149938334,
+      1193448329,
+      1193887545,
+      1351531223,
+      1554762903,
+      1812140441,
+      2188398760,
+      2272528809,
+      2303082117,
+      2340505846,
+      2510777721,
+      2561557300,
+      2727210979,
+      2761027762,
+      3163119785,
+      3184935163,
+      3224995600,
+      3460967357,
+      3639960595,
+      3673561638,
+      3698408854
+    ],
+    "worker_seed": [
+      42,
+      43,
+      44
+    ]
+  },
+  "generation_seed": 42,
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "tokenizer": {
+    "files_sha256": {
+      "config.json": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "a62ff0a2472a0fa1b8eaabcb57c59b58afa42a22831dc141400b6e0cf2b65ce3"
+    },
+    "mode": "exact_local_chat_template",
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "tokenizers_version": "0.22.2",
+    "transformers_version": "4.57.6"
+  },
+  "vllm_version": "0.31.0",
+  "gpu": "L4",
+  "max_model_len": 16384,
+  "block_size": 16,
+  "capacity_tokens": 82880,
+  "concurrency": 1,
+  "arrival_scale": 1.0,
+  "cachekit_version": "0.1.0",
+  "note": "Supplementary post-collection dataset/seed provenance, derived from matching original recorded inputs. Immutable measured timings/counters were not edited. Candidate source and generation are identified by the linked raw run. Human behavioral and exact-diff review remain separate.",
+  "candidate_pr_url": "https://github.com/mohi-devhub/cachekit/pull/2",
+  "candidate_pr_head": "b600ed210749ea1969a2136db6307af457bf4cc5"
+}

@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from cachekit.cli import app
 from cachekit.fix.approve import approve
-from cachekit.fix.content import check_content
+from cachekit.fix.content import CONFIRMATION_INSTRUCTION, check_content
 from cachekit.fix.models import VerifyResult
 from cachekit.fix.task import make_task, task_markdown
 from cachekit.ingest.fix import changes, file_sha, snapshot, write_model
@@ -60,6 +60,96 @@ def test_content_checks_text_tools_roles_settings_and_restored_history():
     assert not check_content([before], [restored], []).passed
     result = check_content([before], [restored], [], {"a": history})
     assert result.passed and result.restored_history_lines == 2
+
+
+def test_confirmation_exception_requires_exact_declared_system_sentence():
+    before = RequestRecord(
+        id="authorization",
+        ts=0,
+        messages=[
+            Message(role="system", content="Original policy"),
+            Message(role="user", content="Do not create a return or escalation yet."),
+        ],
+    )
+    after = before.model_copy(deep=True)
+    after.messages[0].content += "\n" + CONFIRMATION_INSTRUCTION
+    assert not check_content([before], [after], []).passed
+    result = check_content([before], [after], [], restore_confirmation_commitment=True)
+    assert result.passed and result.unexpected_added_lines == 0
+    assert "Declared semantic change" in result.note
+    for text in [
+        "Original policy",  # Declared instruction is required, not optional.
+        after.messages[0].content + "\n" + CONFIRMATION_INSTRUCTION,
+        after.messages[0].content.replace("without their confirmation", "without confirmation"),
+        CONFIRMATION_INSTRUCTION,  # Original policy cannot be replaced.
+        after.messages[0].content + "\nOther new instruction",
+    ]:
+        bad = after.model_copy(deep=True)
+        bad.messages[0].content = text
+        assert not check_content([before], [bad], [], restore_confirmation_commitment=True).passed
+    wrong_role = before.model_copy(deep=True)
+    wrong_role.messages[-1].content += "\n" + CONFIRMATION_INSTRUCTION
+    assert not check_content(
+        [before], [wrong_role], [], restore_confirmation_commitment=True
+    ).passed
+
+
+@pytest.mark.parametrize("declared", [False, True])
+def test_confirmation_exception_is_task_bound_and_covers_goldens(
+    tmp_path, qwen_tokenizer, config, declared
+):
+    repo, bundle, baseline, report_path = temporary_bundle(
+        tmp_path, qwen_tokenizer, config, restore_confirmation_commitment=declared
+    )
+    candidate = CANDIDATE.replace(
+        "    return request\n",
+        '    request["messages"][0]["content"] += "\\n" + '
+        + repr(CONFIRMATION_INSTRUCTION)
+        + "\n    return request\n",
+    )
+    (repo / "demo_app/helpdesk/prompt.py").write_text(candidate)
+    result, after, _ = check(repo, bundle, report_path, qwen_tokenizer)
+    assert baseline.task.restore_confirmation_commitment is declared
+    assert result.content_check.passed is declared
+    assert result.content_check.n_requests == len(after) + 5
+    assert result.quality_guard.status == "not_run" and not result.passed
+    if declared:
+        assert "semantic change: restores behavior lost by reordering" in task_markdown(
+            baseline.task
+        )
+
+
+@pytest.mark.parametrize("declared", [False, True])
+def test_calendar_enrichment_is_explicit_and_checks_golden_inputs(
+    tmp_path, qwen_tokenizer, config, declared
+):
+    repo, bundle, baseline, report_path = temporary_bundle(
+        tmp_path, qwen_tokenizer, config, calendar_window_days=30 if declared else None
+    )
+    extra = """    from cachekit.calendar import calendar_context
+    from cachekit.render.canonical import text_content
+    block = calendar_context(message=inp.message,
+        history=[text_content(m.content) for m in inp.history],
+        documents=[d.text for d in inp.retrieved_docs], now=now, window_days=30)
+    if block:
+        request["messages"][0]["content"] += "\\n" + block + "\\n"
+    return request
+"""
+    candidate = CANDIDATE.replace("    return request\n", extra)
+    assert candidate != CANDIDATE
+    (repo / "demo_app/helpdesk/prompt.py").write_text(candidate)
+    result, _, _ = check(repo, bundle, report_path, qwen_tokenizer)
+    assert result.scope_check.passed
+    assert result.content_check.passed is declared
+    assert result.content_check.n_requests == 11  # Recorded traffic plus the fixed five goldens.
+    assert result.quality_guard.status == "not_run"
+    if declared:
+        assert "Declared calendar arithmetic enrichment" in task_markdown(baseline.task)
+        (repo / "demo_app/helpdesk/prompt.py").write_text(
+            candidate.replace("window_days=30", "window_days=31")
+        )
+        tampered, _, _ = check(repo, bundle, report_path, qwen_tokenizer)
+        assert not tampered.content_check.passed
 
 
 def test_snapshot_identity_ignores_private_artifacts_and_catches_source_and_mode(tmp_path):
@@ -320,4 +410,19 @@ def test_exported_demo_data_does_not_invalidate_audited_source(tmp_path):
     capture.write_bytes(b"updated isolated capture fixture")
     assert snapshot(tmp_path).sha256 == before.sha256
     (tmp_path / "source.py").write_text("changed")
+    assert snapshot(tmp_path).sha256 != before.sha256
+
+
+def test_generated_next_types_do_not_hide_changes_to_actual_ui_source(tmp_path):
+    page = tmp_path / "web/src/app/page.tsx"
+    page.parent.mkdir(parents=True)
+    page.write_text("export default function Page() { return 'original'; }")
+    generated = tmp_path / "web/next-env.d.ts"
+    generated.write_text('import "./.next/types/routes.d.ts";')
+    before = snapshot(tmp_path)
+    assert "web/next-env.d.ts" not in before.files
+    assert "web/src/app/page.tsx" in before.files
+    generated.write_text('import "./.next/dev/types/routes.d.ts";')
+    assert snapshot(tmp_path).sha256 == before.sha256
+    page.write_text("export default function Page() { return 'changed'; }")
     assert snapshot(tmp_path).sha256 != before.sha256

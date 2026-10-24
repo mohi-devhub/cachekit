@@ -2,9 +2,9 @@
 
 ## Event requirements
 
-- Read [RULES.md](RULES.md) before working. Follow the Devin Hack Kochi organizers' current project-start and eligibility instructions.
+- Read [RULES.md](RULES.md) before working. Follow the Devin Hacks Kochi organizers' current project-start and eligibility instructions.
 - Libraries, APIs, and public datasets are allowed. Document their sources and use.
-- Devin Hack Kochi has no major AI usage constraints. Choose suitable AI tools and providers; Codex is not required. If maintaining [AI_USAGE.md](AI_USAGE.md), record actual assistance accurately.
+- Devin Hacks Kochi has no major AI usage constraints. Choose suitable AI tools and providers; Codex is not required. If maintaining [AI_USAGE.md](AI_USAGE.md), record actual assistance accurately.
 - Prepare a code repository, short project description, and working demo in [SUBMISSION.md](SUBMISSION.md).
 
 ## Use basic coding patterns
@@ -50,4 +50,4 @@ The 30-minute target is this repository's working convention. It does not replac
 - Check that the working demo matches the submitted code and that known limitations are disclosed.
 - Update the changelog and any maintained AI usage record, commit the final coherent change, and push it.
 - Record the final submitted commit SHA in the submission details. Documentation may record that SHA in a subsequent commit; do not claim later implementation changes belong to the earlier demo.
-- Follow the organizers' actual submission method and timing. Use the Devin Hack Kochi organizers' current deadline.
+- Follow the organizers' actual submission method and timing. Use the Devin Hacks Kochi organizers' current deadline.

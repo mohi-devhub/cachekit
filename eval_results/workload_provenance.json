@@ -1,0 +1,18 @@
+{
+  "dataset": "synthetic-helpdesk",
+  "config": {
+    "max_turns": 10,
+    "mean_session_gap": 1.0,
+    "mean_turn_gap": 8.0,
+    "min_turns": 2,
+    "seed": 42,
+    "start_ts": 1792841400.0,
+    "users": 6,
+    "workers": 3
+  },
+  "n_requests": 27,
+  "recorded_inputs_sha256": "bc20d2962c1bab2d4fe2fcea68f60acbb5ff6e4f5b7342e1ccd33bcdfb7f64e4",
+  "before_requests_sha256": "4d5cd3fd65b2bf4f467215ebfffe55625e54e42031a717aaff3f365fcdbe9b59",
+  "before_benchmark_sha256": "0a72b8f8c73329128c1c674e4cf8546ea665726cf8e56bf4eabe7d11bef35bda",
+  "note": "Generation configuration copied from the original saved synthetic manifest and checked against the immutable BEFORE benchmark identities. No private input text or new measurements."
+}

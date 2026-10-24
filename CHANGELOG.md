@@ -1,5 +1,160 @@
 # Change log
 
+## 2026-10-25T02:33:54+05:30 — Reproduce setup and finish MUST evidence controls
+
+- Recreated a fresh Python 3.12 .venv; added locked Python/npm dependencies and
+  reproducible setup commands. Initial npm extraction hit disk exhaustion; cleared
+  regenerable package/build files and retried without deleting data or results.
+- Patched Next.js and matching ESLint config to exact 16.4.3 after actual npm audit
+  findings. Recorded before/after audits; patched audit has zero known findings.
+- Fixed narrow-page hash overflow with full-value copy, success/error feedback and
+  selectable expansion. Added saved repetition min/max beside benchmark medians.
+- Excluded generated next-env.d.ts from Git/source identity. Actual UI/config code
+  stays audited; regression checks guard the dev/build typing-mode case. Check
+  scripts now lint/format public Python scripts as well as the engine and harness.
+- Refreshed Devin Hacks Kochi naming, current deadlines and honest setup/baseline
+  instructions. Keep previous failures, human output acceptance and measurements.
+  A new immutable AFTER path is selected when present, retaining metadata checks.
+- Validation: locked setup and CPU demo pass; original traffic byte hashes match.
+  All 161 tests, Ruff, web typecheck/lint/build pass from the fresh environment.
+  Scratch-Chromium copy check gets all 64 characters; 390/320 layouts have no page
+  overflow. New ranges match saved run values. Actual final source/quality/replay,
+  approval and merge outcomes are recorded separately under eval_results.
+- Current semantic exception remains labeled separately from reordering. No new
+  Devin session, UI redesign or STRETCH work. Feature freeze is 05:30 IST.
+
+
+## 2026-10-25T01:58:29+05:30 — Restore the explicit confirmation response commitment
+
+- semantic change: restores behavior lost by reordering, found by the quality guard.
+- Added one localized response instruction in demo_app/helpdesk/prompt.py; original
+  handbook, inputs, golden assertions and generation settings remain unchanged.
+- Added an opt-in hashed task flag and CLI preparation option. The verifier permits
+  only the exact declared sentence once in system context across traffic and goldens;
+  arbitrary additions, missing original content, duplicates and role changes still fail.
+- Validation: 46 focused workflow/quality tests and Ruff pass. Full source-bound
+  preflight and a new immutable five-case inference run follow before human review.
+- Preserved the actual failing run and archived its review/verification. The new
+  prompt has not been performance-benchmarked; existing timings describe earlier source.
+- No approval, merge, new Devin session or later-step work. Stop for Mohith's review.
+
+
+## 2026-10-25T01:44:36+05:30 — Investigate time expectation and strengthen authorization goldens
+
+- Confirmed from the original committed fixture that the 34-day delivery is outside
+  the 30-day window; false is the expected answer. No prompt or policy edit is needed.
+- Confirmed complete original policy and user no-action instructions remain in the
+  actual AFTER render. Added separate explicit return/escalation confirmation checks
+  in helpdesk-e5-lite-v2 while keeping all five inputs and expected JSON unchanged.
+- Added paraphrase, omission, partial-confirmation and dropped-policy regressions;
+  updated only isolated fake test responses. Earlier real outputs stay immutable.
+- Validation: 30 focused quality tests and Ruff pass. Initial full run had 155 passes
+  and two new test-call errors (missing the required templates argument); corrected
+  those test calls and reran focused tests. Source-bound full-suite preflight and
+  fresh actual five-case inference follow; investigation is saved in eval_results.
+- No approval, merge, new Devin session or later-phase implementation. Submission
+  is now 07:00 IST with a 05:30 freeze; stop after the golden packet for human review.
+
+
+## 2026-10-25T01:22:46+05:30 — Persist approval display and publish the actual matched replay
+
+- Fixed: the fix page previously stored approval only in React state and reset it
+  on reload. Expose an optional persisted approval in TaskView, validate its exact
+  task/verification/source/diff/quality identities, and use the same getter for
+  candidate views. Render the saved record after reload; stale or mismatched
+  approvals stay absent. Approval creation/revalidation gates are unchanged.
+- Evidence: the flat-calendar source completed the fixed actual five-case suite;
+  every AFTER assertion, schema and completion check passes. Output differences
+  still require human review. The matched three-repetition replay is saved
+  immutably; README tables come directly from it, with scheduling/cost limits.
+- Provenance: the UI/API display repair follows that collection and changes no
+  prompt builder/helper or rendered input bytes. A fresh task/quality collection
+  binds the final complete source; the input/component binding records which
+  immutable performance run applies. No measurement is relabeled or invented.
+- Validation: persisted API approval reload, stale-source hiding and malformed
+  quality-identity checks are covered in the API regression. Full Python/Ruff and
+  web typecheck/lint/production-build checks run for this checkpoint. Earlier
+  actual code checks passed all 147 tests; final source-bound preflight follows.
+- Human review remains pending. No new Devin session, model, golden, generation
+  setting, original instruction, tool or role change.
+
+## 2026-10-25T01:07:20+05:30 — Select flat system calendar facts using saved focused diagnostics
+
+- Actual diagnostics: the same fixed date input/schema/settings were tried with
+  four transparent context format/placement variants in one allocation. Flat
+  system JSON passes the original schema; plain system text fails; both user-tail
+  variants pass. Saved every response, context, token hash, deployment and script
+  hash in eval_results/calendar_format_trials.json. These are EXPLORATORY focused
+  results, not a full quality pass or approval.
+- Changed: separate pure calendar calculations from their flat-record formatter.
+  The production context exactly matches the successful flat-system variant;
+  retain system placement and the existing narrow declaration/verification gate.
+  Emit invalid/future date labels without altering the normal-date format.
+- Validation: arithmetic, explicit-clock and content rejection cases are checked;
+  the full source-bound preflight runs before final collection. Complete fixed
+  BEFORE/AFTER quality and performance evidence still follow. No original input,
+  assertion, policy, role, tool, expected answer or generation setting changed.
+- Limits: selecting a format on this focused case does not establish general
+  equivalence; all fixed AFTER cases and human review remain required. No new
+  Devin session; the original session reports finished through a read-only check.
+
+## 2026-10-25T00:44:48+05:30 — Expose the direct calendar-window result after a real failed attempt
+
+- Observed: actual calendar-facts v1 still failed the time case: the model answered
+  true despite receiving 34 elapsed days and exceeds-window=true. Reconstructed
+  that public synthetic context from the exact source; its complete prompt token
+  hash matches the actual collected request. Original outputs and evaluated
+  checks remain preserved under eval_results/attempts/calendar-facts-v1/.
+- Changed: the pure helper now also emits within_calendar_window for the closed
+  numeric interval from zero through the declared limit, and explains using that
+  value for timing while preserving all original eligibility/authorization checks.
+  This avoids asking the model to negate the exceeds-window comparison.
+- Validation: full 147-test suite passes for the arithmetic change; boundary,
+  future and leap-day assertions cover direct membership. Formatter/header checks
+  and the final source-bound preflight follow before actual model collection.
+- Limits: no golden input/assertion, expected output, sampling parameter, role,
+  tool or original policy was changed. Prior failure was not waived; no second
+  performance replay is saved for the failed date layouts. Fresh baseline needed.
+
+## 2026-10-25T00:33:50+05:30 — Append the declared calendar facts in the helpdesk prompt tail
+
+- Changed: the builder calls the pure calendar helper with the recorded clock,
+  original message/history/retrieval and handbook comparison window. It appends
+  the computed block after existing time/context only when date mentions exist.
+  Original instructions, values, selected examples, roles, tools and settings
+  remain present. No golden ID/date/expected answer is special-cased.
+- Why: delegate calendar subtraction/comparison to deterministic code, after the
+  original small model failed that arithmetic in both cache layouts.
+- Verification: use a fresh explicit task with calendar_window_days=30. The saved
+  preflight independently checks original traffic plus the fixed goldens; status
+  and repository checks are recorded in source-bound eval_results artifacts.
+  Actual fixed golden collection precedes another performance replay.
+- Limitations: ISO calendar dates only, unverified source mentions, and no grant
+  of return eligibility or authorization. All original AFTER assertions still
+  gate approval; changed model outputs require human review. No new Devin session.
+
+## 2026-10-25T00:32:34+05:30 — Add explicitly declared deterministic calendar arithmetic
+
+- Authorization: Mohith approved expanding the task to fix the pre-existing date
+  arithmetic exposed by both failed layouts. Keep the original fixed suite,
+  expected answers, pinned model, temperature and generation budget unchanged.
+- Added: a pure ISO calendar-date helper using only supplied text, recorded clock
+  and a declared comparison window. It reports elapsed days, mathematical window
+  comparisons, invalid/future dates and source fields. Date mentions stay labeled
+  unverified; no entitlement or tool authorization is inferred.
+- Verification: tasks opt in with --calendar-window-days. The verifier recomputes
+  the exact permitted system block independently, checks originals in BOTH traffic
+  and goldens, and rejects modified numbers, missing/duplicate/misplaced blocks or
+  undeclared additions. The helper/verifier are outside the candidate's allowed
+  source scope; no broad content exception or golden assertion was introduced.
+- Validation: all 147 Python tests pass, including leap-day/boundary/future/invalid
+  dates, explicit-clock validation, content rejection and golden-only enrichment
+  cases. Ruff and CLI option/help checks pass. The public-snapshot checks still
+  validate earlier artifacts. No inference or new Devin session in this commit.
+- Next: prepare a fresh baseline with the declared window, wire the exact helper
+  output into the prompt tail, then collect real quality first. Actual later
+  outcomes belong to the saved run; no application fix is approved here.
+
 ## 2026-10-25T00:11:26+05:30 — Validate real current snapshots instead of demanding historical fixtures
 
 - Fixed: the public-demo test asserted verification_current must always be false.
@@ -185,7 +340,7 @@
 
 ## 2026-10-24T22:39:55+05:30 — Resolve PR #1 against the implemented project
 
-- Changed: integrated corrected Devin Hack Kochi guidance and optional AI-tool
+- Changed: integrated corrected Devin Hacks Kochi guidance and optional AI-tool
   wording across the seven documentation files in PR #1. Preserved the cachekit
   README, setup/demo commands, submission details, changelog and AI usage history.
 - Why: PR #1 started from the old template and conflicts with newer project docs.
@@ -197,10 +352,10 @@
 - Limitations: remote publication must succeed before the PR is conflict-free
   on GitHub. No application behavior or quality-approval state is changed.
 
-## 2026-10-24T21:53:05+05:30 — Correct Devin Hack Kochi event guidance
+## 2026-10-24T21:53:05+05:30 — Correct Devin Hacks Kochi event guidance
 
 - Changed: corrected the current event name and AI tool guidance in `.github/pull_request_template.md`, `AGENTS.md`, `AI_USAGE.md`, `CHANGELOG.md`, `README.md`, `RULES.md`, `SUBMISSION.md`.
-- Why: the organizer shared an older event template; Devin Hack Kochi has no
+- Why: the organizer shared an older event template; Devin Hacks Kochi has no
   major AI usage constraints and the template must not require a particular AI provider.
 - Scope: preserved project implementation and historical assistance records.
 - Removed obsolete template logistics, participation limits, and credit promises; current organizer instructions remain authoritative.

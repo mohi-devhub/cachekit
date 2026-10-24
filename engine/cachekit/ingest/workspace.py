@@ -183,7 +183,14 @@ class Workspace:
                 out.write_bytes(payload)
         return report_id
 
-    def create_task(self, report_id: str, finding_ids: list[str] | None) -> TaskView:
+    def create_task(
+        self,
+        report_id: str,
+        finding_ids: list[str] | None,
+        *,
+        calendar_window_days: int | None = None,
+        restore_confirmation_commitment: bool = False,
+    ) -> TaskView:
         bundle = self.bundle(report_id)
         demo_path = self.repo / DATASETS["demo-before"][1]
         if not demo_path.is_file() or file_sha(demo_path) != bundle.report.input_sha256:
@@ -205,6 +212,8 @@ class Workspace:
                 test_command=["python3", "-m", "pytest", "-q"],
                 finding_ids=finding_ids,
                 generation=GenerationConfig(),
+                calendar_window_days=calendar_window_days,
+                restore_confirmation_commitment=restore_confirmation_commitment,
             )
             write_model(temporary / "fix_task.json", baseline.task)
             write_model(temporary / "fix_baseline.json", baseline)
@@ -243,6 +252,7 @@ class Workspace:
             else ("candidate" if changed else "prepared")
         )
         verification = None
+        verification_path = None
         for p in [
             self.results / "verifications" / f"{task_id}.latest.json",
             self.repo / "eval_results/phase3_verify.json",
@@ -251,6 +261,7 @@ class Workspace:
                 result = read_model(p, VerifyResult)
                 if result.task_id == task_id:
                     verification = result
+                    verification_path = p
                     break
         handoff = None
         for p in [
@@ -292,6 +303,13 @@ class Workspace:
             verification=verification,
             verification_current=bool(
                 verification and verification.after_source_sha256 == current.sha256
+            ),
+            approval=(
+                self._approval_for(verification_path, verification, current.sha256)
+                if verification_path is not None
+                and verification is not None
+                and verification.task_sha256 == digest(baseline.task)
+                else None
             ),
             handoff=handoff,
             quality_outputs=outputs,
@@ -353,25 +371,33 @@ class Workspace:
                 or candidate.n_requests != before.report.n_requests
             ):
                 raise ValueError("Candidate provenance mismatch")
-            approval = None
-            approval_path = self.results / "approvals" / f"{file_sha(result_path)}.json"
-            if approval_path.is_file():
-                saved = read_model(approval_path, Approval)
-                if (
-                    result.passed
-                    and saved.task_id == task_id
-                    and saved.verify_sha256 == file_sha(result_path)
-                    and saved.after_source_sha256 == result.after_source_sha256
-                    and saved.diff_sha256 == result.diff_sha256
-                ):
-                    approval = saved
             return CandidateView(
                 task_id=task_id,
                 report=candidate,
                 verification=result,
                 metadata=metadata,
-                approval=approval,
+                approval=self._approval_for(result_path, result, result.after_source_sha256),
             )
+        return None
+
+    def _approval_for(
+        self, verification_path: Path, result: VerifyResult, current_source: str
+    ) -> Approval | None:
+        if not result.passed or result.after_source_sha256 != current_source:
+            return None
+        identity = file_sha(verification_path)
+        path = self.results / "approvals" / f"{identity}.json"
+        if not path.is_file():
+            return None
+        saved = read_model(path, Approval)
+        if (
+            saved.task_id == result.task_id
+            and saved.verify_sha256 == identity
+            and saved.after_source_sha256 == result.after_source_sha256
+            and saved.diff_sha256 == result.diff_sha256
+            and saved.quality_result_sha256 == result.quality_guard.result_sha256
+        ):
+            return saved
         return None
 
     def evidence_path(self, kind: str, evidence_id: str) -> Path:
@@ -386,7 +412,12 @@ class Workspace:
 
     def bench(self) -> dict:
         benchmarks = []
-        for name, variant in [("before_replay.json", "before"), ("after_replay.json", "after")]:
+        after_name = (
+            "after_confirmation_replay.json"
+            if (self.repo / "eval_results/after_confirmation_replay.json").is_file()
+            else "after_replay.json"
+        )
+        for name, variant in [("before_replay.json", "before"), (after_name, "after")]:
             path = self.repo / "eval_results" / name
             if path.is_file():
                 run = read_model(path, BenchmarkRun)

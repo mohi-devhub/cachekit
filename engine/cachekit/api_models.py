@@ -91,6 +91,7 @@ class TaskView(BoundaryModel):
     state: Literal["prepared", "candidate", "stale"]
     verification: VerifyResult | None = None
     verification_current: bool = False
+    approval: Approval | None = None
     handoff: JsonObject | None = None
     golden_cases: list[JsonObject] = Field(default_factory=list)
     quality_outputs: list[JsonObject] = Field(default_factory=list)

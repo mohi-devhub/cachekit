@@ -36,6 +36,8 @@ def make_task(
     test_command: list[str],
     generation: GenerationConfig,
     finding_ids: list[str] | None = None,
+    calendar_window_days: int | None = None,
+    restore_confirmation_commitment: bool = False,
 ) -> FixTask:
     selected = [f for f in report.findings if finding_ids is None or f.id in finding_ids]
     if not selected or (finding_ids and set(finding_ids) != {f.id for f in selected}):
@@ -58,6 +60,8 @@ def make_task(
         before_source_sha256=before_source_sha256,
         golden_suite_sha256=golden_suite_sha256,
         quality_generation=generation,
+        calendar_window_days=calendar_window_days,
+        restore_confirmation_commitment=restore_confirmation_commitment,
         findings=[
             TaskFinding(
                 id=f.id,
@@ -133,4 +137,30 @@ def task_markdown(task: FixTask) -> str:
         "- The reuse target is a simulation, not a measured latency or dollar-savings claim.",
         "",
     ]
+    if task.calendar_window_days is not None:
+        lines += [
+            "## Declared calendar arithmetic enrichment",
+            f"- Calendar comparison window: {task.calendar_window_days} days.",
+            "- Append cachekit.calendar.calendar_context output in system context for dates",
+            "  mentioned in the original message/history/retrieval, using the recorded clock.",
+            "- Preserve every original value and instruction. The verifier independently",
+            "  recomputes this exact block; arbitrary additions or altered numbers fail.",
+            "- These are calculations on unverified date mentions, not verified order facts",
+            "  or authorization. Original policy, tool and behavioral checks still apply.",
+            "",
+        ]
+    if task.restore_confirmation_commitment:
+        from cachekit.fix.content import CONFIRMATION_INSTRUCTION
+
+        lines += [
+            "## Explicitly authorized semantic exception",
+            "- semantic change: restores behavior lost by reordering, found by the quality guard",
+            "- This is an instruction addition, not part of the reorder. "
+            "Retain all original content.",
+            "- Add exactly once in system context: " + CONFIRMATION_INSTRUCTION,
+            "- Other additions, changed wording, duplicates and wrong-role placement "
+            "fail content checks.",
+            "- All five behavioral cases and explicit human review remain required.",
+            "",
+        ]
     return "\n".join(lines)

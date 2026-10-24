@@ -1,0 +1,57 @@
+{
+  "experiment": "step2-source-checkpoint",
+  "implementation_commit": "b600ed210749ea1969a2136db6307af457bf4cc5",
+  "task_id": "9fc9012aabdf18de95f76598",
+  "source_sha256": "a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab",
+  "diff_sha256": "9892ffb9ee39be22a43bb090ea9d5069630a5cc1590903b4da5fe9771bb081c0",
+  "preflight": {
+    "scope_check": {
+      "details": [],
+      "passed": true
+    },
+    "signature_check": {
+      "details": [],
+      "passed": true
+    },
+    "prefix_check": {
+      "details": [],
+      "passed": true
+    },
+    "content_check": {
+      "added_lines": 56,
+      "conversation_roles_preserved": true,
+      "envelope_equal": true,
+      "missing_dynamic_values": 0,
+      "missing_lines": 0,
+      "n_requests": 32,
+      "note": "Declared semantic change: restores behavior lost by reordering, found by the quality guard; exact confirmation sentence checked in system context. Original line/value checks plus independently recomputed system calendar context; placement passed.",
+      "passed": true,
+      "restored_history_lines": 22,
+      "tools_equal": true,
+      "unexpected_added_lines": 0
+    },
+    "tests": {
+      "command": [
+        "python3",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "output_sha256": "ec5dcc368eee5cc168d0edc15bf6d21b1e6d4db31b889b0d167c1477cfb0f1be",
+      "status": "passed"
+    }
+  },
+  "fresh_model_evidence": "completed; exact accepted generations and prompt identities match",
+  "exact_diff_approval_recorded": true,
+  "note": "Full fresh verification, exact accepted five-case generations, static-prefix target and actual new measured replay pass. Local API approval revalidation passed; persisted record matches a fresh GET. Browser reload and exact-head merge follow.",
+  "quality_result_sha256": "761395061e0ff7480c002a09a278ae17186e7f5ed9ae92038c3f836626713e36",
+  "verification_sha256": "b109aedea0639460ac63e44eb5ecca81d5883a61571a8efbccd27f62da3ce567",
+  "benchmark_file": "eval_results/after_confirmation_replay.json",
+  "benchmark_sha256": "aa0084e09193aeba4d169f0e4005874755210270b8e60b45338ea8b78ca8fd7d",
+  "approval_sha256": "796a1848f3eff3a836c3fe125a914ead0e3c9378d89bd3f841532ae5262ddbe6",
+  "approval_authority": "Mohith accepted all five golden outputs and explicitly authorized step 2: record acceptance, verify, approve exact hash and merge PR #2 after checks. This records that conditional authorization after all gates pass; it does not assert an additional manual code review.",
+  "approval_survives_browser_reload": true,
+  "reload_checked_url": "http://127.0.0.1:3000/fix/9fc9012aabdf18de95f76598",
+  "reload_checked_at": "2026-10-24T21:23:24.209930+00:00"
+}
