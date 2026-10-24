@@ -10,3 +10,6 @@ was replaced with success.
 [Measurements](benchmark_summary.md), [verification and outputs](current_fix_summary.md).
 A copy of the original BEFORE artifact keeps the measurement table links local;
 its checksum is unchanged. Public synthetic outputs are included, not raw logs.
+
+The derived Markdown transcript trims trailing display whitespace; the original
+output text and hashes are preserved verbatim in the JSON artifacts.

@@ -31,11 +31,11 @@ BEFORE:
 ```text
 To assist you with a return for order reference SYN-GOLDEN-17, I need the following information:
 
-1. **Item you'd like to return** – Please specify the product name or description.  
-2. **Reason for the return** – Is it a change of mind, defective item, incorrect item, or missing parts?  
-3. **Desired remedy** – Would you like a refund, exchange, or replacement?  
+1. **Item you'd like to return** – Please specify the product name or description.
+2. **Reason for the return** – Is it a change of mind, defective item, incorrect item, or missing parts?
+3. **Desired remedy** – Would you like a refund, exchange, or replacement?
 
-Once you provide these details, I can check eligibility and explain the next steps. I will not create a return or escalate without your confirmation.  
+Once you provide these details, I can check eligibility and explain the next steps. I will not create a return or escalate without your confirmation.
 
 Please share the item and reason so we can proceed.
 ```
@@ -45,11 +45,11 @@ AFTER:
 ```text
 To assist you with a return for order reference **SYN-GOLDEN-17**, I need the following information:
 
-1. **Which item** from the order you would like to return.  
-2. **Your reason** for the return (e.g., change of mind, damaged goods, incorrect item, etc.).  
-3. **The remedy you prefer** (e.g., refund, exchange, repair).  
+1. **Which item** from the order you would like to return.
+2. **Your reason** for the return (e.g., change of mind, damaged goods, incorrect item, etc.).
+3. **The remedy you prefer** (e.g., refund, exchange, repair).
 
-Once you provide this, I will check the eligibility and next steps based on the order details and policy.  
+Once you provide this, I will check the eligibility and next steps based on the order details and policy.
 
 Please share these details so I can guide you further.
 ```
