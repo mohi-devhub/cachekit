@@ -5,7 +5,7 @@ import { BenchmarkResults } from "@/components/benchmark-results";
 import { CopyHash } from "@/components/copy-hash";
 import { PrefixMap } from "@/components/prefix-map";
 import { HeatmapMetrics } from "@/components/heatmap-metrics";
-import { prefixBoundary } from "@/lib/heatmap";
+import { prefixBoundary, matchingMeasurement, formatMetric } from "@/lib/heatmap";
 import { OverviewMotion } from "@/components/overview-motion";
 import { SummaryReveal } from "@/components/summary-reveal";
 import { FadeContent } from "@/components/react-bits/fade-content";
@@ -37,6 +37,11 @@ function useReport(id: string) {
   useEffect(() => { let active = true; report(id).then(loaded => { if (active) setState({ loaded }); })
     .catch(error => { if (active) setState({ error: error.message }); }); return () => { active = false; }; }, [id]);
   return state;
+}
+function useBench() {
+  const [loaded, setLoaded] = useState<Loaded<BenchView>>(); const [error, setError] = useState("");
+  useEffect(() => { let active = true; api<BenchView>("/bench").then(data => ({ data, source: "API" as const })).catch(async () => ({ data: (await demo()).bench, source: "SAVED" as const })).then(data => { if (active) setLoaded(data); }).catch(e => { if (active) setError(e.message); }); return () => { active = false; }; }, []);
+  return { loaded, error };
 }
 function Reuse({ data }: { data: ReportBundle }) {
   const profile = data.report.backends.find(b => b.backend === "vllm");
@@ -100,18 +105,20 @@ function FindingRow({ finding }: { finding: Finding }) {
   const [expanded, setExpanded] = useState(false);
   return <><tr><td><button className="finding-toggle" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>{words(finding.breaker)} <span aria-hidden="true">{expanded ? "−" : "+"}</span></button></td>
     <td><Badge tone={finding.severity === "high" ? "warn" : "neutral"}>{finding.severity}</Badge></td><td>{number(finding.requests_affected)}</td><td>{number(finding.stable_tokens_after)}</td><td>{finding.safe_to_move ? "Eligible for projection" : "Review required"}</td></tr>
-    {expanded && <tr><td colSpan={5} className="finding-detail"><p>{finding.fix_hint}</p><dl className="inline-data"><div><dt>First observed divergence</dt><dd>Token {number(finding.first_divergence_token)}</dd></div><div><dt>Potential stable-token recomputation</dt><dd>{number(finding.tokens_wasted)} · overlapping attribution</dd></div></dl>{finding.evidence.map((text, i) => <p className="evidence" key={i}>{text}</p>)}<p className="supporting-text">Exact source locations are pending the source-locator enhancement.</p></td></tr>}
+    {expanded && <tr><td colSpan={5} className="finding-detail"><p>{finding.fix_hint}</p><dl className="inline-data"><div><dt>First observed divergence</dt><dd>Token {number(finding.first_divergence_token)}</dd></div><div><dt>Potential stable-token recomputation</dt><dd>{number(finding.tokens_wasted)} · overlapping attribution</dd></div></dl>{finding.evidence.map((text, i) => <p className="evidence" key={i}>{text}</p>)}</td></tr>}
   </>;
 }
 
 export function ReportWorkspace({ id }: { id: string }) {
   const { loaded, error } = useReport(id);
+  const { loaded: bench, error: benchError } = useBench();
   const router = useRouter();
   const [busy, setBusy] = useState(false); const [taskError, setTaskError] = useState("");
   if (error) return <ErrorState message={error} />;
   if (!loaded) return <Loading />;
   const { data, source } = loaded;
   const backend = data.report.backends.find(b => b.backend === "vllm");
+  const measuredCost = matchingMeasurement(bench?.data, data.report, "before")?.run.summary.gpu_window_usd_per_1000;
   async function createTask() {
     setBusy(true); setTaskError("");
     try { const task = await api<TaskView>(`/reports/${encodeURIComponent(id)}/task`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }, 120000); router.push(`/fix/${task.task.id}`); }
@@ -120,7 +127,7 @@ export function ReportWorkspace({ id }: { id: string }) {
   return <><Link href="/" className="back-link">← Workspace</Link><header className="report-header"><div><h1>Prompt reuse, explained.</h1><p className="lede">{data.report.routes.join(" · ")}</p></div><div className="badges"><Badge>{source}</Badge><Badge>SIMULATED</Badge></div></header>
     <SummaryReveal className="run-facts"><div><span>Requests</span><strong>{number(data.report.n_requests)}</strong></div><div><span>Routes</span><strong>{number(data.report.routes.length)}</strong></div><div><span>Findings</span><strong>{number(data.report.findings.length)}</strong></div><div><span>Profile</span><strong>vLLM</strong></div></SummaryReveal>
     <Reuse data={data} />
-    {backend && <div className="recomputed"><p><span>Tokens recomputed · current</span><strong>{number(backend.tokens_recomputed_actual)}</strong></p><p><span>Tokens recomputed · projection</span><strong>{number(backend.tokens_recomputed_achievable)}</strong></p><p><span>Serving cost</span><strong className="pending">&lt;pending&gt;</strong></p></div>}
+    {backend && <div className="recomputed"><p><span>Tokens recomputed · current</span><strong>{number(backend.tokens_recomputed_actual)}</strong></p><p><span>Tokens recomputed · projection</span><strong>{number(backend.tokens_recomputed_achievable)}</strong></p><p><span>GPU-window USD / 1k</span><strong className="cost-value">{measuredCost ? formatMetric(measuredCost.median, "usd") : benchError ? "Replay unavailable" : bench ? "No matching measured replay" : "Loading replay…"}</strong>{measuredCost && <><Badge>MEASURED</Badge><span className="measure-range">min {formatMetric(measuredCost.min, "usd")} · max {formatMetric(measuredCost.max, "usd")}</span></>}<Link className="cost-note" href="/bench">Replay details →</Link></p></div>}
     <section className="report-section"><div className="section-heading"><h2>Follow a route</h2><span className="supporting-text">Inspect the prompt and aligned stability</span></div><div className="route-list">{data.report.routes.map(route => <Link key={route} href={`/report/${encodeURIComponent(id)}/heatmap/${encodeURIComponent(route)}`}><code>{route}</code><span>Open heatmap →</span></Link>)}</div></section>
     <section className="report-section"><h2>Findings</h2><p className="supporting-text">Ordered by potential recomputation. Estimates overlap and cannot be added as causal savings.</p><div className="table-scroll"><table><caption className="sr-only">Detected cache breakers and simulated downstream impact</caption><thead><tr><th>Breaker</th><th>Severity</th><th>Requests</th><th>Stable tokens after</th><th>Movement</th></tr></thead><tbody>{data.report.findings.map(f => <FindingRow key={f.id} finding={f} />)}</tbody></table></div>{!data.report.findings.length && <p className="notice">No breakers were detected in this run. Sampling and heuristics can miss variants.</p>}</section>
     <section className="action-panel"><div><h2>Turn findings into a fix task</h2><p>Export redacted requirements, preserve the recorded baseline, and verify the resulting code change.</p></div><div className="actions"><button className="button primary" onClick={createTask} disabled={source !== "API" || busy}>{busy ? "Preparing baseline…" : "Generate fix task"}</button><Link className="button" href="/fix">Saved fix status</Link></div>{source === "SAVED" && <p className="supporting-text">Task generation needs the local API and recorded helpdesk inputs.</p>}{taskError && <p role="alert" className="notice error">{taskError}</p>}</section>
@@ -131,10 +138,10 @@ export function ReportWorkspace({ id }: { id: string }) {
 export function HeatmapWorkspace({ id, route }: { id: string; route: string }) {
   const { loaded, error } = useReport(id); const [full, setFull] = useState(false);
   const [after, setAfter] = useState<Loaded<CandidateView> | null>(null);
+  const [afterStatus, setAfterStatus] = useState("loading");
   const [version, setVersion] = useState<"before" | "after">("before");
-  const [bench, setBench] = useState<BenchView>();
-  useEffect(() => { let active = true; api<BenchView>("/bench").catch(() => demo().then(d => d.bench)).then(b => { if (active) setBench(b); }).catch(() => {}); return () => { active = false; }; }, []);
-  useEffect(() => { let active = true; candidate(id).then(value => { if (active) setAfter(value); }).catch(() => {}); return () => { active = false; }; }, [id]);
+  const { loaded: bench } = useBench();
+  useEffect(() => { if (!loaded) return; let active = true; candidate(id, loaded.data.report.input_sha256).then(value => { if (active) { setAfter(value); setAfterStatus(value ? "ready" : "unavailable"); } }).catch(() => { if (active) setAfterStatus("unavailable"); }); return () => { active = false; }; }, [id, loaded]);
   if (error) return <ErrorState message={error} />;
   if (!loaded) return <Loading />;
   const { data, source } = loaded; const shown = version === "after" && after ? after.data.report : data.report; const values = shown.heatmaps[route];
@@ -143,13 +150,15 @@ export function HeatmapWorkspace({ id, route }: { id: string; route: string }) {
   const preview = shown.template_preview[route] || "";
   const text = full ? preview : preview.slice(0, 12000);
   return <><Link className="back-link" href={`/report/${id}`}>← Report</Link><header className="report-header"><div><h1>Where the prefix breaks.</h1><p className="lede"><code>{route}</code></p></div><div className="badges"><Badge>{version === "after" && after ? after.source : source}</Badge><Badge>SIMULATED</Badge></div></header>
-    <div className="heatmap-toolbar"><div className="segmented"><button aria-pressed={version === "before"} onClick={() => setVersion("before")}>BEFORE</button><button aria-pressed={version === "after"} disabled={!after} title={after ? "Actual re-rendered candidate; approval is separate" : "No current source-bound candidate is available"} onClick={() => setVersion("after")}>{after ? "AFTER · candidate" : "AFTER · pending"}</button></div><div className="legend"><span><i className="legend-stable" />Reusable prefix</span><span><i className="legend-variable" />Variable</span><span><i className="legend-recomputed" />Recomputed</span></div></div>
-    <section className="heatmap-panel"><div className="section-heading"><h2>Follow the reusable prefix.</h2><Badge>SIMULATED</Badge></div>
-      <p className="supporting-text">Read left to right, then down. The marker follows the earliest divergence recorded in this reference prompt.</p>
+    <div className="heatmap-toolbar"><div className="segmented"><button aria-pressed={version === "before"} onClick={() => setVersion("before")}>BEFORE</button><button aria-pressed={version === "after"} disabled={!after} title={after ? after.source === "SAVED" ? "Read-only recorded AFTER run; current-source approval is separate" : "Current re-rendered candidate; approval is separate" : "No matching AFTER evidence is available"} onClick={() => setVersion("after")}>{after ? after.source === "SAVED" ? "AFTER · saved run" : "AFTER · current" : afterStatus === "loading" ? "Loading AFTER…" : "AFTER unavailable"}</button></div><div className="legend"><span><i className="legend-stable" />Reusable prefix</span><span><i className="legend-variable" />Variable</span><span><i className="legend-recomputed" />Recomputed</span></div></div>
+    {after?.source === "SAVED" && <p className="saved-run-note">Saved AFTER replay · read-only. Current-source approval is separate. <Link href="/fix">Verification status →</Link></p>}
+    {afterStatus === "unavailable" && <p className="supporting-text">No matching AFTER run is saved for this workload. Prepare and verify a candidate to compare it.</p>}
+    <section className="heatmap-panel"><div className="section-heading"><h2>Prompt prefix</h2><Badge>SIMULATED</Badge></div>
+      <p className="supporting-text">Read across, then down. Larger squares group neighboring parts of the reference prompt.</p>
       <PrefixMap values={values} boundary={fraction} first={first} total={total} />
-      <p className="supporting-text">Green is stable content before the break. Red is stable content that follows it and still needs recomputation; amber varies across requests. These downsampled bins are simulation, not measured cache hits.</p>
+      <p className="supporting-text">Deep green: reusable prefix. Yellow with a slash: variation. Red with a dot: static content recomputed after the break. This map is SIMULATED.</p>
     </section>
-    <HeatmapMetrics bench={bench} report={shown} variant={version} />
+    <HeatmapMetrics bench={bench?.data} report={shown} variant={version} />
     {version === "after" && after && <p className="supporting-text">{after.source} · {after.data.approval ? "Exact-diff approval recorded for this saved source." : "Unapproved candidate; visual reuse does not establish behavioral safety."} Recorded {after.data.metadata.timestamp}.</p>}
     <section className="report-section"><h2>Redacted prompt template</h2><p className="supporting-text">Variable spans are marked. This text view is aligned structurally; its character positions are not token offsets.</p><pre className="prompt-view">{text.split(/(⟦[^⟧]*⟧)/g).map((part, i) => part.startsWith("⟦") ? <mark key={i}>{words(part)}</mark> : <span key={i}>{part}</span>)}</pre>{preview.length > 12000 && <button className="text-button" onClick={() => setFull(!full)}>{full ? "Collapse template" : "Show full redacted template"}</button>}</section>{version === "after" && after ? <details className="metadata"><summary>Candidate verification provenance</summary><dl><div><dt>Task</dt><dd><code>{after.data.task_id}</code></dd></div><div><dt>Source SHA-256</dt><dd><code>{after.data.metadata.source_sha256}</code></dd></div><div><dt>Candidate input SHA-256</dt><dd><code>{after.data.report.input_sha256}</code></dd></div><div><dt>Recorded</dt><dd>{after.data.metadata.timestamp}</dd></div></dl></details> : <Metadata data={data} />}
   </>;
@@ -188,8 +197,7 @@ export function FixWorkspace({ id }: { id?: string }) {
 }
 
 export function BenchWorkspace() {
-  const [loaded, setLoaded] = useState<Loaded<BenchView>>(); const [error, setError] = useState("");
-  useEffect(() => { let active = true; api<BenchView>("/bench").then(data => ({ data, source: "API" as const })).catch(async () => ({ data: (await demo()).bench, source: "SAVED" as const })).then(data => { if (active) setLoaded(data); }).catch(e => { if (active) setError(e.message); }); return () => { active = false; }; }, []);
+  const { loaded, error } = useBench();
   if (error) return <ErrorState message={error} />;
   if (!loaded) return <Loading />;
   const smoke = loaded.data.smoke;

@@ -18,7 +18,7 @@ export function CopyHash({ value }: { value?: string }) {
 
   return <div className="hash-field">
     <div className="hash-toolbar">
-      <code className="hash" title={value}>{value || "<pending>"}</code>
+      <code className="hash" title={value}>{value || "No verification recorded"}</code>
       <button className="button" type="button" disabled={!value} onClick={copy}>
         {current?.copied ? "Copied" : "Copy full hash"}
       </button>

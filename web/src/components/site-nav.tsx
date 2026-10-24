@@ -22,6 +22,6 @@ export function SiteNav() {
     onClick={() => setMenu({ path, open: !open })}>{open ? "Close" : "Menu"}</button>
     <nav id="site-navigation" data-open={open} aria-label="Main navigation" onKeyDown={e => { if (e.key === "Escape") { close(); toggle.current?.focus(); } }}>
       {links.map(([href, text, active]) => <Link key={href} href={href} onClick={close} aria-current={active ? "page" : undefined}>{text}</Link>)}
-      <Link className="sidebar-action" href="/report/demo-before/heatmap/helpdesk.answer" onClick={close}>Open demo</Link>
+      <a className="sidebar-action" href="https://github.com/mohi-devhub/cachekit" target="_blank" rel="noopener noreferrer" onClick={close}>Open repo</a>
     </nav></>;
 }

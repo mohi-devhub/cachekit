@@ -92,9 +92,15 @@ export async function report(id: string): Promise<Loaded<ReportBundle>> {
     return { data: saved.report, source: "SAVED" };
   }
 }
-export async function candidate(id: string): Promise<Loaded<CandidateView> | null> {
-  try { const current = await api<CandidateView | null>(`/reports/${encodeURIComponent(id)}/after`); return current ? { data: current, source: "API" } : null; }
-  catch { const saved = await demo(); return saved.report.id === id && saved.after ? { data: saved.after, source: "SAVED" } : null; }
+export async function candidate(id: string, beforeInputSha: string): Promise<Loaded<CandidateView> | null> {
+  try {
+    const current = await api<CandidateView | null>(`/reports/${encodeURIComponent(id)}/after`);
+    if (current) return { data: current, source: "API" };
+  } catch { /* The recorded public demo remains available without the API. */ }
+  const saved = await demo();
+  // Read-only playback does not approve current source. Never pair different workloads.
+  return saved.report.id === id && saved.report.report.input_sha256 === beforeInputSha && saved.after
+    ? { data: saved.after, source: "SAVED" } : null;
 }
 export async function fix(id?: string): Promise<Loaded<TaskView>> {
   const saved = await demo();

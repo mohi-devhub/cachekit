@@ -1,5 +1,49 @@
 # Change log
 
+## 2026-10-25T04:12:55+05:30 — Link the sidebar to the repository
+
+- Replaced the redundant Open demo sidebar action with Open repo, opening the
+  authorized public GitHub repository in a separate tab on desktop and mobile.
+- Reviewed the suggested Anatomy illustration approach; its smallest documented
+  build exceeds the remaining UI window, so the working SVG/GSAP comparison stays.
+- Validation: web checks and actual navigation readback follow in the UI feedback
+  evidence. OpenCode is running in parallel; its scope has not been confirmed.
+
+## 2026-10-25T03:58:26+05:30 — Raise content and distinguish heatmap states
+
+- Raised the desktop content start across pages to the participant's preferred
+  position. Kept the compact mobile header and responsive reading widths.
+- Changed heatmap fills to deep green, bright yellow and red, with slash/dot
+  symbols and dark tile outlines so hue is not the sole visual cue. Larger
+  conservative groups and exact reference cursor placement remain unchanged.
+- Replaced the report cost placeholder/link-only state with the actual matching
+  measured replay median and min/max, labeled GPU-window USD/1k and MEASURED.
+  Different workloads never borrow that value; missing/error states stay explicit.
+- Reused one benchmark loader across report, heatmap and benchmark views. No
+  inferred token-to-GPU pricing, new backend inference or new Devin session.
+- Validation: 161 Python tests, five web tests, Ruff, typecheck, ESLint and
+  production build pass. Actual desktop/mobile captures, network-disabled
+  toggles, reduced motion, native pane scrolling and 320px touch checks pass.
+  Live API checks confirm all six page starts, matched cost and saved AFTER.
+  Evidence: `eval_results/setup/ui_feedback_validation.json`. Final frozen-source
+  behavioral verification remains outstanding; no new approval is claimed.
+
+## 2026-10-25T03:38:18+05:30 — Simplify the heatmap and expose recorded AFTER playback
+
+- Replaced the dense bin mesh with larger grouped squares. Every source bin stays
+  represented; a group is green only if all of it is static before the break.
+  The marker follows the actual row and position within it. Mobile uses fewer,
+  larger groups. No measured value or raw benchmark artifact was changed.
+- When the live API correctly withholds a stale candidate, the public demo can
+  display a matching recorded AFTER as SAVED/read-only. Require the exact BEFORE
+  input hash; different workloads never borrow the demo. Backend approval gates
+  remain unchanged, and the UI explains recorded versus current source.
+- Replaced vague cost/absence placeholders with the measured-replay link or an
+  explicit unavailable state. Exact file/line location remains deferred stretch.
+- Added grouping/marker and stale-live/mismatched-workload regression checks.
+  Web tests initially pass; final full checks, live/offline captures and the
+  actual data availability audit are saved under eval_results/setup.
+
 ## 2026-10-25T03:26:24+05:30 — Rebuild the shell from the inspected live reference
 
 - Corrected the rejected first layout after inspecting Cognition's actual desktop

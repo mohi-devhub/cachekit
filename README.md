@@ -117,10 +117,19 @@ Python resolution and `npm ci`; it downloads the pinned tokenizer explicitly.
 The local tokenizer needs no PyTorch installation or model weights.
 
 The heatmap BEFORE/AFTER switch animates the actual saved divergence marker and
-prefix colors with GSAP. Its hit rate, TTFT p95 and GPU-window USD/1k cards use the
+prefix colors with GSAP. Larger squares conservatively group neighboring saved
+bins; yellow means the group contains variation. Its hit rate, TTFT p95 and
+GPU-window USD/1k cards use the
 matching measured run, with repetition ranges; absent matches show simulation and
-no latency/dollar estimate. Green means a stable prefix, amber variable content,
-and red stable content after a break. Read the grid left to right, then down.
+no latency/dollar estimate. Deep green marks a reusable prefix; yellow/slash marks
+variation; red/dot marks static content after a break. Read across, then down.
+
+The report cost field uses the matching measured replay median/range (GPU-window
+USD per 1k requests), rather than estimating dollars from simulated token counts.
+
+The public demo can replay a recorded AFTER even when live source verification is
+stale. Its BEFORE input hash must match the saved workload, and its source is
+labeled SAVED. Current-source verification and approval remain separate.
 
 The light UI uses an editorial overview, a desktop side rail and a mobile Menu, with self-hosted Inter, Source Serif 4 and Geist Mono. The benchmark chart switches between measured cache reuse, TTFT p95 and GPU-window cost, with saved min–max whiskers. One adapted React
 Bits hero fade and brief summary/count transitions honor reduced motion. Lenis
@@ -275,9 +284,10 @@ GPU invocation endpoint or Devin-launch control.
 
 The `/bench` page reads typed saved replay artifacts and smoke counters, checks
 that both runs share original inputs, schedule, settings, price and profile, and
-shows missing runs as pending. The heatmap AFTER toggle requires a current-source
-candidate report with checksum-bound verification; candidate display is not
-approval. The `/fix` page exposes actual public synthetic BEFORE/AFTER golden
+shows missing runs explicitly. The heatmap prefers a current-source candidate
+with checksum-bound verification. A matching public demo AFTER can also be shown
+as SAVED/read-only when live verification is stale or offline. Saved playback
+requires the same BEFORE request hash and never grants current-source approval. The `/fix` page exposes actual public synthetic BEFORE/AFTER golden
 outputs for review. Generate a fresh task after framework changes; any original
 Devin handoff reference retains its original task identity. Attach a saved quality run and any explicit output
 review artifacts by SHA-256 under the fix page's evidence section. The API looks
