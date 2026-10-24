@@ -1,0 +1,27 @@
+{
+  "experiment": "benchmark-candidate-binding",
+  "status": "input_components_and_quality_prompts_match",
+  "benchmark_sha256": "0e0b532b99147149fd0fcddeb9c5425e1343764f690ad0dcf6437e3c00b5fc48",
+  "benchmark_source_sha256": "4a60ea8b1d9be129400f306f703808100a10a6dc961a4e2f6f92e29a50171b0c",
+  "verified_current_source_sha256": "c988685ccc5ec3ed637a4b384df94a8d51886492df7e3b766a7c030ab16bc27b",
+  "task_id": "1733e486db3c2fd68eff119b",
+  "rendered_requests_sha256": "aa6944af186fba97eccec4c9efe677c9a9835e7ff6e47a5be61382531ef30c9d",
+  "benchmark_requests_sha256": "aa6944af186fba97eccec4c9efe677c9a9835e7ff6e47a5be61382531ef30c9d",
+  "component_file_sha256": {
+    "demo_app/helpdesk/prompt.py": "bc106796948d377b90ed6a8d4ef6416d23e8c8a5e61b97f2185ac35bd36c9647",
+    "demo_app/helpdesk/models.py": "8972bd75853044c213fe2b656413344ae2d5c93e3d07e0c5a29ede4f7868ae05",
+    "demo_app/helpdesk/catalog.py": "9d8db3fa5b3f6a5399bbce6f4ad9df49eefd06ba7e17cd128f85d53e970386ca",
+    "demo_app/helpdesk/tools.py": "cd35fca62339be6e30f8018010c649be9b911181ec2cf10f94dd73ad210d8e90",
+    "demo_app/helpdesk/policy.txt": "6478e2bf779fd29c72b6f8d8d4bd15f6289d9f2b112e608946a4a637a0c5717c",
+    "demo_app/worker.py": "28c795e1d176e17a0819e760c15bcfad5299817a78500be283606e161feb4bea",
+    "engine/cachekit/calendar.py": "965b8bbb0f16bf3333ab3742c6027f8ed75734c1e1a5a5e03e6bae629856b981",
+    "engine/cachekit/models.py": "80fda05d5be2dcf08ba16e1734c4c0c5f06164a6e26d0ebfb32e32d44800c38e",
+    "engine/cachekit/serialization.py": "e9bd7a01fd35103e73b74c540c1db110f730a20b516452c0b31a0e515a66915a",
+    "engine/cachekit/ingest/replay_worker.py": "971625bb42fc4981a8b3bf0e006d519d41539b10fd87938ee7aab7aeec686213",
+    "engine/cachekit/render/tokenize.py": "8794e446f849672a40657ba3ea6a88212168f7dee48183a0b46f4621c52908e4",
+    "engine/cachekit/render/canonical.py": "9e5a62ec13e21184f4fd0f6488979445d72aa064185b239ccaf581d0d05719f6",
+    "engine/cachekit/config/backends.yaml": "6e38487c0ce6a5a55e09872493a28ea1b278a3817678359e3791798837f6a2bf"
+  },
+  "note": "Approval-display/documentation/test changes follow the measured run. Exact rendered request bytes and prompt-producing components match that immutable measurement. Final actual quality binds the complete current source separately; no timing or source identity was edited.",
+  "quality_result_sha256": "29ac15ba14bb0c1f57c97b177b503b15f8c06daef673bb81fedfd6e859b605b6"
+}

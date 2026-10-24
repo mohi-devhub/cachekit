@@ -2,19 +2,19 @@
 
 This is actual saved evidence, not approval. Human review is a separate gate.
 
-Task: `375502572f3aea7a4200b7f0`. Prompt implementation parent: `08dd6cd9be524bcc71cd4fe7644e53d2402268bb`; record-only evidence changes follow. Original Devin task: `391115f6d51ca8741ea5fea8`.
+Task: `1733e486db3c2fd68eff119b`. Prompt implementation parent: `0dff063b152eee2f62710b30abd03d17ae1c5d8c`; record-only evidence changes follow. Original Devin task: `391115f6d51ca8741ea5fea8`.
 
-Source SHA-256: `81f8040c9451aca7f9b16d9d35a328826707d0ed06beb1ce39b6903fe8fb1a5c`.
-Diff SHA-256: `19968e76163f90e1c2810fe217456f078fc8726536f88534e977679a95083228`.
+Source SHA-256: `c988685ccc5ec3ed637a4b384df94a8d51886492df7e3b766a7c030ab16bc27b`.
+Diff SHA-256: `4b688cd47b6f8f56733c90c10ceb4b2b69b5db48eda7aa30c55e3f00de76961d`.
 
 Overall verification passed: `False`.
-Quality status: `failed`.
+Quality status: `review_required`.
 Repository tests: `passed`.
 SIMULATED reuse: 0.304% BEFORE → 80.599% AFTER.
 
 [Verification](current_fix_verify.json), [provenance](current_fix_verify.run.json), [candidate report](current_fix_report.json).
 
-[Actual golden outputs](quality_guard/375502572f3aea7a4200b7f0-v2.json), SHA-256 `66153883de31ac1ed6ff1f54018387c1c77d28f090d4f0bf32b86fd2b0a6350b`.
+[Actual golden outputs](quality_guard/1733e486db3c2fd68eff119b-calendar.json), SHA-256 `29ac15ba14bb0c1f57c97b177b503b15f8c06daef673bb81fedfd6e859b605b6`.
 
 | Case | Exact match | AFTER assertions | JSON | Completion | Human review |
 | --- | --- | --- | --- | --- | --- |
@@ -22,7 +22,7 @@ SIMULATED reuse: 0.304% BEFORE → 80.599% AFTER.
 | golden-continuity | False | True | n/a | complete | pending |
 | golden-locale | False | True | n/a | complete | pending |
 | golden-retrieval | False | True | n/a | complete | pending |
-| golden-time | True | True | False | complete | exact match |
+| golden-time | False | True | True | complete | pending |
 
 ## golden-authorization
 
@@ -110,12 +110,5 @@ BEFORE:
 AFTER:
 
 ```text
-{
-  "date": "2026-10-24",
-  "within_window": true
-}
+{"date": "2026-10-24", "within_window": false}
 ```
-
-The date output violates the fixed expected schema, rather than JSON syntax.
-[Deterministic date diagnosis](date_quality_diagnosis.json) derives the elapsed
-days from the unchanged golden dates. Approval remains blocked.

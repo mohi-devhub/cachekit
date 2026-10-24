@@ -2,12 +2,14 @@
 
 All AFTER assertions, expected schema and completion checks pass. Outputs changed; no human review or approval has been recorded. These fixed synthetic cases are limited evidence, not universal behavioral equivalence.
 
-Task: `ce8235f44907792f94c9c15b`; implementation commit: `b7aecbcb5f388f37a54b1a9b51ca0bfe22cf5d2f`.
-Source SHA-256: `4a60ea8b1d9be129400f306f703808100a10a6dc961a4e2f6f92e29a50171b0c`.
-Diff SHA-256: `bb144678b3d0c9c09dd4e719bef2a7123441d691f94c5a839652cdd2dd6c5625`.
-[Raw actual collection](quality_guard/ce8235f44907792f94c9c15b-calendar.json), SHA-256 `6bc6840de21446c9fbee25fa472c00b1bd1ba89a23ae75b70d6626a55a9a831d`.
+Task: `1733e486db3c2fd68eff119b`; implementation commit: `0dff063b152eee2f62710b30abd03d17ae1c5d8c`.
+Source SHA-256: `c988685ccc5ec3ed637a4b384df94a8d51886492df7e3b766a7c030ab16bc27b`.
+Diff SHA-256: `4b688cd47b6f8f56733c90c10ceb4b2b69b5db48eda7aa30c55e3f00de76961d`.
+[Raw actual collection](quality_guard/1733e486db3c2fd68eff119b-calendar.json), SHA-256 `29ac15ba14bb0c1f57c97b177b503b15f8c06daef673bb81fedfd6e859b605b6`.
 
 The case clock is recorded as 2026-10-24; it is intentionally independent of the current wall-clock date. Original fixed inputs, expected answers, model, temperature, seed and budget were unchanged.
+
+Review the authorization response, retained conversation fact, French response, retrieved identifier and corrected date output below. Approval requires accepting all five changed outputs and reviewing the PR diff.
 
 ## golden-authorization
 
@@ -30,13 +32,13 @@ AFTER:
 ```text
 To assist you with a return for order reference **SYN-GOLDEN-17**, I need the following information:
 
-1. **Which item** from the order you would like to return.
+1. **Which item** from the order you'd like to return.
 2. **Your reason** for the return (e.g., change of mind, damaged goods, incorrect item, etc.).
-3. **The remedy you prefer** (e.g., refund, exchange, repair).
+3. **The remedy you'd prefer** (e.g., refund, exchange, repair).
 
-Once you provide this, I will check the eligibility and next steps based on the order details and policy.
+Once you provide this, I can check eligibility and guide you through the next steps.
 
-Please share these details so I can guide you further.
+Please share these details so I can proceed.
 ```
 
 ## golden-continuity
