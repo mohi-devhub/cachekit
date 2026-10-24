@@ -38,6 +38,7 @@ def test_calendar_arithmetic(mentioned, clock, elapsed, exceeds, future):
     assert result["elapsed_calendar_days"] == elapsed
     assert result["exceeds_calendar_window"] is exceeds
     assert result["date_in_future"] is future
+    assert result["within_calendar_window"] is (not exceeds and not future)
 
 
 def test_mentions_are_deduplicated_with_sources_and_invalid_dates_are_explicit():

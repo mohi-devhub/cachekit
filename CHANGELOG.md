@@ -1,5 +1,23 @@
 # Change log
 
+## 2026-10-25T00:44:48+05:30 — Expose the direct calendar-window result after a real failed attempt
+
+- Observed: actual calendar-facts v1 still failed the time case: the model answered
+  true despite receiving 34 elapsed days and exceeds-window=true. Reconstructed
+  that public synthetic context from the exact source; its complete prompt token
+  hash matches the actual collected request. Original outputs and evaluated
+  checks remain preserved under eval_results/attempts/calendar-facts-v1/.
+- Changed: the pure helper now also emits within_calendar_window for the closed
+  numeric interval from zero through the declared limit, and explains using that
+  value for timing while preserving all original eligibility/authorization checks.
+  This avoids asking the model to negate the exceeds-window comparison.
+- Validation: full 147-test suite passes for the arithmetic change; boundary,
+  future and leap-day assertions cover direct membership. Formatter/header checks
+  and the final source-bound preflight follow before actual model collection.
+- Limits: no golden input/assertion, expected output, sampling parameter, role,
+  tool or original policy was changed. Prior failure was not waived; no second
+  performance replay is saved for the failed date layouts. Fresh baseline needed.
+
 ## 2026-10-25T00:33:50+05:30 — Append the declared calendar facts in the helpdesk prompt tail
 
 - Changed: the builder calls the pure calendar helper with the recorded clock,

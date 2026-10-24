@@ -196,7 +196,9 @@ duplicates, misplaced blocks and undeclared additions fail. The facts label date
 sources as unverified; they do not authorize a return. Ordinary tasks permit no
 such enrichment. Only ISO calendar-date mentions are interpreted; ambiguous
 numeric date formats are left unchanged. The arithmetic compares calendar dates
-as written with the recorded clock's date, and identifies invalid/future dates.
+as written with the recorded clock's date, identifies invalid/future dates and
+provides closed-window membership (elapsed days from zero through the declared
+limit). Membership describes calendar timing and preserves all other policy checks.
 
 The explicit inference runner, `python -m bench.quality --help`, collects only the
 versioned public synthetic goldens on local vLLM or Modal. It requires a live

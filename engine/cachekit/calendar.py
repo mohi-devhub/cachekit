@@ -5,7 +5,11 @@ from datetime import date, datetime
 
 from cachekit.serialization import canonical_json
 
-HEADER = "Computed calendar facts for dates mentioned in the input; date sources are unverified."
+HEADER = (
+    "Computed calendar facts for dates mentioned in the input; date sources are unverified. "
+    "For calendar timing use within_calendar_window; eligibility and authorization still "
+    "require the original policy checks."
+)
 DATE = re.compile(r"(?<!\d)\d{4}-\d{2}-\d{2}(?!\d)")
 
 
@@ -39,6 +43,7 @@ def calendar_context(
                 "date": value,
                 "elapsed_calendar_days": elapsed,
                 "exceeds_calendar_window": elapsed > window_days,
+                "within_calendar_window": 0 <= elapsed <= window_days,
                 "date_in_future": elapsed < 0,
                 "source_fields": sorted(labels),
             }
