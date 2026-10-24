@@ -1,0 +1,51 @@
+{
+  "experiment": "ui-data-availability-audit",
+  "timestamp": "2026-10-25T03:37:19.177583+05:30",
+  "before_report": {
+    "n_requests": 27,
+    "findings": 6,
+    "input_sha256": "4d5cd3fd65b2bf4f467215ebfffe55625e54e42031a717aaff3f365fcdbe9b59"
+  },
+  "live_after_available": false,
+  "live_verification_current": false,
+  "current_source_approval_available": false,
+  "recorded_golden_outputs": 5,
+  "saved_demo_after_available": true,
+  "matched_measured_pair": true,
+  "measured_artifacts": [
+    {
+      "file": "eval_results/before_replay.json",
+      "variant": "before",
+      "requests_per_repetition": 27,
+      "repetitions": 3
+    },
+    {
+      "file": "eval_results/after_confirmation_replay.json",
+      "variant": "after",
+      "requests_per_repetition": 27,
+      "repetitions": 3
+    }
+  ],
+  "datasets": [
+    {
+      "id": "demo-before",
+      "available": true
+    },
+    {
+      "id": "glaive-sample",
+      "available": true
+    },
+    {
+      "id": "swe-sample",
+      "available": true
+    }
+  ],
+  "explanation": "The saved runs are present. Current-source verification became stale after UI/source edits; API correctly withholds current approval. The simulator does not infer GPU dollars from token counts. Read-only saved playback is separate from current-source approval.",
+  "remaining": [
+    "Finish UI source batch and freeze it.",
+    "Collect actual quality evidence for the final full source, re-run verify and bind prior acceptance only to identical accepted generations/prompt identities.",
+    "Record exact-diff approval under the user-authorized gates; final offline rehearsal/screenshots/commit SHA/status.",
+    "Optional Devin self-verify only after quota check and explicit go-ahead; not started.",
+    "Human backup video and submission before 07:00 IST."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "experiment": "step3-browser-captures",
-  "timestamp": "2026-10-25T03:26:33.714150+05:30",
+  "timestamp": "2026-10-25T04:16:03.502828+05:30",
   "browser": "Owned scratch Chromium via Browser Use/CDP; no user profile",
   "blocked_on_all_initial_loads": [
     "local API port 8000",
@@ -31,7 +31,7 @@
         }
       ],
       "file": "screenshots/overview-desktop.png",
-      "full_page_height": 1879
+      "full_page_height": 1839
     },
     {
       "url": "http://127.0.0.1:3000/report/demo-before",
@@ -54,8 +54,9 @@
           "status": "loaded"
         }
       ],
+      "report_cost_matches_saved_measurement": true,
       "file": "screenshots/findings-desktop.png",
-      "full_page_height": 2189
+      "full_page_height": 2187
     },
     {
       "url": "http://127.0.0.1:3000/report/demo-before/heatmap/helpdesk.answer",
@@ -84,8 +85,13 @@
         "2.557 s",
         "$0.7893"
       ],
+      "groups": 64,
+      "square_geometry": {
+        "width": 55.32232666015625,
+        "height": 55.32232666015625
+      },
       "file": "screenshots/heatmap-before-polished-desktop.png",
-      "full_page_height": 2538
+      "full_page_height": 2350
     },
     {
       "url": "http://127.0.0.1:3000/report/demo-before/heatmap/helpdesk.answer",
@@ -114,8 +120,13 @@
         "2.475 s",
         "$0.7050"
       ],
+      "groups": 64,
+      "square_geometry": {
+        "width": 55.32232666015625,
+        "height": 55.32232666015625
+      },
       "file": "screenshots/heatmap-after-polished-desktop.png",
-      "full_page_height": 2612
+      "full_page_height": 2424
     },
     {
       "url": "http://127.0.0.1:3000/fix",
@@ -139,7 +150,7 @@
         }
       ],
       "file": "screenshots/fix-verify-desktop.png",
-      "full_page_height": 3100
+      "full_page_height": 3060
     },
     {
       "url": "http://127.0.0.1:3000/bench",
@@ -163,7 +174,7 @@
         }
       ],
       "file": "screenshots/bench-desktop.png",
-      "full_page_height": 2838
+      "full_page_height": 2798
     },
     {
       "url": "http://127.0.0.1:3000/",
@@ -210,8 +221,9 @@
           "status": "loaded"
         }
       ],
+      "report_cost_matches_saved_measurement": true,
       "file": "screenshots/findings-mobile.png",
-      "full_page_height": 2606
+      "full_page_height": 2623
     },
     {
       "url": "http://127.0.0.1:3000/report/demo-before/heatmap/helpdesk.answer",
@@ -240,8 +252,13 @@
         "2.557 s",
         "$0.7893"
       ],
+      "groups": 32,
+      "square_geometry": {
+        "width": 41.997283935546875,
+        "height": 41.99725341796875
+      },
       "file": "screenshots/heatmap-before-polished-mobile.png",
-      "full_page_height": 2624
+      "full_page_height": 2613
     },
     {
       "url": "http://127.0.0.1:3000/report/demo-before/heatmap/helpdesk.answer",
@@ -270,8 +287,13 @@
         "2.475 s",
         "$0.7050"
       ],
+      "groups": 32,
+      "square_geometry": {
+        "width": 41.997283935546875,
+        "height": 41.99725341796875
+      },
       "file": "screenshots/heatmap-after-polished-mobile.png",
-      "full_page_height": 2719
+      "full_page_height": 2708
     },
     {
       "url": "http://127.0.0.1:3000/fix",
@@ -363,13 +385,69 @@
     "reduced_motion_destroys_lenis": true
   },
   "real_mobile_hardware_tested": false,
-  "mobile_menu": {
-    "opens": true,
-    "touch_targets_at_least_44px": true,
-    "escape_closes_and_returns_focus": true
+  "live_api_checks": {
+    "/": {
+      "content_start_px": 140,
+      "no_page_overflow": true,
+      "repository_link": {
+        "text": "Open repo",
+        "href": "https://github.com/mohi-devhub/cachekit",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      }
+    },
+    "/report/demo-before": {
+      "content_start_px": 140,
+      "no_page_overflow": true,
+      "repository_link": {
+        "text": "Open repo",
+        "href": "https://github.com/mohi-devhub/cachekit",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      },
+      "measured_cost": "$0.7893"
+    },
+    "/report/demo-before/heatmap/helpdesk.answer": {
+      "content_start_px": 140,
+      "no_page_overflow": true,
+      "repository_link": {
+        "text": "Open repo",
+        "href": "https://github.com/mohi-devhub/cachekit",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      },
+      "live_api_stale_saved_after_readonly": true
+    },
+    "/bench": {
+      "content_start_px": 140,
+      "no_page_overflow": true,
+      "repository_link": {
+        "text": "Open repo",
+        "href": "https://github.com/mohi-devhub/cachekit",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      }
+    },
+    "/fix": {
+      "content_start_px": 140,
+      "no_page_overflow": true,
+      "repository_link": {
+        "text": "Open repo",
+        "href": "https://github.com/mohi-devhub/cachekit",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      }
+    },
+    "/how-it-works": {
+      "content_start_px": 140,
+      "no_page_overflow": true,
+      "repository_link": {
+        "text": "Open repo",
+        "href": "https://github.com/mohi-devhub/cachekit",
+        "target": "_blank",
+        "rel": "noopener noreferrer"
+      }
+    }
   },
-  "implementation_commit": "290cfc664960020f5d1446b1279541a96779b8be",
-  "source_sha256": "55a7fbeedbb36f773403c4e60f7e6afc3e5b474e39c91fa1b6979e88924283fd",
-  "capture_source_note": "These actual captures show the source published in the implementation commit. Frozen behavioral verification is separate.",
-  "mechanical_detector_exceptions": "The explicitly requested licensed Inter/Geist font choices are retained. No waiver of functional or contrast checks."
+  "mobile_repository_link_verified": true
 }

@@ -6,8 +6,12 @@
   authorized public GitHub repository in a separate tab on desktop and mobile.
 - Reviewed the suggested Anatomy illustration approach; its smallest documented
   build exceeds the remaining UI window, so the working SVG/GSAP comparison stays.
-- Validation: web checks and actual navigation readback follow in the UI feedback
-  evidence. OpenCode is running in parallel; its scope has not been confirmed.
+- Validation: the documented full check passes (161 Python / five web tests,
+  Ruff and web typecheck/lint/build). Twelve refreshed captures and actual
+  desktop/mobile repository-link readback pass. The initial nonexistent npm
+  check alias was replaced by the documented check script.
+- Concurrent OpenCode work owns report switching and the GPT Researcher
+  experiment; it is excluded from this checkpoint and not claimed verified.
 
 ## 2026-10-25T03:58:26+05:30 — Raise content and distinguish heatmap states
 
