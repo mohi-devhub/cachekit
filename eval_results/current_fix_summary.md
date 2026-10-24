@@ -2,23 +2,23 @@
 
 This is actual saved evidence, not approval. Human review is a separate gate.
 
-Task: `66eec6ba8d039ddffd07ef14`. Prompt implementation parent: `c020841d3788756447d4dbf984facb345dd4f002`; record-only evidence changes follow. Original Devin task: `391115f6d51ca8741ea5fea8`.
+Task: `fbd9dd8e8d0b727ed096c56c`. Prompt implementation parent: `0a36d9360d6fb4981d101eed0c77f1587989315d`; record-only evidence changes follow. Original Devin task: `391115f6d51ca8741ea5fea8`.
 
-Source SHA-256: `608dd395cb139440b79065f1770480d13181866f12f6a9ed3ce4fa2db3911bfe`.
-Diff SHA-256: `490ad400a73a77c6400462b33c4fdb5e400a04ce796a6fddd29e30534d6bd7d6`.
+Source SHA-256: `98ed921de2d6479170e9bf5a33a3f72e412319328be25cfd4c268c31d34767ae`.
+Diff SHA-256: `49d3bf2421901f5c8b1c5296c01dc9c39dfb4ba61751531288e979fe8e7fbe08`.
 
 Overall verification passed: `False`.
-Quality status: `failed`.
+Quality status: `review_required`.
 Repository tests: `passed`.
-SIMULATED reuse: 0.304% BEFORE → 80.599% AFTER.
+SIMULATED reuse: 0.304% BEFORE → 80.690% AFTER.
 
 [Verification](current_fix_verify.json), [provenance](current_fix_verify.run.json), [candidate report](current_fix_report.json).
 
-[Actual golden outputs](quality_guard/66eec6ba8d039ddffd07ef14-calendar.json), SHA-256 `99d881efe241d2f5df91ed59c6ead8e45b53b638e8534085954fc783872dc5cd`.
+[Actual golden outputs](quality_guard/fbd9dd8e8d0b727ed096c56c-calendar.json), SHA-256 `76fa9464e74c3523f7473b3a06b6bc60efd29a04238ed8b73e5fccb60bfc9c38`.
 
 | Case | Exact match | AFTER assertions | JSON | Completion | Human review |
 | --- | --- | --- | --- | --- | --- |
-| golden-authorization | False | False | n/a | complete | pending |
+| golden-authorization | False | True | n/a | complete | pending |
 | golden-continuity | False | True | n/a | complete | pending |
 | golden-locale | False | True | n/a | complete | pending |
 | golden-retrieval | False | True | n/a | complete | pending |
@@ -45,13 +45,15 @@ AFTER:
 ```text
 To assist you with a return for order reference **SYN-GOLDEN-17**, I need the following information:
 
-1. **Which item** from the order you'd like to return.
-2. **Your reason** for the return (e.g., change of mind, damaged goods, incorrect item, etc.).
+1. **The specific item** you'd like to return (e.g., product name, model, or description).
+2. **The reason** for the return (e.g., change of mind, damaged goods, incorrect item, etc.).
 3. **The remedy you'd prefer** (e.g., refund, exchange, repair).
 
-Once you provide this, I can check eligibility and guide you through the next steps.
+Once you provide these details, I will check the eligibility and next steps based on the order record and policy.
 
-Please share these details so I can proceed.
+Please note: I will not create a return or escalate without your confirmation.
+
+Let me know what you'd like to share next.
 ```
 
 ## golden-continuity
@@ -79,7 +81,7 @@ Pour vérifier la livraison de votre colis, veuillez me fournir le numéro de r�
 AFTER:
 
 ```text
-Pour vérifier la livraison de votre colis, veuillez fournir le numéro de référence de votre commande. Cela nous permettra de consulter l'état actuel de l'expédition et de vérifier si le colis a été livré ou s'il y a un retard.
+Pour vérifier la livraison de votre colis, veuillez fournir le numéro de référence de votre commande. Cela nous permettra de consulter l'état actuel de votre colis et de vous informer sur les derniers événements de suivi.
 ```
 
 ## golden-retrieval
