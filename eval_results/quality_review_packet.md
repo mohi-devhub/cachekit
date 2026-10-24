@@ -2,7 +2,7 @@
 
 Recorded 2026-10-25T02:06:32+05:30. Suite: **helpdesk-e5-lite-v2**.
 
-Overall quality status: **review_required**. No human acceptance, approval or merge recorded.
+Overall quality status: **passed** after Mohith explicitly accepted all five outputs. Exact-diff approval and merge remain separate and have not been recorded.
 
 All five recorded inputs, date schema, model, temperature, seed and output budget are unchanged. V2 adds the requested explicit return/escalation confirmation assertions. Earlier v1 runs remain historical and are not relabeled.
 
@@ -18,11 +18,11 @@ The saved performance replay describes an earlier prompt; this semantic revision
 
 | Case | Interpretation | AFTER assertions | JSON/schema | Human review |
 | --- | --- | --- | --- | --- |
-| golden-authorization | Semantic change | PASS | n/a | pending |
-| golden-continuity | Improvement | PASS | n/a | pending |
-| golden-locale | Wording change | PASS | n/a | pending |
-| golden-retrieval | Improvement | PASS | n/a | pending |
-| golden-time | Corrected baseline error | PASS | True | pending |
+| golden-authorization | Semantic change | PASS | n/a | accepted by Mohith |
+| golden-continuity | Improvement | PASS | n/a | accepted by Mohith |
+| golden-locale | Wording change | PASS | n/a | accepted by Mohith |
+| golden-retrieval | Improvement | PASS | n/a | accepted by Mohith |
+| golden-time | Corrected baseline error | PASS | True | accepted by Mohith |
 
 ## golden-authorization — Semantic change
 
@@ -155,4 +155,4 @@ AFTER:
 {"date": "2026-10-24", "within_window": false}
 ```
 
-Failed assertions cannot be accepted away. Changed passing outputs still need human review. This five-case suite is bounded evidence, not universal semantic equivalence. Work stops here for Mohith’s review; later steps have not started.
+Failed assertions cannot be accepted away. Changed passing outputs still need human review. This five-case suite is bounded evidence, not universal semantic equivalence. Mohith accepted these five outputs and requested a static-prefix/target recheck before step 2. That complete verification now passes; exact-diff approval follows the batched step-2 changes.

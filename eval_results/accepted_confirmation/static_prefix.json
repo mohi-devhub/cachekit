@@ -1,0 +1,19 @@
+{
+  "experiment": "static-prefix-verification",
+  "timestamp": "2026-10-24T20:39:19.684732+00:00",
+  "task_id": "fbd9dd8e8d0b727ed096c56c",
+  "source_sha256": "98ed921de2d6479170e9bf5a33a3f72e412319328be25cfd4c268c31d34767ae",
+  "instruction": "When asking for return or escalation details, explicitly state in the customer's language that you will not create a return or escalate without their confirmation.",
+  "n_requests": 32,
+  "identical_static_prefix_sha256": "43079343ffd8d7b510accbf4d287683303037e6b7f690057de376901991d67c9",
+  "instruction_in_static_prefix_before_dynamic_context": true,
+  "human_golden_acceptance": "Mohith accepted five outputs; exact-diff approval is separate",
+  "note": "Actual replay confirms original handbook plus the added sentence are an identical leading system prefix on every recorded traffic and golden request. Dynamic customer/locale/examples/retrieval/clock follow it.",
+  "verification_passed": true,
+  "simulated_hit_rate_before": 0.0030399579082751164,
+  "simulated_hit_rate_after": 0.8069048982165246,
+  "target_hit_rate": 0.7316539521857724,
+  "meets_target": true,
+  "verification_sha256": "1986ca64089a12d8e78768a03dd67d05c04d89b3005fecb60db677ce65cd45ed",
+  "verified_at": "2026-10-24T20:43:30.447524+00:00"
+}
