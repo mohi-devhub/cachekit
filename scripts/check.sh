@@ -5,6 +5,7 @@ cd "$CACHEKIT_ROOT"
 uv run --no-sync pytest
 uv run --no-sync ruff check engine demo_app bench scripts
 uv run --no-sync ruff format --check engine demo_app bench scripts
+npm --prefix web run test
 npm --prefix web run typecheck
 npm --prefix web run lint
 npm --prefix web run build

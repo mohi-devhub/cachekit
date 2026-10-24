@@ -1,4 +1,5 @@
 import { number, percent, type BenchView, type BenchmarkRun } from "@/lib/workspace";
+import { ReplayChart } from "@/components/replay-chart";
 
 const seconds = (n: number) => `${n.toFixed(3)} s`;
 const usd = (n: number) => new Intl.NumberFormat("en", { style: "currency", currency: "USD", maximumFractionDigits: 4 }).format(n);
@@ -28,6 +29,7 @@ export function BenchmarkResults({ data }: { data: BenchView }) {
   return <section className="report-section">
     <div className="section-heading"><h2>{title}</h2><span className="badge">MEASURED EVIDENCE</span></div>
     <p>{data.note}</p>
+    <ReplayChart data={data} />
     {data.benchmarks.length > 0 && <><div className="table-scroll"><table>
       <caption>Median and min/max across the repetitions saved in each artifact. AFTER describes its recorded source; behavioral approval is separate.</caption>
       <thead><tr><th>Metric</th><th>BEFORE</th><th>AFTER</th></tr></thead><tbody>

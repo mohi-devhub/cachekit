@@ -53,31 +53,30 @@ behavioral equivalence. The separate Modal smoke test establishes serving and
 cache reuse only.
 
 The matched **MEASURED** pair is saved in
-[BEFORE](eval_results/before_replay.json) and [earlier AFTER](eval_results/after_replay.json),
+[BEFORE](eval_results/before_replay.json) and [AFTER with the confirmation repair](eval_results/after_confirmation_replay.json),
 with [generation configuration](eval_results/workload_provenance.json),
 [BEFORE provenance](eval_results/before_replay.run.json),
-[AFTER provenance](eval_results/after_replay.run.json) and serving manifests.
+[AFTER provenance](eval_results/after_confirmation_replay.run.json) and serving manifests.
 Each run covers 27 synthetic requests per repetition across 3 repetitions.
 Values below are medians of the repetition summaries.
 
-| Metric | BEFORE | Earlier AFTER candidate |
+| Metric | BEFORE | AFTER with the confirmation repair |
 | --- | ---: | ---: |
-| Measured prompt-cache hit rate | 0.304% | 80.599% |
-| Simulated prompt-cache hit rate | 0.304% | 80.599% |
-| Client TTFT p50 | 2.014 s | 1.319 s |
-| Client TTFT p95 | 2.557 s | 1.671 s |
-| GPU-window USD / 1k requests | $0.7893 | $0.7051 |
+| Measured prompt-cache hit rate | 0.304% | 80.690% |
+| Simulated prompt-cache hit rate | 0.304% | 80.690% |
+| Client TTFT p50 | 2.014 s | 1.425 s |
+| Client TTFT p95 | 2.557 s | 2.475 s |
+| GPU-window USD / 1k requests | $0.7893 | $0.7050 |
 
 This is sequential client replay. Bursty arrivals wait at the client; TTFT starts
 at send and excludes that queue delay. GPU-window USD excludes startup, warmup,
 reset, idle, CPU, memory and storage, so it is narrower than the complete bill.
-The immutable run records its measured source. Later approval-display changes
-preserve the prompt builder, helper and request bytes; the current binding is
-recorded in [source/input provenance](eval_results/current_benchmark_binding.json).
-Performance evidence and human behavioral approval are separate gates. The latest
-explicit-confirmation instruction changes prompt bytes. The table above describes
-the earlier measured candidate. Consult the generated benchmark summary and
-current source/input binding for measurement coverage of the semantic revision.
+The immutable run records its measured source. The confirmation instruction is
+included in this AFTER run; [the original AFTER](eval_results/after_replay.json)
+and all failed golden attempts remain preserved. [Current source/input provenance](eval_results/current_benchmark_binding.json)
+identifies coverage. UI restyling does not relabel a measurement as a new source:
+the heatmap shows measured values only when its rendered request hash matches
+the saved run. Performance evidence and behavioral approval are separate gates.
 
 Devin opened [the application-fix PR](https://github.com/mohi-devhub/cachekit/pull/2)
 in one capped session. The completed candidate retains the full recorded history,
@@ -96,7 +95,7 @@ of changes to the application's current builder.
 
 ## Development
 
-Run scripts are provided for a checkout with Python, uv and Node.js available:
+Run scripts require Python 3.12+, uv and Node.js 22.18+ (native TypeScript support for the web regression tests):
 
 ```sh
 bash scripts/setup.sh       # install dependencies and download only the tokenizer
@@ -116,6 +115,20 @@ Detailed equivalents follow; no credentials are needed for the local synthetic d
 `web/package-lock.json` pin the installed dependency trees. Setup uses locked
 Python resolution and `npm ci`; it downloads the pinned tokenizer explicitly.
 The local tokenizer needs no PyTorch installation or model weights.
+
+The heatmap BEFORE/AFTER switch animates the actual saved divergence marker and
+prefix colors with GSAP. Its hit rate, TTFT p95 and GPU-window USD/1k cards use the
+matching measured run, with repetition ranges; absent matches show simulation and
+no latency/dollar estimate. Green means a stable prefix, amber variable content,
+and red stable content after a break. Read the grid left to right, then down.
+
+The light UI uses an editorial overview, a desktop side rail and a mobile Menu, with self-hosted Inter, Source Serif 4 and Geist Mono. The benchmark chart switches between measured cache reuse, TTFT p95 and GPU-window cost, with saved min–max whiskers. One adapted React
+Bits hero fade and brief summary/count transitions honor reduced motion. Lenis
+loads only on the overview for desktop wheel scrolling; reports and prompt/code
+panes retain native scrolling. All assets are local after setup/build; no runtime
+font/CDN service is required. The web server must still run locally for a cold
+page load. An already loaded heatmap can toggle with networking fully disabled.
+See [component/font sources and licenses](web/THIRD_PARTY_NOTICES.md).
 
 Install the Python workspace and its development dependencies from the repository root:
 
@@ -293,7 +306,7 @@ uv run --no-sync ruff check engine demo_app bench scripts
 uv run --no-sync ruff format --check engine demo_app bench scripts
 ```
 
-In `web/`, run `npm run typecheck`, `npm run lint`, and `npm run build`.
+In `web/`, run `npm run test`, `npm run typecheck`, `npm run lint`, and `npm run build`.
 
 ## Explicit GPU benchmark
 

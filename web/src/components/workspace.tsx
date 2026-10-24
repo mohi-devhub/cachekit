@@ -3,6 +3,12 @@
 import Link from "next/link";
 import { BenchmarkResults } from "@/components/benchmark-results";
 import { CopyHash } from "@/components/copy-hash";
+import { PrefixMap } from "@/components/prefix-map";
+import { HeatmapMetrics } from "@/components/heatmap-metrics";
+import { prefixBoundary } from "@/lib/heatmap";
+import { OverviewMotion } from "@/components/overview-motion";
+import { SummaryReveal } from "@/components/summary-reveal";
+import { FadeContent } from "@/components/react-bits/fade-content";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, candidate, demo, fix, report, number, percent, words, type CandidateView, type BenchView, type Dataset,
@@ -68,8 +74,15 @@ export function AnalyzeWorkspace() {
     } catch (error) { setError(error instanceof Error ? error.message : "Analysis could not finish."); setBusy(false); }
   }
   return <>
-    <section className="page-intro"><h1>Find where reuse stops.</h1><p className="lede">See which changing details interrupt a shared prompt, then give your coding agent a fix it can verify.</p></section>
-    <div className="analyze-grid"><section className="input-panel"><div className="section-heading"><h2>Analyze a request log</h2><Badge tone={connected ? "good" : "neutral"}>{connected ? "LOCAL API" : "SAVED DEMO"}</Badge></div>
+    <OverviewMotion /><section className="page-intro"><FadeContent><h1>Find what breaks prompt caching. Verify the fix before you ship.</h1></FadeContent>
+      <p className="lede">A timestamp, user ID or changing tool order can invalidate a reusable prompt prefix. cachekit finds these breaks in your request logs and shows the stable content being recomputed.</p>
+      <p>Turn the findings into a scoped coding task, compare the exact BEFORE and AFTER inputs, and check the result with the required behavioral guard. Published performance figures come from saved measured replays.</p>
+      <div className="actions"><Link className="button primary" href="/report/demo-before">Explore saved demo</Link><Link className="button outline" href="#analyze-log">Analyze a log</Link></div>
+    </section>
+    <SummaryReveal className="analyze-grid"><section className="saved-panel"><h2>The saved helpdesk run</h2><p>A fictional support agent mixes changing context into its reusable instructions. Inspect the actual saved findings.</p>
+      {saved && <><p className="run-line"><strong>{number(saved.report.n_requests)}</strong> requests <span aria-hidden="true">·</span> <strong>{number(saved.report.findings.length)}</strong> findings <Badge>SAVED</Badge></p><Reuse data={saved} /></>}
+      <Link className="text-link" href="/report/demo-before">Open saved report <span aria-hidden="true">→</span></Link>
+    </section><section className="input-panel" id="analyze-log"><div className="section-heading"><h2>Analyze a request log</h2><Badge tone={connected ? "good" : "neutral"}>{connected ? "LOCAL API" : "SAVED DEMO"}</Badge></div>
       <form onSubmit={analyze}><label htmlFor="dataset">Local dataset</label><select id="dataset" value={selected} onChange={e => { setSelected(e.target.value); setFile(undefined); }} disabled={!connected || busy}>
         {datasets.length ? datasets.map(d => <option key={d.id} value={d.id} disabled={!d.available}>{d.name}{d.available ? "" : " · unavailable"}</option>) : <option value="demo-before">Fictional helpdesk · BEFORE</option>}
       </select><label htmlFor="upload">Or choose your JSONL file</label><input id="upload" type="file" accept=".jsonl,.ndjson" disabled={!connected || busy} onChange={e => setFile(e.target.files?.[0])} />
@@ -78,10 +91,7 @@ export function AnalyzeWorkspace() {
       <button className="button primary" disabled={!connected || busy} type="submit">{busy ? "Analyzing locally…" : "Analyze log"}</button>
       {!connected && <p className="supporting-text">Start the local API to analyze files. The saved report works without it.</p>}
       {error && <p className="notice error" role="alert">{error}</p>}</form>
-    </section><section className="saved-panel"><h2>Explore the helpdesk run</h2><p>A fictional support agent mixes changing context into its reusable instructions. Inspect the actual saved findings.</p>
-      {saved && <><p className="run-line"><strong>{number(saved.report.n_requests)}</strong> requests <span aria-hidden="true">·</span> <strong>{number(saved.report.findings.length)}</strong> findings <Badge>SAVED</Badge></p><Reuse data={saved} /></>}
-      <Link className="button" href="/report/demo-before">Open saved report <span aria-hidden="true">→</span></Link>
-    </section></div>
+    </section></SummaryReveal>
     <section className="workflow-note"><h2>Evidence before approval</h2><p>Analysis produces a scoped refactoring task. Verification checks preserved content, repository tests and golden outputs. Missing or failed quality evidence leaves the change unapproved.</p><Link href="/how-it-works">Read the method and limitations</Link></section>
   </>;
 }
@@ -108,7 +118,7 @@ export function ReportWorkspace({ id }: { id: string }) {
     catch (error) { setTaskError(error instanceof Error ? error.message : "The task could not be prepared."); setBusy(false); }
   }
   return <><Link href="/" className="back-link">← Workspace</Link><header className="report-header"><div><h1>Prompt reuse, explained.</h1><p className="lede">{data.report.routes.join(" · ")}</p></div><div className="badges"><Badge>{source}</Badge><Badge>SIMULATED</Badge></div></header>
-    <div className="run-facts"><div><span>Requests</span><strong>{number(data.report.n_requests)}</strong></div><div><span>Routes</span><strong>{number(data.report.routes.length)}</strong></div><div><span>Findings</span><strong>{number(data.report.findings.length)}</strong></div><div><span>Profile</span><strong>vLLM</strong></div></div>
+    <SummaryReveal className="run-facts"><div><span>Requests</span><strong>{number(data.report.n_requests)}</strong></div><div><span>Routes</span><strong>{number(data.report.routes.length)}</strong></div><div><span>Findings</span><strong>{number(data.report.findings.length)}</strong></div><div><span>Profile</span><strong>vLLM</strong></div></SummaryReveal>
     <Reuse data={data} />
     {backend && <div className="recomputed"><p><span>Tokens recomputed · current</span><strong>{number(backend.tokens_recomputed_actual)}</strong></p><p><span>Tokens recomputed · projection</span><strong>{number(backend.tokens_recomputed_achievable)}</strong></p><p><span>Serving cost</span><strong className="pending">&lt;pending&gt;</strong></p></div>}
     <section className="report-section"><div className="section-heading"><h2>Follow a route</h2><span className="supporting-text">Inspect the prompt and aligned stability</span></div><div className="route-list">{data.report.routes.map(route => <Link key={route} href={`/report/${encodeURIComponent(id)}/heatmap/${encodeURIComponent(route)}`}><code>{route}</code><span>Open heatmap →</span></Link>)}</div></section>
@@ -122,24 +132,25 @@ export function HeatmapWorkspace({ id, route }: { id: string; route: string }) {
   const { loaded, error } = useReport(id); const [full, setFull] = useState(false);
   const [after, setAfter] = useState<Loaded<CandidateView> | null>(null);
   const [version, setVersion] = useState<"before" | "after">("before");
+  const [bench, setBench] = useState<BenchView>();
+  useEffect(() => { let active = true; api<BenchView>("/bench").catch(() => demo().then(d => d.bench)).then(b => { if (active) setBench(b); }).catch(() => {}); return () => { active = false; }; }, []);
   useEffect(() => { let active = true; candidate(id).then(value => { if (active) setAfter(value); }).catch(() => {}); return () => { active = false; }; }, [id]);
   if (error) return <ErrorState message={error} />;
   if (!loaded) return <Loading />;
   const { data, source } = loaded; const shown = version === "after" && after ? after.data.report : data.report; const values = shown.heatmaps[route];
   if (!values) return <ErrorState message="This route is not part of the saved report." />;
-  const findings = shown.findings.filter(f => f.route === route);
-  const first = findings.length ? Math.min(...findings.map(f => f.first_divergence_token)) : null;
-  const total = shown.backends[0]?.params.heatmap_reference_tokens?.[route];
-  const marker = first !== null && total ? Math.min(values.length, first / total * values.length) : null;
+  const { first, total, fraction } = prefixBoundary(shown, route);
   const preview = shown.template_preview[route] || "";
   const text = full ? preview : preview.slice(0, 12000);
   return <><Link className="back-link" href={`/report/${id}`}>← Report</Link><header className="report-header"><div><h1>Where the prefix breaks.</h1><p className="lede"><code>{route}</code></p></div><div className="badges"><Badge>{version === "after" && after ? after.source : source}</Badge><Badge>SIMULATED</Badge></div></header>
-    <div className="heatmap-toolbar"><div className="segmented"><button aria-pressed={version === "before"} onClick={() => setVersion("before")}>BEFORE</button><button aria-pressed={version === "after"} disabled={!after} title={after ? "Actual re-rendered candidate; approval is separate" : "No current source-bound candidate is available"} onClick={() => setVersion("after")}>{after ? "AFTER · candidate" : "AFTER · pending"}</button></div><div className="legend"><span className="legend-stable" />Stable<span className="legend-variable" />Variable</div></div>
-    {version === "after" && after && <p className="notice">{after.source} · {after.data.approval ? "Exact-diff approval recorded for the saved source." : "Unapproved candidate. Visual reuse does not establish behavioral safety."} Recorded {after.data.metadata.timestamp}.</p>}
-    <section className="heatmap-panel"><h2>Aligned token stability</h2><svg className="stability-strip" viewBox={`0 0 ${values.length || 1} 56`} preserveAspectRatio="none" role="img" aria-label="Downsampled stability along the reference prompt; green is shared static content and red is changing content">
-      {values.map((value, i) => <rect key={i} x={i} y="12" width="1.1" height="32" fill={value === 1 ? "var(--stable)" : `rgb(${160 - value * 70} ${66 + value * 60} ${54 + value * 35})`} />)}
-      {marker !== null && <line x1={marker} x2={marker} y1="0" y2="56" stroke="var(--ink)" strokeWidth={Math.max(values.length / 600, 1)} />}
-    </svg><p>{first === null ? "No divergence finding is available for this route." : <>Earliest observed divergence: <strong>token {number(first)}</strong>.</>} {total ? <>Reference prompt: {number(total)} tokens.</> : "Exact reference length is not recorded in this older run."}</p><p className="supporting-text">The strip is downsampled. Stable content after a changing prefix can still require recomputation; green does not mean a measured cache hit.</p></section>
+    <div className="heatmap-toolbar"><div className="segmented"><button aria-pressed={version === "before"} onClick={() => setVersion("before")}>BEFORE</button><button aria-pressed={version === "after"} disabled={!after} title={after ? "Actual re-rendered candidate; approval is separate" : "No current source-bound candidate is available"} onClick={() => setVersion("after")}>{after ? "AFTER · candidate" : "AFTER · pending"}</button></div><div className="legend"><span><i className="legend-stable" />Reusable prefix</span><span><i className="legend-variable" />Variable</span><span><i className="legend-recomputed" />Recomputed</span></div></div>
+    <section className="heatmap-panel"><div className="section-heading"><h2>Follow the reusable prefix.</h2><Badge>SIMULATED</Badge></div>
+      <p className="supporting-text">Read left to right, then down. The marker follows the earliest divergence recorded in this reference prompt.</p>
+      <PrefixMap values={values} boundary={fraction} first={first} total={total} />
+      <p className="supporting-text">Green is stable content before the break. Red is stable content that follows it and still needs recomputation; amber varies across requests. These downsampled bins are simulation, not measured cache hits.</p>
+    </section>
+    <HeatmapMetrics bench={bench} report={shown} variant={version} />
+    {version === "after" && after && <p className="supporting-text">{after.source} · {after.data.approval ? "Exact-diff approval recorded for this saved source." : "Unapproved candidate; visual reuse does not establish behavioral safety."} Recorded {after.data.metadata.timestamp}.</p>}
     <section className="report-section"><h2>Redacted prompt template</h2><p className="supporting-text">Variable spans are marked. This text view is aligned structurally; its character positions are not token offsets.</p><pre className="prompt-view">{text.split(/(⟦[^⟧]*⟧)/g).map((part, i) => part.startsWith("⟦") ? <mark key={i}>{words(part)}</mark> : <span key={i}>{part}</span>)}</pre>{preview.length > 12000 && <button className="text-button" onClick={() => setFull(!full)}>{full ? "Collapse template" : "Show full redacted template"}</button>}</section>{version === "after" && after ? <details className="metadata"><summary>Candidate verification provenance</summary><dl><div><dt>Task</dt><dd><code>{after.data.task_id}</code></dd></div><div><dt>Source SHA-256</dt><dd><code>{after.data.metadata.source_sha256}</code></dd></div><div><dt>Candidate input SHA-256</dt><dd><code>{after.data.report.input_sha256}</code></dd></div><div><dt>Recorded</dt><dd>{after.data.metadata.timestamp}</dd></div></dl></details> : <Metadata data={data} />}
   </>;
 }
@@ -165,7 +176,7 @@ export function FixWorkspace({ id }: { id?: string }) {
   } catch (e) { setError(e instanceof Error ? e.message : "Approval failed."); } finally { setBusy(false); } }
   function download() { const url = URL.createObjectURL(new Blob([view.markdown], { type: "text/markdown" })); const a = document.createElement("a"); a.href = url; a.download = "fix_task.md"; a.click(); URL.revokeObjectURL(url); }
   return <><Link href="/report/demo-before" className="back-link">← Report</Link><header className="report-header"><div><h1>Verify the change.</h1><p className="lede">A scoped task, preserved inputs and evidence tied to the exact source.</p></div><div className="badges"><Badge>{loaded.source}</Badge><Badge tone="warn">{hasApproval ? "APPROVAL RECORDED" : "NOT APPROVED"}</Badge></div></header>
-    <section className="notice"><h2>{view.state === "stale" ? "This saved task predates the current source." : view.state === "candidate" ? "A candidate change is ready to check." : "The task is prepared; a code change is still needed."}</h2><p>{view.state === "stale" ? "Generate a fresh task from the report before using it for a real fix. Historical checks below do not approve today's source." : view.note}</p></section>
+    <section className="notice"><h2>{loaded.source === "SAVED" ? "Saved verification record." : view.state === "stale" ? "This saved task predates the current source." : view.state === "candidate" ? "A candidate change is ready to check." : "The task is prepared; a code change is still needed."}</h2><p>{loaded.source === "SAVED" ? "This snapshot records checks and approval for its saved source. It does not check this checkout; live verification and approval need the local API." : view.state === "stale" ? "Generate a fresh task from the report before using it for a real fix. Historical checks below do not approve today's source." : view.note}</p></section>
     <section className="report-section"><div className="section-heading"><h2>Fixer handoff</h2><Badge>{view.handoff?.status || "NOT STARTED"}</Badge></div><p>Use the redacted task with your coding agent. Devin use is authorized for this build with explicit quota caps.</p>{view.handoff?.reference_only && <p className="supporting-text">Original fixer task: <code>{view.handoff.task_id}</code>. This refreshed task verifies the rebased candidate independently.</p>}{view.handoff?.pr_url && <a href={view.handoff.pr_url}>Open the fix PR</a>}<div className="actions"><button className="button" onClick={download}>Download redacted task</button><button className="button primary" onClick={verify} disabled={loaded.source !== "API" || busy || view.state === "stale"}>{busy ? "Checking…" : "Run local verification"}</button></div><details className="task-document"><summary>Read the fix task</summary><pre>{view.markdown}</pre></details></section>
     <details className="metadata"><summary>Attach saved behavioral evidence</summary><p>Run the explicit quality collector on your local or Modal inference endpoint first. Enter file SHA-256 identities from eval_results/quality_guard/. Verification reads existing evidence; it never starts inference.</p><label htmlFor="quality-id">Quality run SHA-256 (optional)</label><input id="quality-id" value={qualityId} onChange={e => { setQualityId(e.target.value); setVerificationId(""); }} disabled={loaded.source !== "API" || busy} spellCheck={false} /><label htmlFor="review-ids">Review artifact SHA-256 identities (space separated)</label><input id="review-ids" value={reviews} onChange={e => { setReviews(e.target.value); setVerificationId(""); }} disabled={loaded.source !== "API" || busy} spellCheck={false} /><p className="supporting-text">Changed outputs require an explicit artifact-bound review. Missing evidence leaves the quality gate NOT RUN.</p></details>
     <section className="report-section"><h2>Verification gates</h2>{!view.verification_current && <p className="supporting-text">Saved results are historical. Current evidence is required before approval.</p>}<div className="gate-list">{[

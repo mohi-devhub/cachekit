@@ -29,8 +29,8 @@ export default function Method() {
       </p>
       <h2>Current limitations</h2>
       <ul>
-        <li>The local analysis and fix-review workflow is implemented. An actual application fix, live golden inference and a BEFORE/AFTER performance replay are still pending.</li>
-        <li>GPU smoke testing confirms prefix reuse, but establishes no speedup or savings.</li>
+        <li>The application fix, accepted golden cases and matched measured replay are saved in eval_results. Approval applies only to the exact verified source; later changes require fresh verification.</li>
+        <li>The fixed behavioral cases support only the behaviors tested. The calendar and explicit confirmation repairs are declared semantic changes.</li>
         <li>Moving instructions can change model behavior even when every word is preserved.</li>
         <li>Concurrent requests, eviction, and routing can affect real cache reuse.</li>
         <li>Raw logs must remain on the local machine or Modal; agent tasks use redacted evidence.</li>

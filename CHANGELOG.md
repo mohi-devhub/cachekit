@@ -1,5 +1,51 @@
 # Change log
 
+## 2026-10-25T03:26:24+05:30 — Rebuild the shell from the inspected live reference
+
+- Corrected the rejected first layout after inspecting Cognition's actual desktop
+  and mobile rendering: narrow reading column, regular 36px/24px headings, 15px
+  serif text, aligned side rail, fine frame rules and a mobile Menu.
+- Replaced the two-card overview with project-specific explanatory copy/actions,
+  saved evidence, then the original upload form. No company logos or proprietary
+  fonts were copied; Inter/Source Serif 4 are licensed substitutes.
+- Preserved all analysis/heatmap/fix/benchmark routes. Added navigation to the
+  existing findings and heatmap views, Escape focus return, and actual-data chart.
+- Web typecheck/lint/build pass. Actual desktop proportions are saved; final
+  complete checks, new mobile/menu/offline captures and source identity follow
+  in eval_results/setup. Human visual acceptance is pending.
+
+## 2026-10-25T03:12:29+05:30 — Animate actual heatmap evidence and polish the offline UI
+
+- Added a GSAP BEFORE/AFTER prefix grid: marker positions come from saved finding
+  offsets/reference lengths. Stable content after a break remains red; variable
+  bins are amber. Matching request-byte identities gate the measured hit/TTFT p95/
+  GPU-window USD-per-1k cards, including saved min/max. No invented performance.
+- Corrected the initially oversized display headings after Mohith’s screenshot:
+  restrained 32–40px titles and tighter top spacing keep the workspace visible.
+- Rebuilt the initial shell after Mohith rejected its proportions: inspected the
+  live desktop/mobile reference, then used its reading-column width, top spacing,
+  regular heading/body scale, fine guides and mobile Menu pattern. Removed the
+  overview’s two-card layout; preserved the upload/report workflow below the intro.
+- Added the requested desktop side rail with compact mobile navigation and a
+  single paired-replay chart (reuse, TTFT p95, GPU-window cost); whiskers use saved
+  repetition min/max, with no invented model comparisons or chart dependency.
+- Applied the requested light/black/blue palette, square controls and flat borders;
+  bundled pinned Inter, Source Serif 4 and Geist Mono files with their licenses.
+- Added overview-only lazy Lenis, brief GSAP summary/count transitions and one
+  attributed React Bits fade adaptation. Reduced motion settles immediately;
+  reports, tables and prompt panes keep native scrolling. No Vanta or new fixer.
+- Added Node-native regressions for real marker data, prefix colors and measurement
+  identity mismatches; documented Node 22.18+ and included them in check.sh.
+- Fixed a visual-review regression where off-screen count-up cleanup restored old
+  medians after a toggle. Every new view now gets its saved target immediately;
+  actual failing capture is retained and the browser check compares all medians.
+- Validation so far: web tests/typecheck/lint/production build pass. Actual Chromium
+  checks observe marker/color interpolation with all networking disabled after load,
+  plus reduced-motion settlement. Theme/fonts and 1440/390 layouts pass. Initial
+  font CSS resolution failed; corrected the package-relative URLs and rebuilt.
+  Full-suite, final desktop/mobile/offline capture and commit outcomes are recorded
+  separately in eval_results/setup. Prior measured and failed artifacts stay unchanged.
+
 ## 2026-10-25T02:33:54+05:30 — Reproduce setup and finish MUST evidence controls
 
 - Recreated a fresh Python 3.12 .venv; added locked Python/npm dependencies and
