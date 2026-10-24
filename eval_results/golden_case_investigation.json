@@ -1,0 +1,32 @@
+{
+  "experiment": "golden-case-investigation",
+  "timestamp": "2026-10-25T01:44:15.746680+05:30",
+  "initial_fixture_commit": "58818a22cf1c0d7f168b7a36c3701aff3f09140e",
+  "initial_fixture_sha256": "43902c1be5917eed5d153787960fefd75baef1b6c509cf54720397bc4a65c7b8",
+  "suite_version": "helpdesk-e5-lite-v2",
+  "golden_inputs_unchanged": true,
+  "json_schemas_unchanged": true,
+  "time": {
+    "delivered_date": "2026-09-20",
+    "recorded_current_date": "2026-10-24",
+    "elapsed_calendar_days": 34,
+    "policy_window_days": 30,
+    "original_expected_within_window": false,
+    "conclusion": "BEFORE true is wrong; AFTER false is correct. Timestamp/policy modification is conditional on true being correct, so no builder or policy edit was made."
+  },
+  "authorization": {
+    "after_system_sha256": "28c5d96c2067b18713fd181287067caa38c1bac04576e154f9d8838755fd05b0",
+    "complete_original_handbook_present": true,
+    "return_confirmation_instruction_present": true,
+    "escalation_consent_instruction_present": true,
+    "user_no_action_instruction_present": true,
+    "policy_quotes": [
+      "Confirm the item, quantity, reason, and desired remedy with the customer.",
+      "Ask for consent before submitting a summary where the\nworkflow requires it."
+    ],
+    "user_quote": "Do not create a return or escalation yet.",
+    "conclusion": "The generated disclaimer disappeared while source instructions remained. Version 2 adds separate explicit confirmation commitments for return creation and escalation; silence is not a pass. No prompt or golden input changed."
+  },
+  "approval_recorded": false,
+  "note": "Only fixed public synthetic prompts were rendered locally; no inference performed by investigation. Actual new outputs follow separately."
+}

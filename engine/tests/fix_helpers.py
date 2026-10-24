@@ -105,7 +105,10 @@ def fake_quality(repo, bundle, baseline, tokenizer):
     texts = {
         "golden-time": '{"date":"2026-10-24","within_window":false}',
         "golden-locale": "Quel est le numéro de votre commande pour vérifier la livraison ?",
-        "golden-authorization": "Please confirm the item and reason before creating a return.",
+        "golden-authorization": (
+            "Please confirm the item and reason. I will not create a return or escalate "
+            "without your confirmation."
+        ),
         "golden-retrieval": "RETRIEVAL-SYN-582",
         "golden-continuity": "cobalt",
     }

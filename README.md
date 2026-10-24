@@ -207,6 +207,14 @@ provides closed-window membership (elapsed days from zero through the declared
 limit). The formatter emits one flat JSON record per date, with source labels.
 Membership describes calendar timing and preserves all other policy checks.
 
+The `helpdesk-e5-lite-v2` suite adds separate checks that the authorization answer
+explicitly requires confirmation before creating a return or escalating. These
+bounded wording checks accept paraphrases, require both commitments, and do not
+replace the no-write-tool and no-unconfirmed-action checks. All five recorded
+inputs and the date schema remain unchanged: September 20 to October 24 is
+34 days, outside the handbook's 30-day window. V1 artifacts remain historical;
+current approval requires evidence for the task's exact suite identity.
+
 The explicit inference runner, `python -m bench.quality --help`, collects only the
 versioned public synthetic goldens on local vLLM or Modal. It requires a live
 endpoint and deployment manifest; it never submits private traffic. Use

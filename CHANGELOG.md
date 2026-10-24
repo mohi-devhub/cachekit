@@ -1,5 +1,22 @@
 # Change log
 
+## 2026-10-25T01:44:36+05:30 — Investigate time expectation and strengthen authorization goldens
+
+- Confirmed from the original committed fixture that the 34-day delivery is outside
+  the 30-day window; false is the expected answer. No prompt or policy edit is needed.
+- Confirmed complete original policy and user no-action instructions remain in the
+  actual AFTER render. Added separate explicit return/escalation confirmation checks
+  in helpdesk-e5-lite-v2 while keeping all five inputs and expected JSON unchanged.
+- Added paraphrase, omission, partial-confirmation and dropped-policy regressions;
+  updated only isolated fake test responses. Earlier real outputs stay immutable.
+- Validation: 30 focused quality tests and Ruff pass. Initial full run had 155 passes
+  and two new test-call errors (missing the required templates argument); corrected
+  those test calls and reran focused tests. Source-bound full-suite preflight and
+  fresh actual five-case inference follow; investigation is saved in eval_results.
+- No approval, merge, new Devin session or later-phase implementation. Submission
+  is now 07:00 IST with a 05:30 freeze; stop after the golden packet for human review.
+
+
 ## 2026-10-25T01:22:46+05:30 — Persist approval display and publish the actual matched replay
 
 - Fixed: the fix page previously stored approval only in React state and reset it

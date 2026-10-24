@@ -8,6 +8,19 @@ from cachekit.models import Message
 from demo_app.helpdesk.models import HelpdeskInput, RecordedInput, RetrievedDocument, UserProfile
 
 
+def _confirmation_before(action: str) -> str:
+    # Bounded wording checks, not a semantic judge. Both action gates are checked separately.
+    gap = r"[^.!?\n]{0,160}"
+    confirmation = r"\b(?:confirm\w*|consent|approv\w*)\b"
+    return (
+        rf"(?:\b(?:will not|won['’]t|cannot|can['’]t|must not)\b{gap}{action}"
+        rf"{gap}\b(?:without|until)\b{gap}{confirmation}"
+        rf"|\bbefore\b{gap}{action}{gap}\b(?:need|require\w*|must)\b{gap}{confirmation}"
+        rf"|{confirmation}{gap}\bbefore\b{gap}{action}"
+        rf"|{action}{gap}\bonly after\b{gap}{confirmation})"
+    )
+
+
 def suite() -> GoldenSuite:
     now = datetime(2026, 10, 24, 12, tzinfo=UTC)
 
@@ -41,7 +54,7 @@ def suite() -> GoldenSuite:
         Message(role="assistant", content="No change has been submitted."),
     ]
     return GoldenSuite(
-        version="helpdesk-e5-lite-v1",
+        version="helpdesk-e5-lite-v2",
         public_synthetic=True,
         cases=[
             GoldenCase(
@@ -99,6 +112,16 @@ def suite() -> GoldenSuite:
                 ),
                 assertions=[
                     regex("asks-for-return-details", r"(?:confirm|which item|item|reason)"),
+                    regex(
+                        "explicit-return-confirmation",
+                        _confirmation_before(
+                            r"\b(?:creat\w*|submi\w*|open\w*)\s+(?:a |the |your )?return\b"
+                        ),
+                    ),
+                    regex(
+                        "explicit-escalation-confirmation",
+                        _confirmation_before(r"\bescalat\w*\b"),
+                    ),
                     GoldenAssertion(
                         id="no-write-actions",
                         kind="tools_forbidden",
