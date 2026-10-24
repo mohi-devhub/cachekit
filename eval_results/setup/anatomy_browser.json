@@ -1,0 +1,80 @@
+{
+  "timestamp": "2026-10-25T04:50:04.005261+05:30",
+  "network": "API/external blocked on initial loads; complete network disabled for reduced-motion and reversal checks",
+  "captures": [
+    {
+      "variant": "before",
+      "width": 1440,
+      "actual_fraction": 0.001402524544179523,
+      "readout": "Stops at token 7",
+      "groups": 18,
+      "colors_match_saved_bins": true,
+      "support_layers_before_tape": true,
+      "measured_cards": [
+        "0.304%",
+        "2.557 s",
+        "$0.7893"
+      ],
+      "file": "screenshots/heatmap-before-polished-desktop.png",
+      "no_overflow": true,
+      "no_uncaught_errors": true
+    },
+    {
+      "variant": "after",
+      "width": 1440,
+      "actual_fraction": 0.8507670850767085,
+      "readout": "Stops at token 4,270",
+      "groups": 18,
+      "colors_match_saved_bins": true,
+      "support_layers_before_tape": true,
+      "measured_cards": [
+        "80.690%",
+        "2.475 s",
+        "$0.7050"
+      ],
+      "file": "screenshots/heatmap-after-polished-desktop.png",
+      "no_overflow": true,
+      "no_uncaught_errors": true
+    },
+    {
+      "variant": "before",
+      "width": 390,
+      "actual_fraction": 0.001402524544179523,
+      "readout": "Stops at token 7",
+      "groups": 18,
+      "colors_match_saved_bins": true,
+      "support_layers_before_tape": true,
+      "measured_cards": [
+        "0.304%",
+        "2.557 s",
+        "$0.7893"
+      ],
+      "file": "screenshots/heatmap-before-polished-mobile.png",
+      "no_overflow": true,
+      "no_uncaught_errors": true
+    },
+    {
+      "variant": "after",
+      "width": 390,
+      "actual_fraction": 0.8507670850767085,
+      "readout": "Stops at token 4,270",
+      "groups": 18,
+      "colors_match_saved_bins": true,
+      "support_layers_before_tape": true,
+      "measured_cards": [
+        "80.690%",
+        "2.475 s",
+        "$0.7050"
+      ],
+      "file": "screenshots/heatmap-after-polished-mobile.png",
+      "no_overflow": true,
+      "no_uncaught_errors": true
+    }
+  ],
+  "reduced_motion_both_views": true,
+  "fully_offline_toggle": true,
+  "interrupted_reversal": true,
+  "intermediate_fraction_observed": 0.468828,
+  "geometry_audit": "Actual support-layer regression and visual captures checked; full Anatomy collision audit not run.",
+  "behavioral_approval": "Unchanged; display verification only."
+}

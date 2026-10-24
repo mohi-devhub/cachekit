@@ -1,5 +1,21 @@
 # Change log
 
+## 2026-10-25T04:55:10+05:30 — Replace the tile grid with an Anatomy cache scanner
+
+- On Mohith's explicit follow-up, built an SVG optical comparator with the
+  Anatomy geometry kit: bedplate, guide rails, bearings, gantry, sensor and
+  colored prompt tape. BEFORE/AFTER moves the probe to the saved divergence.
+- Kept SIMULATED geometry separate from matching measured cards. Finite eased
+  motion supports reversal, reduced motion and offline use; no new dependency.
+- Preserved the original support-order drawing bug capture and corrected support
+  layers before the final visual pass. Added MIT source/license attribution.
+- Validation: web typecheck, ESLint, production build and web tests pass (five
+  committed tests plus six concurrent OpenCode tests). Actual desktop/mobile
+  colors, positions, measured cards, offline/reduced-motion/reversal and support
+  order pass; four refreshed captures and a detailed view saved. Full Anatomy
+  collision audit was not run. Final combined-source behavioral approval remains
+  separate; OpenCode's report/experiment changes are not included in this commit.
+
 ## 2026-10-25T04:12:55+05:30 — Link the sidebar to the repository
 
 - Replaced the redundant Open demo sidebar action with Open repo, opening the

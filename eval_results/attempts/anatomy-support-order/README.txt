@@ -1,0 +1,1 @@
+First scanner visual capture: center-depth ordering painted the long support plate over part of the tape. Retained before correction; final geometry paints support layers first. This was a drawing failure, not a measured-run or quality-guard result.

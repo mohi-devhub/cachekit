@@ -1,0 +1,12 @@
+.figure { margin: 24px 0 0; border: 1px solid #deded7; background: #f2f2ed; color: #191b17; }
+.header, .footer { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px 18px; padding: 14px 18px; font-family: var(--font-ui); font-size: 12px; }
+.header { border-bottom: 1px solid #deded7; }
+.title { font-weight: 500; }
+.status { color: #55594e; font-family: var(--font-code); font-size: 11px; }
+.stage { width: 100%; display: block; overflow: hidden; }
+.solid { stroke: #50554a; stroke-width: 0.65; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.edge { fill: none; stroke: #74796e; stroke-width: 0.5; vector-effect: non-scaling-stroke; }
+.footer { border-top: 1px solid #deded7; }
+.readout { color: #2200ff; font-variant-numeric: tabular-nums; font-family: var(--font-code); }
+.caption { margin: 0; padding: 0 18px 18px; max-width: none; font: 12px/1.6 var(--font-ui); color: #55594e; }
+@media (max-width: 600px) { .header, .footer { padding: 12px; } .caption { padding: 0 12px 12px; } .status { font-size: 10px; } }

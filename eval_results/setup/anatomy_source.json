@@ -1,0 +1,9 @@
+{
+  "source": "https://github.com/wheresryan22/anatomy",
+  "local_installed_skill": "anatomy",
+  "vendored_file": "web/src/components/iso/iso-kit.ts",
+  "sha256": "e9fc988c61a11bfac1f097e62419915ea86b2130ab091f1b50c0e019c907e253",
+  "license": "MIT, copyright2026 Ryan",
+  "upstream_revision": "Not recorded in installed skill; exact vendored bytes identified by SHA-256.",
+  "runtime_dependencies_added": []
+}

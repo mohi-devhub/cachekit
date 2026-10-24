@@ -154,9 +154,9 @@ export function HeatmapWorkspace({ id, route }: { id: string; route: string }) {
     {after?.source === "SAVED" && <p className="saved-run-note">Saved AFTER replay · read-only. Current-source approval is separate. <Link href="/fix">Verification status →</Link></p>}
     {afterStatus === "unavailable" && <p className="supporting-text">No matching AFTER run is saved for this workload. Prepare and verify a candidate to compare it.</p>}
     <section className="heatmap-panel"><div className="section-heading"><h2>Prompt prefix</h2><Badge>SIMULATED</Badge></div>
-      <p className="supporting-text">Read across, then down. Larger squares group neighboring parts of the reference prompt.</p>
+      <p className="supporting-text">The probe moves along the prompt to its first recorded divergence.</p>
       <PrefixMap values={values} boundary={fraction} first={first} total={total} />
-      <p className="supporting-text">Deep green: reusable prefix. Yellow with a slash: variation. Red with a dot: static content recomputed after the break. This map is SIMULATED.</p>
+      <p className="supporting-text">Deep green: reusable prefix. Yellow: variation. Red: static content recomputed after the break. This scanner is SIMULATED.</p>
     </section>
     <HeatmapMetrics bench={bench?.data} report={shown} variant={version} />
     {version === "after" && after && <p className="supporting-text">{after.source} · {after.data.approval ? "Exact-diff approval recorded for this saved source." : "Unapproved candidate; visual reuse does not establish behavioral safety."} Recorded {after.data.metadata.timestamp}.</p>}

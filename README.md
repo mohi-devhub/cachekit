@@ -116,13 +116,18 @@ Detailed equivalents follow; no credentials are needed for the local synthetic d
 Python resolution and `npm ci`; it downloads the pinned tokenizer explicitly.
 The local tokenizer needs no PyTorch installation or model weights.
 
-The heatmap BEFORE/AFTER switch animates the actual saved divergence marker and
-prefix colors with GSAP. Larger squares conservatively group neighboring saved
-bins; yellow means the group contains variation. Its hit rate, TTFT p95 and
-GPU-window USD/1k cards use the
-matching measured run, with repetition ranges; absent matches show simulation and
-no latency/dollar estimate. Deep green marks a reusable prefix; yellow/slash marks
-variation; red/dot marks static content after a break. Read across, then down.
+The heatmap uses an Anatomy SVG cache scanner: the probe moves to the exact saved
+first-divergence position when switching BEFORE/AFTER. Its colored prompt tape
+conservatively groups neighboring saved bins. Deep green is reusable; yellow/slash
+contains variation; red/dot is static content recomputed after the break. The
+figure is SIMULATED. The cards below use matching saved MEASURED replay medians
+and ranges; the scanner does not generate latency or cost estimates. Reduced
+motion jumps directly to the saved position, and playback works offline.
+
+Geometry uses the vendored [Anatomy kit](https://github.com/wheresryan22/anatomy)
+under its [MIT license](web/src/components/iso/LICENSE). The exact source checksum
+is saved in [the source record](eval_results/setup/anatomy_source.json). No new
+runtime package, WebGL or external runtime service is required.
 
 The report cost field uses the matching measured replay median/range (GPU-window
 USD per 1k requests), rather than estimating dollars from simulated token counts.

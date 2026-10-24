@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-10-25T04:55:10+05:30",
+  "task": "Anatomy scanner display",
+  "logs": {
+    "typecheck": {
+      "file": "eval_results/setup/anatomy_typecheck.txt",
+      "sha256": "682986f8e626666ebb6b784fb5570597878aa625e779c801dd1ecbb2ecd2ed4d",
+      "raw_sha256": "682986f8e626666ebb6b784fb5570597878aa625e779c801dd1ecbb2ecd2ed4d",
+      "exit_code": 0
+    },
+    "lint": {
+      "file": "eval_results/setup/anatomy_lint.txt",
+      "sha256": "ccebfe3e648b85e2332cba06ffb37fb1cc3767d8514fb1d774f27ce1be487c04",
+      "raw_sha256": "fc938276c9ffcf2552954af19b77a3bf9d78136d465d1b3f5625d31a70d4ff62",
+      "exit_code": 0
+    },
+    "build": {
+      "file": "eval_results/setup/anatomy_build.txt",
+      "sha256": "2985121bf8541632eab6345c46aa281504e4addab964e780ff0f1755abc832c6",
+      "raw_sha256": "95a1455d07603f0156c03b151cd877667c643f523f3f2864f0c08b1e7c2102be",
+      "exit_code": 0
+    },
+    "web_tests": {
+      "file": "eval_results/setup/anatomy_web_tests.txt",
+      "sha256": "a7a36964b03d48d736830f065b1f5d81042098b85d68abfe6bba7851ee4069b2",
+      "raw_sha256": "a7a36964b03d48d736830f065b1f5d81042098b85d68abfe6bba7851ee4069b2",
+      "exit_code": 0
+    }
+  },
+  "web_tests": {
+    "total_passed": 11,
+    "previously_committed": 5,
+    "concurrent_opencode": 6
+  },
+  "browser_check": "eval_results/setup/anatomy_browser.json",
+  "source": "eval_results/setup/anatomy_source.json",
+  "scope": "UI only; original measured replay artifacts unchanged. Tests/build used combined working tree; only scanner and its heatmap copy are committed here.",
+  "full_collision_audit": false,
+  "frozen_source_behavioral_verification": "Still required after concurrent source changes settle.",
+  "new_devin_sessions": 0,
+  "log_normalization": "Carriage returns, trailing spaces and blank EOF lines trimmed; messages unchanged."
+}
