@@ -1,5 +1,26 @@
 # Change log
 
+## 2026-10-24T22:54:51+05:30 — Implement the MUST measurement harness
+
+- Changed: added strict token-counter/config parsing, streaming completion
+  timing/usage checks, scheduled sequential replay, warmup/reset/settling,
+  repetition summaries and immutable source-bound artifacts in `bench/`.
+  Added pinned single-L4 Modal serving with a benchmark-route allowlist.
+  Quality inference now accepts Modal's documented `.modal.direct` hostnames.
+- Why: collect real E2/E3 evidence independently of the deterministic engine,
+  reject invalid/contaminated runs, and make GPU teardown reproducible.
+- Pricing: verified the base L4 rate against Modal's current pricing page;
+  GPU-window estimates explicitly exclude startup/idle, CPU/memory and other
+  charges. Existing analysis cost fields remain unset.
+- Validation: full suite passed 129 tests, including 21 benchmark protocol,
+  accounting and readiness cases; CLI help and Ruff checks passed. Modal
+  definition imports with the installed SDK without starting a deployment.
+- Limitations: no actual benchmark or golden inference is claimed by this
+  implementation commit. Dedicated-server use is an operator assertion;
+  revision/GPU identity comes from the pinned deployment manifest. Concurrency
+  and generated-token cache pressure are outside the simulator's model.
+
+
 ## 2026-10-24T22:39:55+05:30 — Resolve PR #1 against the implemented project
 
 - Changed: integrated corrected Devin Hack Kochi guidance and optional AI-tool

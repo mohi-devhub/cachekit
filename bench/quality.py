@@ -73,7 +73,7 @@ class ModelsResponse(BaseModel):
 def validate_endpoint(endpoint: str) -> str:
     parsed = urlsplit(endpoint)
     local = parsed.hostname in {"localhost", "127.0.0.1", "::1"}
-    modal = bool(parsed.hostname and parsed.hostname.endswith(".modal.run"))
+    modal = bool(parsed.hostname and parsed.hostname.endswith((".modal.run", ".modal.direct")))
     if (
         parsed.username
         or parsed.password

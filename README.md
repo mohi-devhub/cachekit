@@ -198,6 +198,20 @@ uv run --no-sync ruff format --check engine demo_app bench
 
 In `web/`, run `npm run typecheck`, `npm run lint`, and `npm run build`.
 
+## Explicit GPU benchmark
+
+The streaming replay runner and single-L4 Modal definition are implemented.
+See [bench/README.md](bench/README.md) for deployment, live profile inspection,
+BEFORE/AFTER replay, evidence fields and teardown. The runner warms the server,
+resets its cache per repetition, checks streamed token accounting, and compares
+actual counters with the prompt-only simulator. Ordinary analysis/verification
+never starts a GPU or makes inference calls.
+
+Replay artifacts store timing/counter evidence, input/source/config hashes and
+repetition summaries. They omit raw prompts and generated answers. The allocated
+GPU window and its GPU-only price estimate are explicitly narrower than a full
+Modal invoice. Headline BEFORE/AFTER results still require actual saved runs.
+
 ## Limitations
 - The offline analysis pipeline, local API/report UI, fix workflow, quality
   collector/evaluator and approval gates are implemented. A real fixer PR, actual quality inference,

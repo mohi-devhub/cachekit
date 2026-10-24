@@ -1,6 +1,6 @@
-# Fill this from a verified provider price before reporting monetary savings.
+# Verified base-rate GPU component; excludes CPU/memory/storage/startup/idle and modifiers.
 vllm:
   gpu_hourly_usd:
-    value: null
+    value: 0.7992
     source: https://modal.com/pricing
-    verified_on: null
+    verified_on: "2026-10-24"
