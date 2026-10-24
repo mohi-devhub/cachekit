@@ -1,5 +1,64 @@
 # Change log
 
+## 2026-10-25T00:11:26+05:30 — Validate real current snapshots instead of demanding historical fixtures
+
+- Fixed: the public-demo test asserted verification_current must always be false.
+  A real current task export correctly set it true, causing one failure with 132
+  other tests passing. Replace that historical-only expectation with typed task
+  and candidate identity checks plus exact report/verification byte hashes.
+  Ignored local task bundles are not required for a public checkout's test.
+- Scope: no runtime content, quality, source-scope or approval gate changed.
+  Production still rejects stale/tampered evidence. The original failing date
+  outputs remain preserved; the timestamp-last layout remains unapproved.
+- Operations: stopped the second warming allocation before it generated any
+  golden request. Start a fresh baseline after this framework-only source change
+  and reuse the documented model/inputs/settings. Actual later quality outcomes
+  belong to the saved run, not a claimed pass in this entry.
+- Validation: the focused public-snapshot test and all 133 Python tests pass;
+  Ruff check and format pass. The saved current candidate exercises the positive
+  snapshot path. No actual behavioral pass is claimed.
+
+## 2026-10-25T00:07:19+05:30 — Preserve the failed date case and move existing time context last
+
+- Observed: the first actual fixed suite passes four AFTER cases but fails the
+  date/return-window schema: BEFORE and AFTER both answer true for a delivery
+  34 days earlier against a 30-day rule. The initial candidate remains unapproved.
+  All original output/measurement bytes are preserved under
+  eval_results/attempts/pr2-v1/ and the original quality_guard run.
+- Changed: move the existing Current time line to the end of system context,
+  after examples/retrieval, to make the actual date salient beside the question.
+  No rule, value, golden assertion, expected answer, seed or output budget changes.
+- Validation: final current structural/test/quality outcomes are recorded in the
+  source-bound verification artifacts. Collect the complete fixed suite first;
+  a failed assertion cannot be waived by human review. A later performance run
+  is collected only if all AFTER behavioral assertions and completion checks pass.
+- Limitations: this is a bounded prompt-layout attempt, not a general fix for
+  model arithmetic. If it fails, stop and discuss a broader application change.
+
+## 2026-10-25T00:04:44+05:30 — Save paired live replay and collect the fixed behavioral suite
+
+- Changed: recorded the real AFTER replay on the reviewed PR #2 builder, using
+  the same original synthetic inputs, planned schedule, generation settings,
+  pinned L4 profile and price as BEFORE. Three repetitions completed; immutable
+  raw measurements, deployment profile and post-collection provenance are saved.
+  The generated benchmark summary supplies all comparisons, including metrics
+  that did not improve. This is sequential replay, not an open-loop load test.
+- Evidence: eval_results/after_replay.json, after_replay.run.json and
+  benchmark_summary.md. The actual application diff keeps the static handbook
+  first, sorts tools and restores recorded history without changing goldens.
+- Validation: combined candidate passes 133 tests and Ruff; current local content,
+  scope, signature and prefix checks pass. Measured AFTER cache reuse median is
+  80.622%. The saved run contains each repetition's prediction error.
+- Quality: collect the unchanged five public synthetic BEFORE/AFTER cases on this
+  same allocation at temperature zero. Actual outputs and independently evaluated
+  outcomes are recorded only in eval_results/quality_guard/ and
+  eval_results/current_fix_summary.md; this note does not claim a pass or review.
+  Human output review and exact-diff approval remain separate gates.
+- Provenance: these record-only CHANGELOG/AI_USAGE edits follow the completed
+  benchmark and precede golden inference. The benchmark binds its earlier source;
+  the quality artifact and final verification bind the later complete source.
+  The prompt builder is identical. No second Devin session was started.
+
 ## 2026-10-24T23:53:51+05:30 — Connect real replay and candidate evidence to the UI
 
 - Changed: shared pure benchmark contracts power the read-only API, real replay
@@ -21,6 +80,45 @@
   its combined candidate passes 131 tests and Ruff. Human review is pending. The
   next live AFTER/golden collection requires a fresh baseline after these source
   changes. This milestone starts no new Devin session and claims no quality pass.
+## 2026-10-24T23:29:40+05:30 — Restore history and integrate framework repairs in PR #2
+
+- Changed: retain all recorded conversation messages in the prompt builder;
+  keep static handbook first, deterministic tools and the original roles/content.
+  Integrated current main's independent BEFORE fixtures and tokenizer dependency.
+- Why: the original fixed window drops the early fact required by the fixed
+  continuity golden. The verifier supports restoring original recorded history;
+  the change still needs actual behavioral review.
+- Validation: the combined candidate passes 131 Python tests plus Ruff check
+  and format. Original failed preflight remains historical evidence; no actual
+  golden or current authoritative verification pass is claimed.
+- Limitations: actual golden evidence and human approval remain required. The
+  configured context budget is enforced by analysis/collection; no history is
+  silently truncated to make a request fit.
+
+
+## 2026-10-24T23:17:02+05:30 — Reorder the helpdesk prompt builder for prefix reuse (unapproved)
+
+- Changed: `demo_app/helpdesk/prompt.py` now puts the company support handbook first
+  in the single system message, followed by the unchanged per-request block (current
+  time, customer identity, locale, the three seeded sampled examples, retrieved
+  context) in its original order; tools are sorted by name. Public signature,
+  history window, roles, tool definitions and generation settings are unchanged.
+  `before.py` stays frozen.
+- Why: fix task 391115f6d51ca8741ea5fea8 (timestamp, user_identity,
+  rag_before_static, few_shot_sampling high; tool_order low).
+- Validation (local, recorded 27-request synthetic inputs, sha256 bc20d296...):
+  `cachekit verify` SIMULATED vLLM hit rate 0.00304 -> 0.80851 (target 0.73165);
+  no high-severity findings remain (four at medium, history_truncation low);
+  content, scope, signature and prefix checks passed; Ruff passed.
+- Not passing: `python3 -m pytest -q` reports 7 failed and 13 errors, 109 passed. The
+  engine fix-workflow fixture (`engine/tests/fix_helpers.py`) copies the real
+  `prompt.py` and requires it to reproduce BEFORE requests; it is outside this
+  task's allowed files. Golden BEFORE/AFTER inference was not run, so quality
+  evidence is missing and the fix is incomplete and unapproved.
+- Limitations: simulation only; no measured latency or cost claim. Moving context
+  into another message/role was not done; it would raise simulated reuse further
+  but needs quality review.
+
 
 ## 2026-10-24T23:27:29+05:30 — Repair verification fixtures exposed by the actual fixer PR
 
