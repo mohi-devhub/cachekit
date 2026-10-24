@@ -1,0 +1,14 @@
+{
+  "experiment": "E5-lite-date-diagnosis",
+  "dataset": "public-synthetic-helpdesk-goldens",
+  "task_id": "375502572f3aea7a4200b7f0",
+  "quality_result_sha256": "66153883de31ac1ed6ff1f54018387c1c77d28f090d4f0bf32b86fd2b0a6350b",
+  "golden_suite_sha256": "a1e71b1c527034a041bc4dbe9a3e30033952b586f251a603a508d8825b7917f8",
+  "recorded_current_date": "2026-10-24",
+  "delivery_date_from_fixed_golden": "2026-09-20",
+  "elapsed_calendar_days": 34,
+  "expected_within_window": false,
+  "before_within_window": true,
+  "after_within_window": true,
+  "note": "Deterministic arithmetic on the unchanged synthetic golden dates. Both actual outputs violate its original schema. No pass, review, or eligibility decision is manufactured."
+}
