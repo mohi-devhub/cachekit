@@ -412,7 +412,12 @@ class Workspace:
 
     def bench(self) -> dict:
         benchmarks = []
-        for name, variant in [("before_replay.json", "before"), ("after_replay.json", "after")]:
+        after_name = (
+            "after_confirmation_replay.json"
+            if (self.repo / "eval_results/after_confirmation_replay.json").is_file()
+            else "after_replay.json"
+        )
+        for name, variant in [("before_replay.json", "before"), (after_name, "after")]:
             path = self.repo / "eval_results" / name
             if path.is_file():
                 run = read_model(path, BenchmarkRun)

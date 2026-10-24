@@ -2,7 +2,7 @@
 
 **Find what breaks prompt caching in your LLM app, fix it with an agent, and prove the speedup on vLLM.**
 
-> Status: in development at Devin Hack Kochi (Oct 24–25, 2026). Published figures come from saved runs in `eval_results/`, labeled SIMULATED or MEASURED.
+> Status: in development at Devin Hacks Kochi (Oct 24–25, 2026). Published figures come from saved runs in `eval_results/`, labeled SIMULATED or MEASURED. Submission is **07:00 IST**; feature freeze is **05:30 IST**.
 
 Participant: Mohith ([mohi-devhub](https://github.com/mohi-devhub)), solo builder.
 Repository initially created from the shared
@@ -53,7 +53,7 @@ behavioral equivalence. The separate Modal smoke test establishes serving and
 cache reuse only.
 
 The matched **MEASURED** pair is saved in
-[BEFORE](eval_results/before_replay.json) and [AFTER](eval_results/after_replay.json),
+[BEFORE](eval_results/before_replay.json) and [earlier AFTER](eval_results/after_replay.json),
 with [generation configuration](eval_results/workload_provenance.json),
 [BEFORE provenance](eval_results/before_replay.run.json),
 [AFTER provenance](eval_results/after_replay.run.json) and serving manifests.
@@ -75,23 +75,24 @@ The immutable run records its measured source. Later approval-display changes
 preserve the prompt builder, helper and request bytes; the current binding is
 recorded in [source/input provenance](eval_results/current_benchmark_binding.json).
 Performance evidence and human behavioral approval are separate gates. The latest
-explicit-confirmation instruction changes prompt bytes and has not yet been
-performance-benchmarked; the table above describes the earlier measured candidate,
-not that semantic revision.
+explicit-confirmation instruction changes prompt bytes. The table above describes
+the earlier measured candidate. Consult the generated benchmark summary and
+current source/input binding for measurement coverage of the semantic revision.
 
-Devin opened [the application-fix PR](https://github.com/mohi-devhub/cachekit/pull/2).
-Its original local review is saved in
-[eval_results/pr2_preflight.json](eval_results/pr2_preflight.json). Content, scope,
-signature and simulated-reuse checks passed, but repository tests exposed a test
-fixture bug and golden evidence was missing. It is not an approved fix. The test
-harness now initializes isolated fixtures from the frozen BEFORE builder, so a
-real application fix no longer invalidates unrelated fixture setup. A fresh
-baseline and actual behavioral evidence are required after framework changes.
+Devin opened [the application-fix PR](https://github.com/mohi-devhub/cachekit/pull/2)
+in one capped session. The completed candidate retains the full recorded history,
+static handbook, selected examples and tool definitions. The required quality
+guard found a date-arithmetic error and a lost explicit confirmation commitment.
+Mohith authorized the separately documented semantic repairs and accepted the
+five resulting golden answers. The unchanged date expectation is false: the
+fixture's delivery is outside the handbook window.
 
-The [Phase 3 preflight](eval_results/phase3_verify.json) and original PR preflight
-are historical records, not current approval. The fix page displays current
-source-bound verification and any actual golden outputs. Approval requires all
-gates and explicit human review; a missing or stale run cannot pass.
+[Accepted output evidence and prefix verification](eval_results/accepted_confirmation/review_packet.md)
+preserve that checkpoint. [Current source verification](eval_results/current_fix_summary.md)
+records subsequent checks and approval status. Approval is tied to an exact
+source/diff and current behavioral evidence; historical runs never approve a new
+revision. The frozen BEFORE builder keeps planted detection fixtures independent
+of changes to the application's current builder.
 
 ## Development
 
@@ -109,14 +110,17 @@ The setup script uses the network for installation and tokenizer preparation.
 The demo runs CPU analysis without inference or an external agent. Open
 `http://localhost:3000` for the workspace. A committed synthetic report works
 without the API or GPU; analysis and task generation need the local API. Actual desktop/mobile [UI captures](screenshots/README.md) show the saved
-BEFORE report and measured baseline. Local browser analysis and responsive views
-have been checked; later candidate evidence is labeled separately.
-Detailed equivalents follow; no credentials are needed for the local synthetic demo.
+BEFORE report, candidate heatmap, quality outcomes and measured replay. Captures
+identify which revision they show; later source changes require fresh verification.
+Detailed equivalents follow; no credentials are needed for the local synthetic demo. `uv.lock` and
+`web/package-lock.json` pin the installed dependency trees. Setup uses locked
+Python resolution and `npm ci`; it downloads the pinned tokenizer explicitly.
+The local tokenizer needs no PyTorch installation or model weights.
 
 Install the Python workspace and its development dependencies from the repository root:
 
 ```sh
-uv sync --all-packages --all-extras
+uv sync --locked --all-packages --all-extras
 uv run --no-sync cachekit --version
 uv run --no-sync cachekit schema --model RequestRecord
 ```
@@ -124,7 +128,7 @@ uv run --no-sync cachekit schema --model RequestRecord
 Generate reproducible, fictional helpdesk traffic:
 
 ```sh
-uv run --no-sync python -m demo_app.traffic --out data/demo
+uv run --no-sync python -m demo_app.traffic --users 6 --seed 42 --out data/demo
 ```
 
 This writes recorded inputs, BEFORE requests, and a checksum manifest to gitignored
@@ -137,7 +141,7 @@ Prefetch the exact tokenizer once, outside the deterministic engine. No model
 weights are needed locally:
 
 ```sh
-hf download Qwen/Qwen3-4B-Instruct-2507 tokenizer.json tokenizer_config.json config.json \
+uv run --no-sync hf download Qwen/Qwen3-4B-Instruct-2507 tokenizer.json tokenizer_config.json config.json \
   --revision cdbee75f17c01a7cc42f958dc650907174af0554 --local-dir data/tokenizer
 ```
 
@@ -161,39 +165,34 @@ trajectories; a trajectory can produce several requests. Glaive tool-order
 planting requires an explicit `--tool-order-fraction`; its default is disabled.
 Print the request contract with `cachekit schema --model RequestRecord`.
 
-Prepare a redacted fix task and preserve its local baseline before editing the app:
+Task generation preserves the current builder as a baseline **before an application
+edit**. This checkout already contains the demo fix. Use `/fix` to inspect its
+saved task and actual outputs; a fresh public clone has read-only evidence, not
+the original private verification bundle or an automatic current-source approval.
+
+For a new fix, capture requests and recorded inputs from the unchanged application,
+analyze them, then prepare the local task before changing that builder. The
+current builder must reproduce those BEFORE requests exactly. Giving frozen
+BEFORE logs to an already-fixed builder is intentionally rejected. Inspect the
+actual command contracts with:
 
 ```sh
-uv run --no-sync cachekit task eval_results/demo_before_report.json \
-  --repo . --inputs data/demo/inputs.jsonl \
-  --before-requests data/demo/requests_before.jsonl \
-  --goldens demo_app/goldens.json --tokenizer data/tokenizer \
-  --out data/fixes/demo/fix_task.md
-uv run --no-sync cachekit fix data/fixes/demo/fix_task.json --fixer local
+uv run --no-sync cachekit task --help
+uv run --no-sync cachekit fix --help
+uv run --no-sync cachekit verify --help
 ```
 
-Use a new bundle directory for each task. Its neighboring baseline and JSONL
-files stay under gitignored `data/`; only the redacted task is suitable for a
-fixer. The local handoff proposes a branch and task without starting an agent.
-Mohith has authorized selective Devin use with limited quota in mind. Use an
-explicit ACU cap and the correct API version/account configuration. No key is loaded for a local
-handoff. One real quota-capped session opened PR #2. Its sanitized handoff is saved in
-[eval_results/devin_handoff.json](eval_results/devin_handoff.json).
+Keep each task's baseline, recorded inputs and BEFORE requests under gitignored
+`data/`; only the structured redacted task is suitable for a remote fixer.
+Verification re-renders the recorded inputs, checks scope/signature/content,
+runs tests and evaluates source-bound saved golden outputs. Missing or stale
+quality evidence fails closed. Build a fresh baseline and collect actual quality
+evidence for a new checkout/source; publishing JSON does not grant approval.
 
-Verify the candidate after the fixer changes the allowed source files:
-
-```sh
-uv run --no-sync cachekit verify --repo . \
-  --task data/fixes/demo/fix_task.json \
-  --inputs data/demo/inputs.jsonl --baseline eval_results/demo_before_report.json \
-  --tokenizer data/tokenizer --out eval_results/verify.json
-```
-
-Verification writes its checks, run provenance, and a candidate report. It checks
-the source scope and public signature, replays recorded inputs under their
-original process seeds, checks content/tools/settings, runs repository tests,
-and evaluates saved quality evidence. Missing quality evidence produces
-`not_run`, a nonzero exit, and no approval.
+`DEVIN_API_KEY` stays in ignored `.env`. Ask Mohith before starting any new real
+Devin session and use an explicit quota cap. One capped session opened PR #2;
+its [sanitized handoff](eval_results/devin_handoff.json) retains its original task
+identity. Local analysis and verification never launch Devin.
 
 For an explicitly authorized date-arithmetic repair, add
 `--calendar-window-days 30` when preparing the task. The fictional handbook uses
@@ -243,7 +242,7 @@ uv run --no-sync uvicorn cachekit.api:app --host 127.0.0.1 --port 8000
 
 ```sh
 cd web
-npm install
+npm ci
 npm run dev
 ```
 
@@ -277,7 +276,9 @@ fix status, candidate reports and benchmark counters load from `web/public/demo/
 a new synthetic analysis to `eval_results/demo_before_report.json`, then run
 `uv run --no-sync python scripts/export_demo.py` to refresh this public snapshot.
 Use `python scripts/export_demo.py --task-id <current-task-id>` to select a
-registered current task. The exporter accepts only the named synthetic helpdesk run.
+registered current task. This export is for an operator workspace with its local
+baseline/task bundle; fresh public clones should keep the committed snapshot to
+inspect recorded fix evidence. The exporter accepts only the named synthetic helpdesk run.
 The summary formatter, `python scripts/summarize_bench.py`, only reads saved
 measurements; it performs no inference. Never copy uploaded
 or dataset-derived reports into the public demo. After installation, this mode
@@ -288,8 +289,8 @@ Check the engine and demo:
 
 ```sh
 uv run --no-sync pytest
-uv run --no-sync ruff check engine demo_app bench
-uv run --no-sync ruff format --check engine demo_app bench
+uv run --no-sync ruff check engine demo_app bench scripts
+uv run --no-sync ruff format --check engine demo_app bench scripts
 ```
 
 In `web/`, run `npm run typecheck`, `npm run lint`, and `npm run build`.
@@ -306,19 +307,20 @@ never starts a GPU or makes inference calls.
 Replay artifacts store timing/counter evidence, input/source/config hashes and
 repetition summaries. They omit raw prompts and generated answers. The allocated
 GPU window and its GPU-only price estimate are explicitly narrower than a full
-Modal invoice. Headline BEFORE/AFTER results still require actual saved runs.
+Modal invoice. The saved table includes repetition min/max beside medians. New source revisions
+require their own measurement before those timings can be claimed for them.
 
 ## Limitations
 - The offline analysis pipeline, local API/report UI, fix workflow, quality
-  collector/evaluator and approval gates are implemented. Devin PR #2 exists and a measured BEFORE replay is saved. AFTER replay and
-  current golden/approval status come from saved artifacts; a PR alone is not an
-  approved fix.
+  collector/evaluator and approval gates are implemented. Both measured replay
+  artifacts exist for their recorded sources. Current golden/approval status
+  comes from saved artifacts; a PR alone is not an approved fix.
 - Replay currently supports the documented helpdesk input adapter. Other apps
   need their own adapter or fresh capture; generic source tracing is stretch work.
 - Source identity uses content/mode manifests, excluding private data, generated
   evaluation artifacts (including the exported public demo JSON and root
   `screenshots/` captures), caches,
-  dependencies and hidden files except GitHub
+  dependencies, generated `web/next-env.d.ts` ambient types and hidden files except GitHub
   workflows and the declared public ignore/env examples. Unsupported source
   symlinks fail explicitly. The diff hash binds audited source states, rather
   than Git patch text. Saved pre-Git runs record a null Git SHA and bind source

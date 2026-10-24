@@ -1,6 +1,6 @@
 # AI usage record
 
-If maintaining this record, briefly document the actual contributions of whichever AI tools you use at Devin Hack Kochi. Add a row after each meaningful task or milestone. Keep summaries concise and omit secrets, private data, and full chat transcripts.
+If maintaining this record, briefly document the actual contributions of whichever AI tools you use at Devin Hacks Kochi. Add a row after each meaningful task or milestone. Keep summaries concise and omit secrets, private data, and full chat transcripts.
 
 ## Event build log
 
@@ -10,6 +10,7 @@ review. Exact model identifiers were not recorded.
 
 | Date and time with timezone | Tool / model | Task | Assistance and affected files | Human review / corrections | Validation and result |
 | --- | --- | --- | --- | --- | --- |
+| 2026-10-25T02:33:54+05:30 | Codex | MUST closure and reproducible setup | Recorded Mohith’s output acceptance, verified static prefix/target, rebuilt locked environment, patched audited dependencies, added hash-copy/range UI and generated-type regression, refreshed docs | Human golden acceptance recorded; final exact-source approval/merge follow the authorized checks | 161 tests/Ruff/web checks and actual browser copy/mobile range checks pass; saved setup/audit evidence; final quality/replay outcomes remain separate; no new Devin session |
 | 2026-10-25T01:58:29+05:30 | Codex | Authorized semantic response restoration | Added one confirmation instruction and strict task-bound exact-sentence exception, with negative/content regressions | Explicitly authorized by Mohith; semantic change: restores behavior lost by reordering, found by the quality guard; no output acceptance yet | Prior failed run retained; 46 focused tests/Ruff pass; full preflight and fresh inference follow; previous performance remains historical |
 | 2026-10-25T01:44:36+05:30 | Codex | Investigate challenged time/authorization cases | Verified original false expectation and complete retained policy; strengthened v2 confirmation assertions and negative tests; preserved inputs/schema/prompt | Mohith requested investigation; no output acceptance or approval recorded | Saved deterministic investigation; 30 focused tests/Ruff pass after correcting two test-call errors; full preflight and actual collection follow; no new Devin session |
 | 2026-10-25T01:22:46+05:30 | Codex | Persist approval UI state and publish measured evidence | Added source-bound saved approval views, reload rendering and API regression checks; README results use the immutable measured pair | Human review pending; actual five AFTER cases pass but changed outputs remain review_required; final complete source gets a fresh collection | Python/Ruff and web checks run for the display repair; measured run/component/input identity preserved; no new Devin session |
@@ -53,7 +54,7 @@ This preparation is separate from participant project implementation and partici
 ## Event documentation correction — 2026-10-24T21:53:05+05:30
 
 - Tool: Codex.
-- Task: correct the organizer-shared template to Devin Hack Kochi and clarify
+- Task: correct the organizer-shared template to Devin Hacks Kochi and clarify
   that the event has no major AI usage constraints.
 - Affected files: `.github/pull_request_template.md`, `AGENTS.md`, `AI_USAGE.md`, `CHANGELOG.md`, `README.md`, `RULES.md`, `SUBMISSION.md`.
 - Human review: pending maintainer review of this pull request.

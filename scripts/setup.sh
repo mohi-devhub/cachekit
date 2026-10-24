@@ -6,8 +6,8 @@ cd "$CACHEKIT_ROOT"
 command -v uv >/dev/null || { echo "Install uv before running setup." >&2; exit 1; }
 command -v npm >/dev/null || { echo "Install Node.js and npm before running setup." >&2; exit 1; }
 
-uv sync --all-packages --all-extras
-npm --prefix web install
+uv sync --locked --all-packages --all-extras
+npm --prefix web ci
 
 # Explicit setup download, separate from the offline analysis engine. No weights or GPU.
 uv run --no-sync hf download Qwen/Qwen3-4B-Instruct-2507 \

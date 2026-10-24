@@ -1,0 +1,20 @@
+{
+  "experiment": "step2-ui-controls",
+  "timestamp": "2026-10-25T02:33:54+05:30",
+  "engine": "owned scratch Chromium via CDP",
+  "desktop_width": 1440,
+  "mobile_widths": [
+    390,
+    320
+  ],
+  "full_hash_clipboard_length": 64,
+  "clipboard_matches_complete_hash": true,
+  "hash_visually_truncated_on_narrow_layout": true,
+  "fix_page_overflow": false,
+  "benchmark_page_overflow": false,
+  "benchmark_row_checked": "Client TTFT p50",
+  "values_match_saved_artifacts": true,
+  "mechanical_detector_findings": [],
+  "real_mobile_hardware_tested": false,
+  "note": "Actual DOM/clipboard and emulated viewport checks. These verify layout/control behavior, not new model or performance outcomes."
+}

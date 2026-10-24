@@ -16,7 +16,10 @@ const metrics: [string, string, (n: number) => string][] = [
 ];
 function value(run: BenchmarkRun | undefined, key: string, format: (n: number) => string) {
   const result = run?.summary[key];
-  return result ? format(result.median) : "<pending>";
+  return result ? <>
+    <span className="measure-median">{format(result.median)}</span>
+    <span className="measure-range">min {format(result.min)} · max {format(result.max)}</span>
+  </> : "<pending>";
 }
 export function BenchmarkResults({ data }: { data: BenchView }) {
   const before = data.benchmarks.find(x => x.run.variant === "before")?.run;
@@ -26,7 +29,7 @@ export function BenchmarkResults({ data }: { data: BenchView }) {
     <div className="section-heading"><h2>{title}</h2><span className="badge">MEASURED EVIDENCE</span></div>
     <p>{data.note}</p>
     {data.benchmarks.length > 0 && <><div className="table-scroll"><table>
-      <caption>Median across the repetitions saved in each artifact. AFTER is a candidate measurement; behavioral approval is separate.</caption>
+      <caption>Median and min/max across the repetitions saved in each artifact. AFTER describes its recorded source; behavioral approval is separate.</caption>
       <thead><tr><th>Metric</th><th>BEFORE</th><th>AFTER</th></tr></thead><tbody>
         <tr><td>Requests per repetition</td><td>{before ? number(before.n_requests) : "<pending>"}</td><td>{after ? number(after.n_requests) : "<pending>"}</td></tr>
         <tr><td>Repetitions</td><td>{before ? number(before.runs.length) : "<pending>"}</td><td>{after ? number(after.runs.length) : "<pending>"}</td></tr>

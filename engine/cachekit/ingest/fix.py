@@ -70,8 +70,8 @@ def snapshot(repo: Path, excluded: list[str] | tuple[str, ...] = ()) -> SourceSn
                 continue
             path = Path(directory) / name
             relative = path.relative_to(root).as_posix()
-            # This JSON is exported evaluation data; the exporter and UI code remain audited.
-            if relative == "web/public/demo/workspace.json":
+            # Generated evidence and ambient Next types; actual UI/config source stays audited.
+            if relative in {"web/public/demo/workspace.json", "web/next-env.d.ts"}:
                 continue
             if relative in excluded:
                 continue

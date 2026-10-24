@@ -161,6 +161,15 @@ dd { margin: 0; overflow-wrap: anywhere; }
 .evidence { font-family: ui-monospace, monospace; font-size: 0.75rem; overflow-wrap: anywhere; }
 .action-panel { border-block: 1px solid var(--line); margin-top: 3rem; padding-block: 2rem; }
 .action-panel > p { margin-top: 1rem; margin-bottom: 0; }
+.hash-field { margin-top: 1rem; max-width: 100%; }
+.hash-toolbar { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+.hash-toolbar .hash { display: block; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hash-toolbar .button { flex: none; }
+.hash-field .supporting-text { margin: 0.4rem 0 0; }
+.full-hash { font-size: 0.85rem; }
+.full-hash code { display: block; overflow-wrap: anywhere; }
+.measure-median { display: block; }
+.measure-range { display: block; color: var(--muted); font-size: 0.75rem; margin-top: 0.2rem; }
 .metadata { margin-top: 2rem; color: var(--muted); font-size: 0.85rem; }
 summary { cursor: pointer; padding-block: 0.7rem; color: var(--ink); }
 .metadata dl { display: grid; gap: 1rem; }

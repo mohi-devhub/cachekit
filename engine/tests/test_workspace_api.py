@@ -292,3 +292,18 @@ def test_real_before_benchmark_is_available_without_smoke_file(tmp_path, qwen_to
     before["schedule_sha256"] = "0" * 64
     (out.parent / "after_replay.json").write_text(json.dumps(before))
     assert not client.get("/bench").json()["comparison_ready"]
+    # Prefer the semantic-repair run; never hide a mismatched new run behind the old pair.
+    restored = json.loads(out.read_text())
+    restored["variant"] = "after"
+    older = out.parent / "after_replay.json"
+    older.write_text(json.dumps(restored))
+    original_bytes = older.read_bytes()
+    preferred = out.parent / "after_confirmation_replay.json"
+    preferred.write_text(json.dumps(restored))
+    response = client.get("/bench").json()
+    assert response["comparison_ready"]
+    assert response["benchmarks"][1]["source"] == "eval_results/after_confirmation_replay.json"
+    restored["schedule_sha256"] = "f" * 64
+    preferred.write_text(json.dumps(restored))
+    assert not client.get("/bench").json()["comparison_ready"]
+    assert older.read_bytes() == original_bytes

@@ -1,5 +1,29 @@
 # Change log
 
+## 2026-10-25T02:33:54+05:30 — Reproduce setup and finish MUST evidence controls
+
+- Recreated a fresh Python 3.12 .venv; added locked Python/npm dependencies and
+  reproducible setup commands. Initial npm extraction hit disk exhaustion; cleared
+  regenerable package/build files and retried without deleting data or results.
+- Patched Next.js and matching ESLint config to exact 16.4.3 after actual npm audit
+  findings. Recorded before/after audits; patched audit has zero known findings.
+- Fixed narrow-page hash overflow with full-value copy, success/error feedback and
+  selectable expansion. Added saved repetition min/max beside benchmark medians.
+- Excluded generated next-env.d.ts from Git/source identity. Actual UI/config code
+  stays audited; regression checks guard the dev/build typing-mode case. Check
+  scripts now lint/format public Python scripts as well as the engine and harness.
+- Refreshed Devin Hacks Kochi naming, current deadlines and honest setup/baseline
+  instructions. Keep previous failures, human output acceptance and measurements.
+  A new immutable AFTER path is selected when present, retaining metadata checks.
+- Validation: locked setup and CPU demo pass; original traffic byte hashes match.
+  All 161 tests, Ruff, web typecheck/lint/build pass from the fresh environment.
+  Scratch-Chromium copy check gets all 64 characters; 390/320 layouts have no page
+  overflow. New ranges match saved run values. Actual final source/quality/replay,
+  approval and merge outcomes are recorded separately under eval_results.
+- Current semantic exception remains labeled separately from reordering. No new
+  Devin session, UI redesign or STRETCH work. Feature freeze is 05:30 IST.
+
+
 ## 2026-10-25T01:58:29+05:30 — Restore the explicit confirmation response commitment
 
 - semantic change: restores behavior lost by reordering, found by the quality guard.
@@ -316,7 +340,7 @@
 
 ## 2026-10-24T22:39:55+05:30 — Resolve PR #1 against the implemented project
 
-- Changed: integrated corrected Devin Hack Kochi guidance and optional AI-tool
+- Changed: integrated corrected Devin Hacks Kochi guidance and optional AI-tool
   wording across the seven documentation files in PR #1. Preserved the cachekit
   README, setup/demo commands, submission details, changelog and AI usage history.
 - Why: PR #1 started from the old template and conflicts with newer project docs.
@@ -328,10 +352,10 @@
 - Limitations: remote publication must succeed before the PR is conflict-free
   on GitHub. No application behavior or quality-approval state is changed.
 
-## 2026-10-24T21:53:05+05:30 — Correct Devin Hack Kochi event guidance
+## 2026-10-24T21:53:05+05:30 — Correct Devin Hacks Kochi event guidance
 
 - Changed: corrected the current event name and AI tool guidance in `.github/pull_request_template.md`, `AGENTS.md`, `AI_USAGE.md`, `CHANGELOG.md`, `README.md`, `RULES.md`, `SUBMISSION.md`.
-- Why: the organizer shared an older event template; Devin Hack Kochi has no
+- Why: the organizer shared an older event template; Devin Hacks Kochi has no
   major AI usage constraints and the template must not require a particular AI provider.
 - Scope: preserved project implementation and historical assistance records.
 - Removed obsolete template logistics, participation limits, and credit promises; current organizer instructions remain authoritative.

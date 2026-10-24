@@ -411,3 +411,18 @@ def test_exported_demo_data_does_not_invalidate_audited_source(tmp_path):
     assert snapshot(tmp_path).sha256 == before.sha256
     (tmp_path / "source.py").write_text("changed")
     assert snapshot(tmp_path).sha256 != before.sha256
+
+
+def test_generated_next_types_do_not_hide_changes_to_actual_ui_source(tmp_path):
+    page = tmp_path / "web/src/app/page.tsx"
+    page.parent.mkdir(parents=True)
+    page.write_text("export default function Page() { return 'original'; }")
+    generated = tmp_path / "web/next-env.d.ts"
+    generated.write_text('import "./.next/types/routes.d.ts";')
+    before = snapshot(tmp_path)
+    assert "web/next-env.d.ts" not in before.files
+    assert "web/src/app/page.tsx" in before.files
+    generated.write_text('import "./.next/dev/types/routes.d.ts";')
+    assert snapshot(tmp_path).sha256 == before.sha256
+    page.write_text("export default function Page() { return 'changed'; }")
+    assert snapshot(tmp_path).sha256 != before.sha256
