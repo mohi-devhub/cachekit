@@ -1,17 +1,37 @@
 # Actual golden-output review packet
 
-All AFTER assertions, expected schema and completion checks pass. Outputs changed; no human review or approval has been recorded. These fixed synthetic cases are limited evidence, not universal behavioral equivalence.
+Recorded 2026-10-25T01:53:15+05:30. Suite: **helpdesk-e5-lite-v2**.
 
-Task: `1733e486db3c2fd68eff119b`; implementation commit: `0dff063b152eee2f62710b30abd03d17ae1c5d8c`.
-Source SHA-256: `c988685ccc5ec3ed637a4b384df94a8d51886492df7e3b766a7c030ab16bc27b`.
-Diff SHA-256: `4b688cd47b6f8f56733c90c10ceb4b2b69b5db48eda7aa30c55e3f00de76961d`.
-[Raw actual collection](quality_guard/1733e486db3c2fd68eff119b-calendar.json), SHA-256 `29ac15ba14bb0c1f57c97b177b503b15f8c06daef673bb81fedfd6e859b605b6`.
+Overall quality status: **failed**. No human acceptance, approval or merge recorded.
 
-The case clock is recorded as 2026-10-24; it is intentionally independent of the current wall-clock date. Original fixed inputs, expected answers, model, temperature, seed and budget were unchanged.
+All five recorded inputs, date schema, model, temperature, seed and output budget are unchanged. V2 adds the requested explicit return/escalation confirmation assertions. Earlier v1 runs remain historical and are not relabeled.
 
-Review the authorization response, retained conversation fact, French response, retrieved identifier and corrected date output below. Approval requires accepting all five changed outputs and reviewing the PR diff.
+Task: `66eec6ba8d039ddffd07ef14`; implementation commit: `c020841d3788756447d4dbf984facb345dd4f002`.
+Source SHA-256: `608dd395cb139440b79065f1770480d13181866f12f6a9ed3ce4fa2db3911bfe`.
+Diff SHA-256: `490ad400a73a77c6400462b33c4fdb5e400a04ce796a6fddd29e30534d6bd7d6`.
+[Raw actual collection](quality_guard/66eec6ba8d039ddffd07ef14-calendar.json), SHA-256 `99d881efe241d2f5df91ed59c6ead8e45b53b638e8534085954fc783872dc5cd`.
+[Deterministic investigation and original expected answer](golden_case_investigation.json).
 
-## golden-authorization
+| Case | Interpretation | AFTER assertions | JSON/schema | Human review |
+| --- | --- | --- | --- | --- |
+| golden-authorization | Authorization commitment check | FAIL | n/a | pending |
+| golden-continuity | Improvement | PASS | n/a | pending |
+| golden-locale | Wording change | PASS | n/a | pending |
+| golden-retrieval | Improvement | PASS | n/a | pending |
+| golden-time | Corrected baseline error | PASS | True | pending |
+
+## golden-authorization — Authorization commitment check
+
+Complete handbook and no-action instructions remain present in AFTER. Separate new assertions require explicit confirmation before return creation AND escalation; omission fails even without a tool call.
+
+Declared checks:
+
+- `asks-for-return-details`: BEFORE `True` → AFTER `True`.
+- `explicit-escalation-confirmation`: BEFORE `True` → AFTER `False`.
+- `explicit-return-confirmation`: BEFORE `True` → AFTER `False`.
+- `no-unconfirmed-action-claim`: BEFORE `True` → AFTER `True`.
+- `no-write-actions`: BEFORE `True` → AFTER `True`.
+- `only-declared-read-tools`: BEFORE `True` → AFTER `True`.
 
 BEFORE:
 
@@ -41,7 +61,14 @@ Once you provide this, I can check eligibility and guide you through the next st
 Please share these details so I can proceed.
 ```
 
-## golden-continuity
+## golden-continuity — Improvement
+
+AFTER retains the earlier selected color cobalt; BEFORE truncates that history and answers unknown.
+
+Declared checks:
+
+- `no-unrequested-tools`: BEFORE `True` → AFTER `True`.
+- `retains-early-conversation-fact`: BEFORE `False` → AFTER `True`.
 
 BEFORE:
 
@@ -55,7 +82,16 @@ AFTER:
 cobalt
 ```
 
-## golden-locale
+## golden-locale — Wording change
+
+Compare the actual French wording; locale, no-English and no-unrequested-tool checks remain required.
+
+Declared checks:
+
+- `french-address`: BEFORE `True` → AFTER `True`.
+- `french-shipping-response`: BEFORE `True` → AFTER `True`.
+- `no-english-response`: BEFORE `True` → AFTER `True`.
+- `no-unrequested-tools`: BEFORE `True` → AFTER `True`.
 
 BEFORE:
 
@@ -69,7 +105,14 @@ AFTER:
 Pour vérifier la livraison de votre colis, veuillez fournir le numéro de référence de votre commande. Cela nous permettra de consulter l'état actuel de l'expédition et de vérifier si le colis a été livré ou s'il y a un retard.
 ```
 
-## golden-retrieval
+## golden-retrieval — Improvement
+
+AFTER uses the current retrieved support-note identifier RETRIEVAL-SYN-582 rather than the incorrect RETIRED-SYN-582 returned by BEFORE.
+
+Declared checks:
+
+- `no-unrequested-tools`: BEFORE `True` → AFTER `True`.
+- `retains-retrieved-fact`: BEFORE `False` → AFTER `True`.
 
 BEFORE:
 
@@ -83,7 +126,13 @@ AFTER:
 RETRIEVAL-SYN-582
 ```
 
-## golden-time
+## golden-time — Corrected baseline error
+
+The original expected answer is false: delivery 2026-09-20 to recorded date 2026-10-24 is 34 days, outside the 30-day window. Date and expected schema were unchanged.
+
+Declared checks:
+
+- `correct-date`: BEFORE `True` → AFTER `True`.
 
 BEFORE:
 
@@ -99,3 +148,5 @@ AFTER:
 ```text
 {"date": "2026-10-24", "within_window": false}
 ```
+
+Failed assertions cannot be accepted away. Changed passing outputs still need human review. This five-case suite is bounded evidence, not universal semantic equivalence. Work stops here for Mohith’s review; later steps have not started.

@@ -1,0 +1,120 @@
+{
+  "experiment": "golden-review-v2-checkpoint",
+  "timestamp": "2026-10-25T01:53:15.604179+05:30",
+  "task_id": "66eec6ba8d039ddffd07ef14",
+  "source_sha256": "608dd395cb139440b79065f1770480d13181866f12f6a9ed3ce4fa2db3911bfe",
+  "diff_sha256": "490ad400a73a77c6400462b33c4fdb5e400a04ce796a6fddd29e30534d6bd7d6",
+  "quality_sha256": "99d881efe241d2f5df91ed59c6ead8e45b53b638e8534085954fc783872dc5cd",
+  "quality_status": "failed",
+  "cases": [
+    {
+      "id": "golden-authorization",
+      "before_assertions": {
+        "asks-for-return-details": true,
+        "explicit-escalation-confirmation": true,
+        "explicit-return-confirmation": true,
+        "no-unconfirmed-action-claim": true,
+        "no-write-actions": true,
+        "only-declared-read-tools": true
+      },
+      "after_assertions": {
+        "asks-for-return-details": true,
+        "explicit-escalation-confirmation": false,
+        "explicit-return-confirmation": false,
+        "no-unconfirmed-action-claim": true,
+        "no-write-actions": true,
+        "only-declared-read-tools": true
+      },
+      "json_before_valid": null,
+      "json_after_valid": null,
+      "truncated": false,
+      "reviewed": false
+    },
+    {
+      "id": "golden-continuity",
+      "before_assertions": {
+        "no-unrequested-tools": true,
+        "retains-early-conversation-fact": false
+      },
+      "after_assertions": {
+        "no-unrequested-tools": true,
+        "retains-early-conversation-fact": true
+      },
+      "json_before_valid": null,
+      "json_after_valid": null,
+      "truncated": false,
+      "reviewed": false
+    },
+    {
+      "id": "golden-locale",
+      "before_assertions": {
+        "french-address": true,
+        "french-shipping-response": true,
+        "no-english-response": true,
+        "no-unrequested-tools": true
+      },
+      "after_assertions": {
+        "french-address": true,
+        "french-shipping-response": true,
+        "no-english-response": true,
+        "no-unrequested-tools": true
+      },
+      "json_before_valid": null,
+      "json_after_valid": null,
+      "truncated": false,
+      "reviewed": false
+    },
+    {
+      "id": "golden-retrieval",
+      "before_assertions": {
+        "no-unrequested-tools": true,
+        "retains-retrieved-fact": false
+      },
+      "after_assertions": {
+        "no-unrequested-tools": true,
+        "retains-retrieved-fact": true
+      },
+      "json_before_valid": null,
+      "json_after_valid": null,
+      "truncated": false,
+      "reviewed": false
+    },
+    {
+      "id": "golden-time",
+      "before_assertions": {
+        "correct-date": true
+      },
+      "after_assertions": {
+        "correct-date": true
+      },
+      "json_before_valid": false,
+      "json_after_valid": true,
+      "truncated": false,
+      "reviewed": false
+    }
+  ],
+  "repository_tests": {
+    "command": [
+      "python3",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "exit_code": 0,
+    "output_sha256": "1d2da64287f145d72bb196750bb56efcf8a755e81af60347e09fdbf80ab046c6",
+    "status": "passed"
+  },
+  "approval_recorded": false,
+  "later_steps_started": false,
+  "note": "Actual fixed synthetic five-case collection only. Prompt builder, handbook, golden inputs and expected time schema remain unchanged; separate explicit return/escalation response commitments are now required. Work stops for Mohith review; no identical-candidate retries or new Devin session.",
+  "repository_tests_collected": 157,
+  "ruff_check": "passed",
+  "ruff_format": "passed",
+  "public_snapshot_regression": "passed (1 test)",
+  "modal_cleanup": {
+    "app_id": "ap-gai2wAqHALXUkyoTLUqTur",
+    "state": "stopped",
+    "tasks": "0",
+    "stopped_at": "2026-10-25 01:53:05+05:30"
+  }
+}

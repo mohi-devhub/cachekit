@@ -1,4 +1,8 @@
-# Final candidate evidence checkpoint
+# Historical v1 candidate evidence checkpoint
+
+This predates the strengthened v2 authorization assertions. For the current failing
+confirmation checks, see [v2 checkpoint](golden_review_v2_checkpoint.json) and
+[actual review packet](quality_review_packet.md). No approval was recorded.
 
 Recorded 2026-10-25T01:36:30+05:30. Task `1733e486db3c2fd68eff119b`.
 

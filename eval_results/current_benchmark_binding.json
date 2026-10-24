@@ -3,8 +3,8 @@
   "status": "input_components_and_quality_prompts_match",
   "benchmark_sha256": "0e0b532b99147149fd0fcddeb9c5425e1343764f690ad0dcf6437e3c00b5fc48",
   "benchmark_source_sha256": "4a60ea8b1d9be129400f306f703808100a10a6dc961a4e2f6f92e29a50171b0c",
-  "verified_current_source_sha256": "c988685ccc5ec3ed637a4b384df94a8d51886492df7e3b766a7c030ab16bc27b",
-  "task_id": "1733e486db3c2fd68eff119b",
+  "verified_current_source_sha256": "608dd395cb139440b79065f1770480d13181866f12f6a9ed3ce4fa2db3911bfe",
+  "task_id": "66eec6ba8d039ddffd07ef14",
   "rendered_requests_sha256": "aa6944af186fba97eccec4c9efe677c9a9835e7ff6e47a5be61382531ef30c9d",
   "benchmark_requests_sha256": "aa6944af186fba97eccec4c9efe677c9a9835e7ff6e47a5be61382531ef30c9d",
   "component_file_sha256": {
@@ -22,6 +22,7 @@
     "engine/cachekit/render/canonical.py": "9e5a62ec13e21184f4fd0f6488979445d72aa064185b239ccaf581d0d05719f6",
     "engine/cachekit/config/backends.yaml": "6e38487c0ce6a5a55e09872493a28ea1b278a3817678359e3791798837f6a2bf"
   },
-  "note": "Approval-display/documentation/test changes follow the measured run. Exact rendered request bytes and prompt-producing components match that immutable measurement. Final actual quality binds the complete current source separately; no timing or source identity was edited.",
-  "quality_result_sha256": "29ac15ba14bb0c1f57c97b177b503b15f8c06daef673bb81fedfd6e859b605b6"
+  "quality_result_sha256": "99d881efe241d2f5df91ed59c6ead8e45b53b638e8534085954fc783872dc5cd",
+  "quality_guard_status": "failed",
+  "note": "V2 strengthens authorization assertions only. All rendered traffic bytes, prompt-producing components, fixed golden prompt hashes and generation/profile settings match prior recorded inputs. The immutable measured source/timings remain unchanged. Actual fresh quality binds current complete source and may fail the stronger assertions; performance does not override that failure."
 }
