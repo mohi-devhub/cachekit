@@ -62,6 +62,39 @@ def test_content_checks_text_tools_roles_settings_and_restored_history():
     assert result.passed and result.restored_history_lines == 2
 
 
+@pytest.mark.parametrize("declared", [False, True])
+def test_calendar_enrichment_is_explicit_and_checks_golden_inputs(
+    tmp_path, qwen_tokenizer, config, declared
+):
+    repo, bundle, baseline, report_path = temporary_bundle(
+        tmp_path, qwen_tokenizer, config, calendar_window_days=30 if declared else None
+    )
+    extra = """    from cachekit.calendar import calendar_context
+    from cachekit.render.canonical import text_content
+    block = calendar_context(message=inp.message,
+        history=[text_content(m.content) for m in inp.history],
+        documents=[d.text for d in inp.retrieved_docs], now=now, window_days=30)
+    if block:
+        request["messages"][0]["content"] += "\\n" + block + "\\n"
+    return request
+"""
+    candidate = CANDIDATE.replace("    return request\n", extra)
+    assert candidate != CANDIDATE
+    (repo / "demo_app/helpdesk/prompt.py").write_text(candidate)
+    result, _, _ = check(repo, bundle, report_path, qwen_tokenizer)
+    assert result.scope_check.passed
+    assert result.content_check.passed is declared
+    assert result.content_check.n_requests == 11  # Recorded traffic plus the fixed five goldens.
+    assert result.quality_guard.status == "not_run"
+    if declared:
+        assert "Declared calendar arithmetic enrichment" in task_markdown(baseline.task)
+        (repo / "demo_app/helpdesk/prompt.py").write_text(
+            candidate.replace("window_days=30", "window_days=31")
+        )
+        tampered, _, _ = check(repo, bundle, report_path, qwen_tokenizer)
+        assert not tampered.content_check.passed
+
+
 def test_snapshot_identity_ignores_private_artifacts_and_catches_source_and_mode(tmp_path):
     (tmp_path / "source.py").write_text("original")
     (tmp_path / ".env").write_text("PRIVATE_SENTINEL")

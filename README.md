@@ -186,6 +186,18 @@ original process seeds, checks content/tools/settings, runs repository tests,
 and evaluates saved quality evidence. Missing quality evidence produces
 `not_run`, a nonzero exit, and no approval.
 
+For an explicitly authorized date-arithmetic repair, add
+`--calendar-window-days 30` when preparing the task. The fictional handbook uses
+that comparison window. This opt-in permits only the exact output of
+[`calendar_context`](engine/cachekit/calendar.py), independently recomputed by the
+verifier from recorded dates and clock. Original content/tools/roles are still
+checked across both recorded traffic and the fixed goldens. Incorrect numbers,
+duplicates, misplaced blocks and undeclared additions fail. The facts label date
+sources as unverified; they do not authorize a return. Ordinary tasks permit no
+such enrichment. Only ISO calendar-date mentions are interpreted; ambiguous
+numeric date formats are left unchanged. The arithmetic compares calendar dates
+as written with the recorded clock's date, and identifies invalid/future dates.
+
 The explicit inference runner, `python -m bench.quality --help`, collects only the
 versioned public synthetic goldens on local vLLM or Modal. It requires a live
 endpoint and deployment manifest; it never submits private traffic. Use

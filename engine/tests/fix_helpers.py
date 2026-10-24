@@ -44,7 +44,7 @@ def build_request(inp: HelpdeskInput, *, now: datetime, rng: Random) -> JsonObje
 """
 
 
-def temporary_bundle(tmp_path, tokenizer, config):
+def temporary_bundle(tmp_path, tokenizer, config, *, calendar_window_days=None):
     repo = tmp_path / "repo"
     repo.mkdir()
     ignored = shutil.ignore_patterns("__pycache__", "*.pyc")
@@ -87,6 +87,7 @@ def test_public_request_contract():
         finding_ids=None,
         test_command=[sys.executable, "-m", "pytest", "-q", "fixture_tests.py"],
         generation=GenerationConfig(),
+        calendar_window_days=calendar_window_days,
     )
     write_model(bundle / "fix_task.json", baseline.task)
     write_model(bundle / "fix_baseline.json", baseline)

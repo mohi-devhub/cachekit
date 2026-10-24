@@ -183,7 +183,13 @@ class Workspace:
                 out.write_bytes(payload)
         return report_id
 
-    def create_task(self, report_id: str, finding_ids: list[str] | None) -> TaskView:
+    def create_task(
+        self,
+        report_id: str,
+        finding_ids: list[str] | None,
+        *,
+        calendar_window_days: int | None = None,
+    ) -> TaskView:
         bundle = self.bundle(report_id)
         demo_path = self.repo / DATASETS["demo-before"][1]
         if not demo_path.is_file() or file_sha(demo_path) != bundle.report.input_sha256:
@@ -205,6 +211,7 @@ class Workspace:
                 test_command=["python3", "-m", "pytest", "-q"],
                 finding_ids=finding_ids,
                 generation=GenerationConfig(),
+                calendar_window_days=calendar_window_days,
             )
             write_model(temporary / "fix_task.json", baseline.task)
             write_model(temporary / "fix_baseline.json", baseline)

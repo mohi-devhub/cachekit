@@ -1,5 +1,27 @@
 # Change log
 
+## 2026-10-25T00:32:34+05:30 — Add explicitly declared deterministic calendar arithmetic
+
+- Authorization: Mohith approved expanding the task to fix the pre-existing date
+  arithmetic exposed by both failed layouts. Keep the original fixed suite,
+  expected answers, pinned model, temperature and generation budget unchanged.
+- Added: a pure ISO calendar-date helper using only supplied text, recorded clock
+  and a declared comparison window. It reports elapsed days, mathematical window
+  comparisons, invalid/future dates and source fields. Date mentions stay labeled
+  unverified; no entitlement or tool authorization is inferred.
+- Verification: tasks opt in with --calendar-window-days. The verifier recomputes
+  the exact permitted system block independently, checks originals in BOTH traffic
+  and goldens, and rejects modified numbers, missing/duplicate/misplaced blocks or
+  undeclared additions. The helper/verifier are outside the candidate's allowed
+  source scope; no broad content exception or golden assertion was introduced.
+- Validation: all 147 Python tests pass, including leap-day/boundary/future/invalid
+  dates, explicit-clock validation, content rejection and golden-only enrichment
+  cases. Ruff and CLI option/help checks pass. The public-snapshot checks still
+  validate earlier artifacts. No inference or new Devin session in this commit.
+- Next: prepare a fresh baseline with the declared window, wire the exact helper
+  output into the prompt tail, then collect real quality first. Actual later
+  outcomes belong to the saved run; no application fix is approved here.
+
 ## 2026-10-25T00:11:26+05:30 — Validate real current snapshots instead of demanding historical fixtures
 
 - Fixed: the public-demo test asserted verification_current must always be false.
