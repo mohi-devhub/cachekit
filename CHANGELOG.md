@@ -1,5 +1,46 @@
 # Change log
 
+## 2026-10-25T00:07:19+05:30 — Preserve the failed date case and move existing time context last
+
+- Observed: the first actual fixed suite passes four AFTER cases but fails the
+  date/return-window schema: BEFORE and AFTER both answer true for a delivery
+  34 days earlier against a 30-day rule. The initial candidate remains unapproved.
+  All original output/measurement bytes are preserved under
+  eval_results/attempts/pr2-v1/ and the original quality_guard run.
+- Changed: move the existing Current time line to the end of system context,
+  after examples/retrieval, to make the actual date salient beside the question.
+  No rule, value, golden assertion, expected answer, seed or output budget changes.
+- Validation: final current structural/test/quality outcomes are recorded in the
+  source-bound verification artifacts. Collect the complete fixed suite first;
+  a failed assertion cannot be waived by human review. A later performance run
+  is collected only if all AFTER behavioral assertions and completion checks pass.
+- Limitations: this is a bounded prompt-layout attempt, not a general fix for
+  model arithmetic. If it fails, stop and discuss a broader application change.
+
+## 2026-10-25T00:04:44+05:30 — Save paired live replay and collect the fixed behavioral suite
+
+- Changed: recorded the real AFTER replay on the reviewed PR #2 builder, using
+  the same original synthetic inputs, planned schedule, generation settings,
+  pinned L4 profile and price as BEFORE. Three repetitions completed; immutable
+  raw measurements, deployment profile and post-collection provenance are saved.
+  The generated benchmark summary supplies all comparisons, including metrics
+  that did not improve. This is sequential replay, not an open-loop load test.
+- Evidence: eval_results/after_replay.json, after_replay.run.json and
+  benchmark_summary.md. The actual application diff keeps the static handbook
+  first, sorts tools and restores recorded history without changing goldens.
+- Validation: combined candidate passes 133 tests and Ruff; current local content,
+  scope, signature and prefix checks pass. Measured AFTER cache reuse median is
+  80.622%. The saved run contains each repetition's prediction error.
+- Quality: collect the unchanged five public synthetic BEFORE/AFTER cases on this
+  same allocation at temperature zero. Actual outputs and independently evaluated
+  outcomes are recorded only in eval_results/quality_guard/ and
+  eval_results/current_fix_summary.md; this note does not claim a pass or review.
+  Human output review and exact-diff approval remain separate gates.
+- Provenance: these record-only CHANGELOG/AI_USAGE edits follow the completed
+  benchmark and precede golden inference. The benchmark binds its earlier source;
+  the quality artifact and final verification bind the later complete source.
+  The prompt builder is identical. No second Devin session was started.
+
 ## 2026-10-24T23:53:51+05:30 — Connect real replay and candidate evidence to the UI
 
 - Changed: shared pure benchmark contracts power the read-only API, real replay
