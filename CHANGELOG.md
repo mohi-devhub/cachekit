@@ -1,5 +1,22 @@
 # Change log
 
+## 2026-10-25T00:33:50+05:30 — Append the declared calendar facts in the helpdesk prompt tail
+
+- Changed: the builder calls the pure calendar helper with the recorded clock,
+  original message/history/retrieval and handbook comparison window. It appends
+  the computed block after existing time/context only when date mentions exist.
+  Original instructions, values, selected examples, roles, tools and settings
+  remain present. No golden ID/date/expected answer is special-cased.
+- Why: delegate calendar subtraction/comparison to deterministic code, after the
+  original small model failed that arithmetic in both cache layouts.
+- Verification: use a fresh explicit task with calendar_window_days=30. The saved
+  preflight independently checks original traffic plus the fixed goldens; status
+  and repository checks are recorded in source-bound eval_results artifacts.
+  Actual fixed golden collection precedes another performance replay.
+- Limitations: ISO calendar dates only, unverified source mentions, and no grant
+  of return eligibility or authorization. All original AFTER assertions still
+  gate approval; changed model outputs require human review. No new Devin session.
+
 ## 2026-10-25T00:32:34+05:30 — Add explicitly declared deterministic calendar arithmetic
 
 - Authorization: Mohith approved expanding the task to fix the pre-existing date

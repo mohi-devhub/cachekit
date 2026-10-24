@@ -10,7 +10,9 @@ from datetime import datetime
 from importlib.resources import files
 from random import Random
 
+from cachekit.calendar import calendar_context
 from cachekit.models import JsonObject
+from cachekit.render.canonical import text_content
 
 from demo_app.helpdesk.catalog import EXAMPLES
 from demo_app.helpdesk.models import ChatRequest, HelpdeskInput
@@ -32,6 +34,15 @@ def build_request(inp: HelpdeskInput, *, now: datetime, rng: Random) -> JsonObje
         f"Retrieved context\n{context}\n"
         f"Current time: {now.isoformat()}\n"
     )
+    calendar = calendar_context(
+        message=inp.message,
+        history=[text_content(message.content) for message in inp.history],
+        documents=[doc.text for doc in inp.retrieved_docs],
+        now=now,
+        window_days=30,  # Calendar comparison from the handbook; no eligibility is authorized.
+    )
+    if calendar:
+        system += "\n" + calendar + "\n"
     tools = [deepcopy(TOOLS[name]) for name in sorted(TOOLS)]
     return ChatRequest(
         messages=[
