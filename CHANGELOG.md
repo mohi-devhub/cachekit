@@ -1,5 +1,21 @@
 # Change log
 
+## 2026-10-24T23:29:40+05:30 — Restore history and integrate framework repairs in PR #2
+
+- Changed: retain all recorded conversation messages in the prompt builder;
+  keep static handbook first, deterministic tools and the original roles/content.
+  Integrated current main's independent BEFORE fixtures and tokenizer dependency.
+- Why: the original fixed window drops the early fact required by the fixed
+  continuity golden. The verifier supports restoring original recorded history;
+  the change still needs actual behavioral review.
+- Validation: the combined candidate passes 131 Python tests plus Ruff check
+  and format. Original failed preflight remains historical evidence; no actual
+  golden or current authoritative verification pass is claimed.
+- Limitations: actual golden evidence and human approval remain required. The
+  configured context budget is enforced by analysis/collection; no history is
+  silently truncated to make a request fit.
+
+
 ## 2026-10-24T23:17:02+05:30 — Reorder the helpdesk prompt builder for prefix reuse (unapproved)
 
 - Changed: `demo_app/helpdesk/prompt.py` now puts the company support handbook first
@@ -22,6 +38,29 @@
 - Limitations: simulation only; no measured latency or cost claim. Moving context
   into another message/role was not done; it would raise simulated reuse further
   but needs quality review.
+
+
+## 2026-10-24T23:27:29+05:30 — Repair verification fixtures exposed by the actual fixer PR
+
+- Changed: isolated test repos now initialize the prompt target from frozen
+  `before.py`, independently of the live app's candidate. Added a regression
+  case with a deliberately unusable live builder to verify this separation.
+  Declared Jinja2 in the tokenizer extra; its requirement is present in the built
+  engine wheel. Exported public demo JSON is treated as generated evaluation
+  data, while its exporter and UI source remain audited.
+- Why: PR #2's source/content/prefix checks passed, but fixture setup incorrectly
+  required every fixed live builder to remain equal to BEFORE. Public demo
+  export must not itself invalidate the source-bound checks it displays.
+- Validation: reproduced the original PR's failed verification in an isolated
+  exact-source copy (`eval_results/pr2_preflight.*`). With these framework fixes,
+  that candidate passes 131 Python tests. Root focused workflow tests and Ruff
+  pass; engine wheel built and its Jinja2 extra inspected. No production gate or
+  golden assertion was removed or weakened.
+- Limitations: a fresh baseline is required after the framework change. The
+  original PR still truncates history and has no actual golden inference; it is
+  not approved or merged. One Devin session was used with a one-ACU creation cap;
+  creation/handoff evidence is sanitized and contains no raw request logs.
+
 
 ## 2026-10-24T23:09:55+05:30 — Save actual BEFORE replay and fix startup/teardown behavior
 

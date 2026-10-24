@@ -69,6 +69,9 @@ def snapshot(repo: Path, excluded: list[str] | tuple[str, ...] = ()) -> SourceSn
                 continue
             path = Path(directory) / name
             relative = path.relative_to(root).as_posix()
+            # This JSON is exported evaluation data; the exporter and UI code remain audited.
+            if relative == "web/public/demo/workspace.json":
+                continue
             if relative in excluded:
                 continue
             info = path.lstat()

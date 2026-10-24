@@ -36,7 +36,7 @@ def build_request(inp: HelpdeskInput, *, now: datetime, rng: Random) -> JsonObje
     return ChatRequest(
         messages=[
             {"role": "system", "content": system},
-            *[message.model_dump(exclude_none=True) for message in inp.history[-6:]],
+            *[message.model_dump(exclude_none=True) for message in inp.history],
             {"role": "user", "content": inp.message},
         ],
         tools=tools,
