@@ -1,5 +1,28 @@
 # Change log
 
+## 2026-10-24T23:17:02+05:30 — Reorder the helpdesk prompt builder for prefix reuse (unapproved)
+
+- Changed: `demo_app/helpdesk/prompt.py` now puts the company support handbook first
+  in the single system message, followed by the unchanged per-request block (current
+  time, customer identity, locale, the three seeded sampled examples, retrieved
+  context) in its original order; tools are sorted by name. Public signature,
+  history window, roles, tool definitions and generation settings are unchanged.
+  `before.py` stays frozen.
+- Why: fix task 391115f6d51ca8741ea5fea8 (timestamp, user_identity,
+  rag_before_static, few_shot_sampling high; tool_order low).
+- Validation (local, recorded 27-request synthetic inputs, sha256 bc20d296...):
+  `cachekit verify` SIMULATED vLLM hit rate 0.00304 -> 0.80851 (target 0.73165);
+  no high-severity findings remain (four at medium, history_truncation low);
+  content, scope, signature and prefix checks passed; Ruff passed.
+- Not passing: `python3 -m pytest -q` reports 7 failed and 13 errors, 109 passed. The
+  engine fix-workflow fixture (`engine/tests/fix_helpers.py`) copies the real
+  `prompt.py` and requires it to reproduce BEFORE requests; it is outside this
+  task's allowed files. Golden BEFORE/AFTER inference was not run, so quality
+  evidence is missing and the fix is incomplete and unapproved.
+- Limitations: simulation only; no measured latency or cost claim. Moving context
+  into another message/role was not done; it would raise simulated reuse further
+  but needs quality review.
+
 ## 2026-10-24T23:09:55+05:30 — Save actual BEFORE replay and fix startup/teardown behavior
 
 - Changed: saved the real synthetic BEFORE benchmark and live deployment profile,
