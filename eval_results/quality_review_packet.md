@@ -1,15 +1,15 @@
 # Actual golden-output review packet
 
-Recorded 2026-10-25T02:06:32+05:30. Suite: **helpdesk-e5-lite-v2**.
+Recorded 2026-10-25T02:52:56+05:30. Suite: **helpdesk-e5-lite-v2**.
 
-Overall quality status: **passed** after Mohith explicitly accepted all five outputs. Exact-diff approval and merge remain separate and have not been recorded.
+Overall quality status: **passed**. Mohith acceptance is recorded for the exact outputs; exact-diff approval and merge are separate.
 
 All five recorded inputs, date schema, model, temperature, seed and output budget are unchanged. V2 adds the requested explicit return/escalation confirmation assertions. Earlier v1 runs remain historical and are not relabeled.
 
-Task: `fbd9dd8e8d0b727ed096c56c`; implementation commit: `0a36d9360d6fb4981d101eed0c77f1587989315d`.
-Source SHA-256: `98ed921de2d6479170e9bf5a33a3f72e412319328be25cfd4c268c31d34767ae`.
-Diff SHA-256: `49d3bf2421901f5c8b1c5296c01dc9c39dfb4ba61751531288e979fe8e7fbe08`.
-[Raw actual collection](quality_guard/fbd9dd8e8d0b727ed096c56c-calendar.json), SHA-256 `76fa9464e74c3523f7473b3a06b6bc60efd29a04238ed8b73e5fccb60bfc9c38`.
+Task: `9fc9012aabdf18de95f76598`; implementation commit: `b600ed210749ea1969a2136db6307af457bf4cc5`.
+Source SHA-256: `a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab`.
+Diff SHA-256: `9892ffb9ee39be22a43bb090ea9d5069630a5cc1590903b4da5fe9771bb081c0`.
+[Raw actual collection](quality_guard/9fc9012aabdf18de95f76598-calendar.json), SHA-256 `761395061e0ff7480c002a09a278ae17186e7f5ed9ae92038c3f836626713e36`.
 [Deterministic investigation and original expected answer](golden_case_investigation.json).
 
 **semantic change: restores behavior lost by reordering, found by the quality guard**. The one response instruction is an explicitly authorized exception, not part of the reorder.
@@ -155,4 +155,4 @@ AFTER:
 {"date": "2026-10-24", "within_window": false}
 ```
 
-Failed assertions cannot be accepted away. Changed passing outputs still need human review. This five-case suite is bounded evidence, not universal semantic equivalence. Mohith accepted these five outputs and requested a static-prefix/target recheck before step 2. That complete verification now passes; exact-diff approval follows the batched step-2 changes.
+Failed assertions cannot be accepted away. Changed passing outputs still need human review. This five-case suite is bounded evidence, not universal semantic equivalence. Any different answer still needs explicit human review. Final source verification and exact-diff approval are separate.

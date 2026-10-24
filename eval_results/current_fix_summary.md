@@ -2,10 +2,10 @@
 
 This is actual saved evidence, not approval. Human review is a separate gate.
 
-Task: `fbd9dd8e8d0b727ed096c56c`. Prompt implementation parent: `780c18a22bcdd6af2d254ad96513e78f853b0c88`; record-only evidence changes follow. Original Devin task: `391115f6d51ca8741ea5fea8`.
+Task: `9fc9012aabdf18de95f76598`. Prompt implementation parent: `b600ed210749ea1969a2136db6307af457bf4cc5`; record-only evidence changes follow. Original Devin task: `391115f6d51ca8741ea5fea8`.
 
-Source SHA-256: `98ed921de2d6479170e9bf5a33a3f72e412319328be25cfd4c268c31d34767ae`.
-Diff SHA-256: `49d3bf2421901f5c8b1c5296c01dc9c39dfb4ba61751531288e979fe8e7fbe08`.
+Source SHA-256: `a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab`.
+Diff SHA-256: `9892ffb9ee39be22a43bb090ea9d5069630a5cc1590903b4da5fe9771bb081c0`.
 
 Overall verification passed: `True`.
 Quality status: `passed`.
@@ -14,7 +14,7 @@ SIMULATED reuse: 0.304% BEFORE → 80.690% AFTER.
 
 [Verification](current_fix_verify.json), [provenance](current_fix_verify.run.json), [candidate report](current_fix_report.json).
 
-[Actual golden outputs](quality_guard/fbd9dd8e8d0b727ed096c56c-calendar.json), SHA-256 `76fa9464e74c3523f7473b3a06b6bc60efd29a04238ed8b73e5fccb60bfc9c38`.
+[Actual golden outputs](quality_guard/9fc9012aabdf18de95f76598-calendar.json), SHA-256 `761395061e0ff7480c002a09a278ae17186e7f5ed9ae92038c3f836626713e36`.
 
 | Case | Exact match | AFTER assertions | JSON | Completion | Human review |
 | --- | --- | --- | --- | --- | --- |

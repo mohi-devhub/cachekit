@@ -1,15 +1,16 @@
 {
   "experiment": "benchmark-candidate-binding",
-  "status": "prompt_changed_measurement_historical",
-  "benchmark_sha256": "0e0b532b99147149fd0fcddeb9c5425e1343764f690ad0dcf6437e3c00b5fc48",
-  "benchmark_source_sha256": "4a60ea8b1d9be129400f306f703808100a10a6dc961a4e2f6f92e29a50171b0c",
-  "verified_current_source_sha256": "98ed921de2d6479170e9bf5a33a3f72e412319328be25cfd4c268c31d34767ae",
-  "task_id": "fbd9dd8e8d0b727ed096c56c",
+  "status": "current_source_quality_and_measured_replay_match",
+  "benchmark_file": "eval_results/after_confirmation_replay.json",
+  "benchmark_sha256": "aa0084e09193aeba4d169f0e4005874755210270b8e60b45338ea8b78ca8fd7d",
+  "benchmark_source_sha256": "a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab",
+  "verified_current_source_sha256": "a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab",
+  "task_id": "9fc9012aabdf18de95f76598",
   "rendered_requests_sha256": "3fd17a6029c5a771ed99e44531a17c3884fab1b9637849aa4b9b1518703d890b",
-  "benchmark_requests_sha256": "aa6944af186fba97eccec4c9efe677c9a9835e7ff6e47a5be61382531ef30c9d",
-  "rendered_requests_match": false,
-  "needs_fresh_performance_replay": true,
-  "quality_result_sha256": "76fa9464e74c3523f7473b3a06b6bc60efd29a04238ed8b73e5fccb60bfc9c38",
-  "quality_guard_status": "review_required",
-  "note": "semantic change: restores behavior lost by reordering, found by the quality guard. The authorized one-sentence addition changes prompt bytes. Existing measured AFTER timings remain immutable and apply only to the earlier candidate. Fresh quality is actual evidence for this source; no new performance run or speedup claim is made."
+  "benchmark_requests_sha256": "3fd17a6029c5a771ed99e44531a17c3884fab1b9637849aa4b9b1518703d890b",
+  "rendered_requests_match": true,
+  "needs_fresh_performance_replay": false,
+  "quality_result_sha256": "761395061e0ff7480c002a09a278ae17186e7f5ed9ae92038c3f836626713e36",
+  "quality_guard_status": "passed",
+  "note": "Actual new matched AFTER measurement includes the explicitly authorized semantic confirmation instruction. Raw earlier AFTER and failing goldens remain unchanged. All claims use the linked saved artifacts; behavioral review and exact-diff approval are separate."
 }

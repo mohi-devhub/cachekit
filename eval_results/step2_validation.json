@@ -1,0 +1,28 @@
+{
+  "experiment": "step2-must-closure",
+  "timestamp": "2026-10-24T21:23:24.210203+00:00",
+  "implementation_commit": "b600ed210749ea1969a2136db6307af457bf4cc5",
+  "task_id": "9fc9012aabdf18de95f76598",
+  "source_sha256": "a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab",
+  "verification_passed": true,
+  "quality_status": "passed",
+  "accepted_golden_cases": 5,
+  "static_prefix_all_32_requests": true,
+  "simulated_hit_rate": 0.8069048982165246,
+  "target_hit_rate": 0.7316539521857724,
+  "fresh_locked_setup": "eval_results/setup/clean_environment.json",
+  "browser_copy_mobile_ranges": "eval_results/setup/browser_checks.json",
+  "actual_matched_replay": "eval_results/benchmark_summary.md",
+  "exact_diff_sha256": "9892ffb9ee39be22a43bb090ea9d5069630a5cc1590903b4da5fe9771bb081c0",
+  "approval": "eval_results/step2_approval.json",
+  "approval_survives_actual_browser_reload": true,
+  "modal_apps_stopped_tasks_zero": true,
+  "new_devin_session_started": false,
+  "original_failing_run_preserved": true,
+  "known_limits": [
+    "Five fixed cases support only tested behaviors.",
+    "Single in-flight replay; TTFT excludes client queue delay; GPU-window cost is not a full invoice.",
+    "Real mobile hardware was not tested; scratch Chromium viewport and clipboard checks passed."
+  ],
+  "merge_status": "pending exact-head merge; record outcome separately"
+}
