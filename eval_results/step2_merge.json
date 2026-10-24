@@ -1,0 +1,12 @@
+{
+  "experiment": "step2-exact-head-merge",
+  "timestamp": "2026-10-24T21:24:06.186721+00:00",
+  "pr": "https://github.com/mohi-devhub/cachekit/pull/2",
+  "merged_head": "e8ff95d2e8d77a02f048923b34ef0111b38e3be2",
+  "merge_commit": "79ff21c3faf0db06702e27145472a3f482793715",
+  "main_source_sha256": "a2e81b98660ef4c7d59cb099cb961fc74e6b27fdce4497dc895eaf4798ab8aab",
+  "matches_approved_source": true,
+  "approval_reload_before_merge": true,
+  "merge_method": "merge commit; preserved development history",
+  "note": "User authorized step-2 approval/merge after accepted output and verification gates; no additional manual code review is asserted."
+}
