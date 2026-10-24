@@ -13,7 +13,7 @@ Complete this file during the hackathon and use it to prepare your submission th
 
 ## Participants
 
-Participate solo or in a team of up to 4. Remove unused rows.
+List participants according to the organizers' current participation format. Remove unused rows.
 
 | Participant name | GitHub handle | Contribution |
 | --- | --- | --- |
@@ -36,9 +36,9 @@ Participate solo or in a team of up to 4. Remove unused rows.
 
 ## Submission checklist
 
-- [ ] The project implementation started from scratch at the event.
-- [ ] I participated solo or with no more than 4 team members in total.
-- [x] Codex was used during development and its usage is documented.
+- [ ] The project follows the organizers' current project-start and eligibility instructions.
+- [ ] The participation format follows the organizers' current instructions.
+- [x] Actual AI assistance is documented; no particular tool or provider is required.
 - [ ] The code repository URL, short description, and working demo are provided.
 - [ ] README setup and demo instructions match the submitted code.
 - [x] Actual checks and known limitations are documented.
@@ -47,4 +47,4 @@ Participate solo or in a team of up to 4. Remove unused rows.
 - [ ] No credentials or private data are included in the repository or demo instructions.
 - [ ] The organizers' announced submission method and timing have been followed.
 
-Upstream event reference: [DevDay Exchange Community: Kochi on Luma](https://luma.com/z10nz8gp). The preserved template describes its original October event; Mohith supplied this template for the Devin Hacks Kochi project described in the README. Eligibility, the active event schedule and final submission must follow the current organizers' instructions; pending checklist items are not asserted as complete.
+Event: **Devin Hack Kochi**. Follow the organizers' current submission method and deadline. No particular template or AI provider is required. Pending checklist items are not asserted as complete.

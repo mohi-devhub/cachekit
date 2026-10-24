@@ -2,15 +2,16 @@
 
 **Find what breaks prompt caching in your LLM app, fix it with an agent, and prove the speedup on vLLM.**
 
-> Status: in development at Devin Hacks Kochi (Oct 24–25, 2026). Published figures come from saved runs in `eval_results/`, labeled SIMULATED or MEASURED.
+> Status: in development at Devin Hack Kochi (Oct 24–25, 2026). Published figures come from saved runs in `eval_results/`, labeled SIMULATED or MEASURED.
 
 Participant: Mohith ([mohi-devhub](https://github.com/mohi-devhub)), solo builder.
-Repository created from the organizer-provided
+Repository initially created from the shared
 [hackathon template](https://github.com/anima-regem/devday-kochi-hackathon-template).
-Public records: [submission](SUBMISSION.md), [AI usage](AI_USAGE.md),
-[changelog](CHANGELOG.md), and the preserved [organizer rules](RULES.md).
-The template's original event dates differ from this project's participant-provided
-Devin event schedule; its rules file is retained unchanged as upstream reference.
+No particular template or AI provider is required for this hackathon. Devin and
+other AI tools may be used. The shared template referred to an older event;
+[current event guidance](RULES.md) and organizer announcements take precedence.
+Project records: [submission](SUBMISSION.md), [AI assistance](AI_USAGE.md) and
+[changelog](CHANGELOG.md).
 
 ## How it works
 1. **Analyze:** a deterministic engine reads your rendered prompt logs, finds where requests stop sharing a prefix, labels the cause (timestamp, user identity, tool order, sampled examples, RAG placement, history truncation...), and simulates each backend's cache to compare the hit rate you have with the hit rate you could have.
@@ -117,8 +118,8 @@ uv run --no-sync cachekit fix data/fixes/demo/fix_task.json --fixer local
 Use a new bundle directory for each task. Its neighboring baseline and JSONL
 files stay under gitignored `data/`; only the redacted task is suitable for a
 fixer. The local handoff proposes a branch and task without starting an agent.
-A real Devin session requires Mohith's explicit approval, an explicit ACU cap,
-and the correct API version/account configuration. No key is loaded for a local
+Mohith has authorized selective Devin use with limited quota in mind. Use an
+explicit ACU cap and the correct API version/account configuration. No key is loaded for a local
 handoff. Remote API behavior is tested with mocks; account access is unverified.
 
 Verify the candidate after the fixer changes the allowed source files:
@@ -241,5 +242,4 @@ In `web/`, run `npm run typecheck`, `npm run lint`, and `npm run build`.
   universal equivalence proof. Actual model evidence is still missing.
 
 Private project planning and agent notes are maintained locally and excluded
-from Git. The organizer's original public instructions and submission records
-are retained separately.
+from Git. Public event guidance and project submission records are maintained separately.

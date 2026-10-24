@@ -1,5 +1,29 @@
 # Change log
 
+## 2026-10-24T22:39:55+05:30 — Resolve PR #1 against the implemented project
+
+- Changed: integrated corrected Devin Hack Kochi guidance and optional AI-tool
+  wording across the seven documentation files in PR #1. Preserved the cachekit
+  README, setup/demo commands, submission details, changelog and AI usage history.
+- Why: PR #1 started from the old template and conflicts with newer project docs.
+  No particular template or AI provider is an event requirement.
+- Validation: reviewed exact downloaded PR head d361d19d50d6589966e349804d0654730e3b7940; checked local Markdown
+  links, whitespace and preservation of all application files. Current main had
+  passed 108 Python tests before this documentation-only resolution; those tests
+  are not a new runtime claim for the PR.
+- Limitations: remote publication must succeed before the PR is conflict-free
+  on GitHub. No application behavior or quality-approval state is changed.
+
+## 2026-10-24T21:53:05+05:30 — Correct Devin Hack Kochi event guidance
+
+- Changed: corrected the current event name and AI tool guidance in `.github/pull_request_template.md`, `AGENTS.md`, `AI_USAGE.md`, `CHANGELOG.md`, `README.md`, `RULES.md`, `SUBMISSION.md`.
+- Why: the organizer shared an older event template; Devin Hack Kochi has no
+  major AI usage constraints and the template must not require a particular AI provider.
+- Scope: preserved project implementation and historical assistance records.
+- Removed obsolete template logistics, participation limits, and credit promises; current organizer instructions remain authoritative.
+- Validation: reviewed documentation diffs, checked whitespace with `git diff --check`, and checked local Markdown links for new breakage.
+- Limitations: maintainer review is pending; application tests were not run for this documentation-only correction.
+
 Record each meaningful project change during the event, newest first. Update this file in the same commit as the change. Use a real timestamp with timezone, for example `YYYY-MM-DDTHH:MM:SS+05:30`.
 
 ## Event build log
