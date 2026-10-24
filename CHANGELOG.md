@@ -1,5 +1,25 @@
 # Change log
 
+## 2026-10-25T01:07:20+05:30 — Select flat system calendar facts using saved focused diagnostics
+
+- Actual diagnostics: the same fixed date input/schema/settings were tried with
+  four transparent context format/placement variants in one allocation. Flat
+  system JSON passes the original schema; plain system text fails; both user-tail
+  variants pass. Saved every response, context, token hash, deployment and script
+  hash in eval_results/calendar_format_trials.json. These are EXPLORATORY focused
+  results, not a full quality pass or approval.
+- Changed: separate pure calendar calculations from their flat-record formatter.
+  The production context exactly matches the successful flat-system variant;
+  retain system placement and the existing narrow declaration/verification gate.
+  Emit invalid/future date labels without altering the normal-date format.
+- Validation: arithmetic, explicit-clock and content rejection cases are checked;
+  the full source-bound preflight runs before final collection. Complete fixed
+  BEFORE/AFTER quality and performance evidence still follow. No original input,
+  assertion, policy, role, tool, expected answer or generation setting changed.
+- Limits: selecting a format on this focused case does not establish general
+  equivalence; all fixed AFTER cases and human review remain required. No new
+  Devin session; the original session reports finished through a read-only check.
+
 ## 2026-10-25T00:44:48+05:30 — Expose the direct calendar-window result after a real failed attempt
 
 - Observed: actual calendar-facts v1 still failed the time case: the model answered

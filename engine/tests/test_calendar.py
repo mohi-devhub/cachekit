@@ -2,7 +2,7 @@ import json
 from datetime import UTC, datetime
 
 import pytest
-from cachekit.calendar import calendar_context
+from cachekit.calendar import calendar_context, calendar_facts
 from cachekit.fix.content import check_content
 from cachekit.models import Message, RequestRecord
 
@@ -20,7 +20,13 @@ def context(message, **kwargs):
 
 
 def facts(message, **kwargs):
-    return json.loads(context(message, **kwargs).split("\n", 1)[1])
+    return calendar_facts(
+        message=message,
+        history=kwargs.get("history", []),
+        documents=kwargs.get("documents", []),
+        now=kwargs.get("now", NOW),
+        window_days=kwargs.get("window_days", 30),
+    )
 
 
 @pytest.mark.parametrize(
@@ -55,6 +61,13 @@ def test_mentions_are_deduplicated_with_sources_and_invalid_dates_are_explicit()
     assert context("No calendar date") == ""
     assert context("01/02/2026") == ""  # Ambiguous numeric dates are not interpreted.
     assert "eligibility" not in result
+    text = context("2026-09-20 and invalid 2026-02-30 and future 2026-10-25")
+    rows = [json.loads(line) for line in text.splitlines()[1:]]
+    assert any(
+        row.get("mentioned_date") == "2026-09-20" and row["within_window"] is False for row in rows
+    )
+    assert any(row.get("invalid_date") == "2026-02-30" for row in rows)
+    assert any(row.get("date_in_future") is True for row in rows)
 
 
 @pytest.mark.parametrize("window", [0, -1, True, 1.5])
