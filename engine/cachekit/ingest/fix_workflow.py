@@ -75,6 +75,7 @@ def prepare_task(
     finding_ids: list[str] | None,
     generation: GenerationConfig,
     calendar_window_days: int | None = None,
+    restore_confirmation_commitment: bool = False,
 ) -> FixBaseline:
     if not bundle.resolve().is_relative_to(repo.resolve() / "data"):
         raise ValueError(
@@ -122,6 +123,7 @@ def prepare_task(
         finding_ids=finding_ids,
         generation=generation,
         calendar_window_days=calendar_window_days,
+        restore_confirmation_commitment=restore_confirmation_commitment,
     )
     if any(path not in before_source.files for path in task.allowed_files):
         raise ValueError("Every allowed file must exist in the audited source snapshot")
@@ -230,7 +232,14 @@ def verify_bundle(
                     now=datetime.fromisoformat(record["now"]),
                     window_days=task.calendar_window_days,
                 )
-        content = check_content(checked_before, checked_after, templates, histories, calendar)
+        content = check_content(
+            checked_before,
+            checked_after,
+            templates,
+            histories,
+            calendar,
+            restore_confirmation_commitment=task.restore_confirmation_commitment,
+        )
         encoded = "".join(canonical_json(r) + "\n" for r in after).encode()
         after_report = analyze(
             after, baseline.config, tokenizer, input_sha256=hashlib.sha256(encoded).hexdigest()

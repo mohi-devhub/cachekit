@@ -9,6 +9,11 @@ from cachekit.models import Message, RequestRecord
 from cachekit.render.canonical import text_content
 from cachekit.serialization import canonical_json
 
+CONFIRMATION_INSTRUCTION = (
+    "When asking for return or escalation details, explicitly state in the customer's "
+    "language that you will not create a return or escalate without their confirmation."
+)
+
 
 def _lines(record: RequestRecord) -> Counter:
     # This check establishes textual preservation only, not instruction authority.
@@ -30,6 +35,7 @@ def check_content(
     templates: list[SegmentTemplate],
     recorded_histories: dict[str, list[Message]] | None = None,
     allowed_calendar_context: dict[str, str] | None = None,
+    restore_confirmation_commitment: bool = False,
 ) -> ContentResult:
     old = {r.id: r for r in before}
     new = {r.id: r for r in after}
@@ -39,6 +45,7 @@ def check_content(
     tools_equal = set(old) == set(new)
     envelope_equal = tools_equal
     calendar_equal = True
+    confirmation_equal = True
     for key in sorted(set(old) | set(new)):
         if key not in old or key not in new:
             missing += int(key not in new)
@@ -73,6 +80,14 @@ def check_content(
                     id="calendar", ts=0, messages=[Message(role="system", content=context)]
                 )
             )
+        if restore_confirmation_commitment:
+            system_texts = [text_content(m.content) for m in b.messages if m.role == "system"]
+            if b.system is not None:
+                system_texts.append(text_content(b.system))
+            confirmation_equal &= (
+                sum(text.splitlines().count(CONFIRMATION_INSTRUCTION) for text in system_texts) == 1
+            )
+            computed[CONFIRMATION_INSTRUCTION] += 1
         unexpected += sum((additions - permitted - computed).values())
 
         def conversation_lines(record):
@@ -110,7 +125,8 @@ def check_content(
         and tools_equal
         and envelope_equal
         and roles_equal
-        and calendar_equal,
+        and calendar_equal
+        and confirmation_equal,
         n_requests=len(before),
         missing_lines=missing,
         added_lines=added,
@@ -121,6 +137,14 @@ def check_content(
         envelope_equal=envelope_equal,
         conversation_roles_preserved=roles_equal,
         note=(
+            (
+                "Declared semantic change: restores behavior lost by reordering, found by the "
+                "quality guard; exact confirmation sentence checked in system context. "
+            )
+            if restore_confirmation_commitment
+            else ""
+        )
+        + (
             "Original line/value checks plus independently recomputed system calendar context; "
             + ("placement passed." if calendar_equal else "context is missing or duplicated.")
             if allowed_calendar_context

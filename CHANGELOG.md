@@ -1,5 +1,20 @@
 # Change log
 
+## 2026-10-25T01:58:29+05:30 — Restore the explicit confirmation response commitment
+
+- semantic change: restores behavior lost by reordering, found by the quality guard.
+- Added one localized response instruction in demo_app/helpdesk/prompt.py; original
+  handbook, inputs, golden assertions and generation settings remain unchanged.
+- Added an opt-in hashed task flag and CLI preparation option. The verifier permits
+  only the exact declared sentence once in system context across traffic and goldens;
+  arbitrary additions, missing original content, duplicates and role changes still fail.
+- Validation: 46 focused workflow/quality tests and Ruff pass. Full source-bound
+  preflight and a new immutable five-case inference run follow before human review.
+- Preserved the actual failing run and archived its review/verification. The new
+  prompt has not been performance-benchmarked; existing timings describe earlier source.
+- No approval, merge, new Devin session or later-step work. Stop for Mohith's review.
+
+
 ## 2026-10-25T01:44:36+05:30 — Investigate time expectation and strengthen authorization goldens
 
 - Confirmed from the original committed fixture that the 34-day delivery is outside

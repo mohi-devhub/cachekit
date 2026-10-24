@@ -189,6 +189,7 @@ class Workspace:
         finding_ids: list[str] | None,
         *,
         calendar_window_days: int | None = None,
+        restore_confirmation_commitment: bool = False,
     ) -> TaskView:
         bundle = self.bundle(report_id)
         demo_path = self.repo / DATASETS["demo-before"][1]
@@ -212,6 +213,7 @@ class Workspace:
                 finding_ids=finding_ids,
                 generation=GenerationConfig(),
                 calendar_window_days=calendar_window_days,
+                restore_confirmation_commitment=restore_confirmation_commitment,
             )
             write_model(temporary / "fix_task.json", baseline.task)
             write_model(temporary / "fix_baseline.json", baseline)

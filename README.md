@@ -60,7 +60,7 @@ with [generation configuration](eval_results/workload_provenance.json),
 Each run covers 27 synthetic requests per repetition across 3 repetitions.
 Values below are medians of the repetition summaries.
 
-| Metric | BEFORE | AFTER candidate |
+| Metric | BEFORE | Earlier AFTER candidate |
 | --- | ---: | ---: |
 | Measured prompt-cache hit rate | 0.304% | 80.599% |
 | Simulated prompt-cache hit rate | 0.304% | 80.599% |
@@ -74,7 +74,10 @@ reset, idle, CPU, memory and storage, so it is narrower than the complete bill.
 The immutable run records its measured source. Later approval-display changes
 preserve the prompt builder, helper and request bytes; the current binding is
 recorded in [source/input provenance](eval_results/current_benchmark_binding.json).
-Performance evidence and human behavioral approval are separate gates.
+Performance evidence and human behavioral approval are separate gates. The latest
+explicit-confirmation instruction changes prompt bytes and has not yet been
+performance-benchmarked; the table above describes the earlier measured candidate,
+not that semantic revision.
 
 Devin opened [the application-fix PR](https://github.com/mohi-devhub/cachekit/pull/2).
 Its original local review is saved in
@@ -214,6 +217,15 @@ replace the no-write-tool and no-unconfirmed-action checks. All five recorded
 inputs and the date schema remain unchanged: September 20 to October 24 is
 34 days, outside the handbook's 30-day window. V1 artifacts remain historical;
 current approval requires evidence for the task's exact suite identity.
+
+An explicitly authorized exception can be declared at task preparation with
+`--restore-confirmation-commitment`. This is a **semantic change: restores behavior
+lost by reordering, found by the quality guard**, not part of the reorder. The
+verifier permits only the exact localized confirmation-response sentence defined
+in `fix/content.py`, exactly once in system context. The default remains disabled;
+all original content, other additions and behavioral assertions are still checked.
+The [original failed v2 run](eval_results/attempts/confirmation-omission-v2/README.md)
+is retained. Fresh current-source golden evidence and human review remain required.
 
 The explicit inference runner, `python -m bench.quality --help`, collects only the
 versioned public synthetic goldens on local vLLM or Modal. It requires a live

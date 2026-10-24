@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from cachekit.cli import app
 from cachekit.fix.approve import approve
-from cachekit.fix.content import check_content
+from cachekit.fix.content import CONFIRMATION_INSTRUCTION, check_content
 from cachekit.fix.models import VerifyResult
 from cachekit.fix.task import make_task, task_markdown
 from cachekit.ingest.fix import changes, file_sha, snapshot, write_model
@@ -60,6 +60,63 @@ def test_content_checks_text_tools_roles_settings_and_restored_history():
     assert not check_content([before], [restored], []).passed
     result = check_content([before], [restored], [], {"a": history})
     assert result.passed and result.restored_history_lines == 2
+
+
+def test_confirmation_exception_requires_exact_declared_system_sentence():
+    before = RequestRecord(
+        id="authorization",
+        ts=0,
+        messages=[
+            Message(role="system", content="Original policy"),
+            Message(role="user", content="Do not create a return or escalation yet."),
+        ],
+    )
+    after = before.model_copy(deep=True)
+    after.messages[0].content += "\n" + CONFIRMATION_INSTRUCTION
+    assert not check_content([before], [after], []).passed
+    result = check_content([before], [after], [], restore_confirmation_commitment=True)
+    assert result.passed and result.unexpected_added_lines == 0
+    assert "Declared semantic change" in result.note
+    for text in [
+        "Original policy",  # Declared instruction is required, not optional.
+        after.messages[0].content + "\n" + CONFIRMATION_INSTRUCTION,
+        after.messages[0].content.replace("without their confirmation", "without confirmation"),
+        CONFIRMATION_INSTRUCTION,  # Original policy cannot be replaced.
+        after.messages[0].content + "\nOther new instruction",
+    ]:
+        bad = after.model_copy(deep=True)
+        bad.messages[0].content = text
+        assert not check_content([before], [bad], [], restore_confirmation_commitment=True).passed
+    wrong_role = before.model_copy(deep=True)
+    wrong_role.messages[-1].content += "\n" + CONFIRMATION_INSTRUCTION
+    assert not check_content(
+        [before], [wrong_role], [], restore_confirmation_commitment=True
+    ).passed
+
+
+@pytest.mark.parametrize("declared", [False, True])
+def test_confirmation_exception_is_task_bound_and_covers_goldens(
+    tmp_path, qwen_tokenizer, config, declared
+):
+    repo, bundle, baseline, report_path = temporary_bundle(
+        tmp_path, qwen_tokenizer, config, restore_confirmation_commitment=declared
+    )
+    candidate = CANDIDATE.replace(
+        "    return request\n",
+        '    request["messages"][0]["content"] += "\\n" + '
+        + repr(CONFIRMATION_INSTRUCTION)
+        + "\n    return request\n",
+    )
+    (repo / "demo_app/helpdesk/prompt.py").write_text(candidate)
+    result, after, _ = check(repo, bundle, report_path, qwen_tokenizer)
+    assert baseline.task.restore_confirmation_commitment is declared
+    assert result.content_check.passed is declared
+    assert result.content_check.n_requests == len(after) + 5
+    assert result.quality_guard.status == "not_run" and not result.passed
+    if declared:
+        assert "semantic change: restores behavior lost by reordering" in task_markdown(
+            baseline.task
+        )
 
 
 @pytest.mark.parametrize("declared", [False, True])

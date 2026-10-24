@@ -87,6 +87,7 @@ def register(app: typer.Typer) -> None:
         test_command: Annotated[str, typer.Option()] = "python3 -m pytest -q",
         quality_max_tokens: Annotated[int, typer.Option(min=1)] = 512,
         calendar_window_days: Annotated[int | None, typer.Option(min=1)] = None,
+        restore_confirmation_commitment: Annotated[bool, typer.Option()] = False,
         config_dir: Annotated[Path | None, typer.Option()] = None,
     ) -> None:
         """Prepare an immutable local baseline and a redacted agent task; no agent starts."""
@@ -111,6 +112,7 @@ def register(app: typer.Typer) -> None:
                 finding_ids=finding,
                 generation=GenerationConfig(max_tokens=quality_max_tokens),
                 calendar_window_days=calendar_window_days,
+                restore_confirmation_commitment=restore_confirmation_commitment,
             )
             write_model(out.with_suffix(".json"), baseline.task)
             write_model(out.parent / "fix_baseline.json", baseline)

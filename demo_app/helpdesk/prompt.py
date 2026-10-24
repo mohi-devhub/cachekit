@@ -28,6 +28,9 @@ def build_request(inp: HelpdeskInput, *, now: datetime, rng: Random) -> JsonObje
     context = "\n\n".join(f"Document {doc.id}\n{doc.text}" for doc in inp.retrieved_docs)
     system = (
         f"Company support handbook\n{POLICY_TEXT}\n"
+        # Semantic change: restores behavior lost by reordering, found by the quality guard.
+        "When asking for return or escalation details, explicitly state in the customer's "
+        "language that you will not create a return or escalate without their confirmation.\n"
         f"Customer: {inp.user.name} (id {inp.user.id}, tier {inp.user.tier})\n"
         f"Locale: {inp.user.locale}\n\n"
         f"Support examples\n{examples}\n\n"
