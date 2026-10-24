@@ -1,5 +1,22 @@
 # Change log
 
+## 2026-10-25T05:24:00+05:30 — Compare saved replay evidence offline
+
+- Added `cachekit compare BEFORE_JSON AFTER_JSON --out FILE`
+  (`engine/cachekit/cli_compare.py`, registered in `engine/cachekit/cli.py`):
+  validates both `BenchmarkRun` files, refuses pairs failing `matched_replays`
+  with named reasons, and writes median (min–max) for measured hit rate, TTFT
+  p50/p95, latency p50/p95 and GPU-window USD/1k with both artifact SHA-256s.
+- Why: a deterministic, dependency-free way to compare saved replays without
+  re-running inference or trusting precomputed summaries.
+- Usage in `bench/SAVED_COMPARISON.md`. Tests in `engine/tests/test_compare_cli.py`.
+- Validation: ran on the committed BEFORE/AFTER confirmation replays (medians match
+  the stored summaries); the new focused test module (8 tests) and Ruff check/format
+  on the three changed Python files pass. The full Python suite was not run.
+- Limitations: formats existing saved measurements only; no new benchmark, no model
+  output recollection, no quality or behavioral approval. Cost excludes startup,
+  warmup, idle, CPU, memory and storage; sequential trace only.
+
 ## 2026-10-25T04:55:10+05:30 — Replace the tile grid with an Anatomy cache scanner
 
 - On Mohith's explicit follow-up, built an SVG optical comparator with the

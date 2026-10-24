@@ -11,6 +11,7 @@ from typing import Annotated
 import typer
 
 from cachekit import __version__
+from cachekit.cli_compare import register as register_compare_command
 from cachekit.cli_fix import register as register_fix_commands
 from cachekit.ingest.config import load_config
 from cachekit.ingest.jsonl import read_requests, write_requests
@@ -171,6 +172,7 @@ def analyze_command(
 
 
 register_fix_commands(app)
+register_compare_command(app)
 
 
 def main() -> None:
