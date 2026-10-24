@@ -1,7 +1,7 @@
 """Explicit, temporary single-L4 serving. Import/deploy does not run a benchmark.
 
 Deploy with the isolated Modal CLI: modal deploy bench/modal_vllm.py
-Stop after collection: modal app stop cachekit-benchmark
+Stop after collection: modal app stop --yes cachekit-benchmark
 """
 
 import modal

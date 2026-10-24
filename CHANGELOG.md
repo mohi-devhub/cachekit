@@ -1,5 +1,25 @@
 # Change log
 
+## 2026-10-24T23:09:55+05:30 — Save actual BEFORE replay and fix startup/teardown behavior
+
+- Changed: saved the real synthetic BEFORE benchmark and live deployment profile,
+  plus checksum-bound dataset/seed provenance. Added a baseline-only README table.
+  Kept original measurement bytes immutable and saved no prompt/answer text.
+- Observed: all three repetitions completed; measured token-cache reuse matched
+  the sequential simulator for this traffic/profile. TTFT excludes client queue
+  delay; the saved scheduling lag is disclosed, not described as open-loop load.
+- Fixed: startup readiness now uses bounded backoff. Earlier frequent 503 health
+  probes appeared as dashboard errors during model startup; inference proceeded
+  only after readiness. Non-interactive teardown uses `modal app stop --yes`;
+  the initial stop lacked that flag and was retried successfully by app ID.
+- Validation: actual stream/usage/cache/reset/source checks passed during the run;
+  benchmark schema and dataset/input hashes verified afterward. All 21 focused
+  benchmark tests and Ruff passed after the backoff change; the full harness
+  suite previously passed 129 tests. Modal confirms stopped with zero tasks.
+- Limitations: BEFORE-only; no application fix, AFTER performance or quality pass
+  is claimed. GPU-window cost remains narrower than the complete Modal invoice.
+
+
 ## 2026-10-24T22:54:51+05:30 — Implement the MUST measurement harness
 
 - Changed: added strict token-counter/config parsing, streaming completion

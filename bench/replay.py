@@ -46,6 +46,7 @@ async def scrape(client: httpx.AsyncClient, endpoint: str, model: str) -> CacheS
 async def wait_ready(client, endpoint: str, timeout: float = 900):
     endpoint = validate_endpoint(endpoint)
     deadline = time.perf_counter() + timeout
+    interval = 5
     while True:
         try:
             response = await client.get(endpoint + "/health")
@@ -57,7 +58,9 @@ async def wait_ready(client, endpoint: str, timeout: float = 900):
             pass
         if time.perf_counter() >= deadline:
             raise ValueError("Server startup exceeded the readiness timeout")
-        await asyncio.sleep(2)
+        remaining = deadline - time.perf_counter()
+        await asyncio.sleep(min(interval, max(0, remaining)))
+        interval = min(interval * 2, 30)
 
 
 async def inspect_deployment(client, endpoint: str, deployment_id: str) -> DeploymentIdentity:

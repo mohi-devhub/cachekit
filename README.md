@@ -32,6 +32,24 @@ achievable hit rates are **SIMULATED**; they establish neither speedup nor
 behavioral equivalence. The separate Modal smoke test establishes serving and
 cache reuse only.
 
+The first real **BEFORE-only** replay is saved in
+[eval_results/before_replay.json](eval_results/before_replay.json), with
+[dataset/seed provenance](eval_results/before_replay.run.json) and its
+[deployment profile](eval_results/benchmark_deployment.json).
+It covers 27 synthetic requests per repetition across 3 repetitions.
+
+| Metric | BEFORE: median across repetitions |
+| --- | ---: |
+| Measured prompt-cache hit rate | 0.304% |
+| Simulated prompt-cache hit rate | 0.304% |
+| Client TTFT p50 | 2.014 s |
+| Client TTFT p95 | 2.557 s |
+
+This is a sequential client trace replay. Bursty arrivals waited at the client;
+the maximum recorded scheduling lag was 50.801 s, excluded from TTFT.
+It establishes baseline evidence, not open-loop load performance, a speedup or
+an approved fix. An actual AFTER fix and paired measurements remain pending.
+
 The Phase 3 local preflight is saved in
 [eval_results/phase3_verify.json](eval_results/phase3_verify.json), with run
 provenance alongside it. It checks the unchanged application and remains

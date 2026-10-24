@@ -27,7 +27,7 @@ development server. Do not redeploy or share its endpoint while collecting.
 Stop it as soon as the collection block finishes:
 
 ```sh
-modal app stop cachekit-benchmark
+modal app stop --yes cachekit-benchmark
 ```
 
 Idle scale-down is a fallback, not a substitute for stopping the deployment.
@@ -51,16 +51,18 @@ uv run --no-sync python -m bench.replay run \
   --exclusive-server --out eval_results/local/before_replay.json
 ```
 
-Inspection waits for readiness and checks live version, model, context, block
+Inspection waits for readiness with bounded backoff, treating startup 503 as
+not-ready, and checks live version, model, context, block
 size and KV capacity. Revision and GPU identity come from the operator's pinned
 deployment; this is not cryptographic hardware/model attestation. If live capacity
 changes, use it to configure analysis before preparing a fresh fix task. The
 quality collector requires the exact task profile.
 
 Replay sends exact locally rendered token IDs to `/v1/completions`, with the
-recorded deterministic generation settings. It preserves timestamp order and
-relative arrival times, executes requests sequentially, and records scheduling
-lag separately from TTFT. Use the same `--arrival-scale` for BEFORE and AFTER.
+recorded deterministic generation settings. It preserves timestamp order and uses relative arrival times as the planned
+schedule. Only one request is in flight; overlapping arrivals wait at the client,
+and that scheduling lag is recorded separately from TTFT and request latency.
+This is a sequential trace replay, not an open-loop load or concurrency benchmark. Use the same `--arrival-scale` for BEFORE and AFTER.
 Unsupported/mismatched settings or over-budget contexts fail instead of silently
 changing requests. No inference request is retried.
 
