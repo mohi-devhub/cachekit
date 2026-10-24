@@ -250,6 +250,7 @@ class Workspace:
             else ("candidate" if changed else "prepared")
         )
         verification = None
+        verification_path = None
         for p in [
             self.results / "verifications" / f"{task_id}.latest.json",
             self.repo / "eval_results/phase3_verify.json",
@@ -258,6 +259,7 @@ class Workspace:
                 result = read_model(p, VerifyResult)
                 if result.task_id == task_id:
                     verification = result
+                    verification_path = p
                     break
         handoff = None
         for p in [
@@ -299,6 +301,13 @@ class Workspace:
             verification=verification,
             verification_current=bool(
                 verification and verification.after_source_sha256 == current.sha256
+            ),
+            approval=(
+                self._approval_for(verification_path, verification, current.sha256)
+                if verification_path is not None
+                and verification is not None
+                and verification.task_sha256 == digest(baseline.task)
+                else None
             ),
             handoff=handoff,
             quality_outputs=outputs,
@@ -360,25 +369,33 @@ class Workspace:
                 or candidate.n_requests != before.report.n_requests
             ):
                 raise ValueError("Candidate provenance mismatch")
-            approval = None
-            approval_path = self.results / "approvals" / f"{file_sha(result_path)}.json"
-            if approval_path.is_file():
-                saved = read_model(approval_path, Approval)
-                if (
-                    result.passed
-                    and saved.task_id == task_id
-                    and saved.verify_sha256 == file_sha(result_path)
-                    and saved.after_source_sha256 == result.after_source_sha256
-                    and saved.diff_sha256 == result.diff_sha256
-                ):
-                    approval = saved
             return CandidateView(
                 task_id=task_id,
                 report=candidate,
                 verification=result,
                 metadata=metadata,
-                approval=approval,
+                approval=self._approval_for(result_path, result, result.after_source_sha256),
             )
+        return None
+
+    def _approval_for(
+        self, verification_path: Path, result: VerifyResult, current_source: str
+    ) -> Approval | None:
+        if not result.passed or result.after_source_sha256 != current_source:
+            return None
+        identity = file_sha(verification_path)
+        path = self.results / "approvals" / f"{identity}.json"
+        if not path.is_file():
+            return None
+        saved = read_model(path, Approval)
+        if (
+            saved.task_id == result.task_id
+            and saved.verify_sha256 == identity
+            and saved.after_source_sha256 == result.after_source_sha256
+            and saved.diff_sha256 == result.diff_sha256
+            and saved.quality_result_sha256 == result.quality_guard.result_sha256
+        ):
+            return saved
         return None
 
     def evidence_path(self, kind: str, evidence_id: str) -> Path:

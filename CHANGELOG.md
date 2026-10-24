@@ -1,5 +1,27 @@
 # Change log
 
+## 2026-10-25T01:22:46+05:30 — Persist approval display and publish the actual matched replay
+
+- Fixed: the fix page previously stored approval only in React state and reset it
+  on reload. Expose an optional persisted approval in TaskView, validate its exact
+  task/verification/source/diff/quality identities, and use the same getter for
+  candidate views. Render the saved record after reload; stale or mismatched
+  approvals stay absent. Approval creation/revalidation gates are unchanged.
+- Evidence: the flat-calendar source completed the fixed actual five-case suite;
+  every AFTER assertion, schema and completion check passes. Output differences
+  still require human review. The matched three-repetition replay is saved
+  immutably; README tables come directly from it, with scheduling/cost limits.
+- Provenance: the UI/API display repair follows that collection and changes no
+  prompt builder/helper or rendered input bytes. A fresh task/quality collection
+  binds the final complete source; the input/component binding records which
+  immutable performance run applies. No measurement is relabeled or invented.
+- Validation: persisted API approval reload, stale-source hiding and malformed
+  quality-identity checks are covered in the API regression. Full Python/Ruff and
+  web typecheck/lint/production-build checks run for this checkpoint. Earlier
+  actual code checks passed all 147 tests; final source-bound preflight follows.
+- Human review remains pending. No new Devin session, model, golden, generation
+  setting, original instruction, tool or role change.
+
 ## 2026-10-25T01:07:20+05:30 — Select flat system calendar facts using saved focused diagnostics
 
 - Actual diagnostics: the same fixed date input/schema/settings were tried with

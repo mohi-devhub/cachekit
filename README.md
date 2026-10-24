@@ -31,7 +31,7 @@ flowchart LR
     Devin --> Verify[Content, tests and saved golden checks]
     Verify --> Human[Human output and exact-diff review]
     Human --> Approval[Approved candidate]
-    Approval --> Replay[Same traffic on pinned vLLM]
+    Verify --> Replay[Same traffic on pinned vLLM]
     Replay --> Evidence[Saved measurements and UI]
 ```
 
@@ -52,23 +52,29 @@ achievable hit rates are **SIMULATED**; they establish neither speedup nor
 behavioral equivalence. The separate Modal smoke test establishes serving and
 cache reuse only.
 
-The first real **BEFORE-only** replay is saved in
-[eval_results/before_replay.json](eval_results/before_replay.json), with
-[dataset/seed provenance](eval_results/before_replay.run.json) and its
-[deployment profile](eval_results/benchmark_deployment.json).
-It covers 27 synthetic requests per repetition across 3 repetitions.
+The matched **MEASURED** pair is saved in
+[BEFORE](eval_results/before_replay.json) and [AFTER](eval_results/after_replay.json),
+with [generation configuration](eval_results/workload_provenance.json),
+[BEFORE provenance](eval_results/before_replay.run.json),
+[AFTER provenance](eval_results/after_replay.run.json) and serving manifests.
+Each run covers 27 synthetic requests per repetition across 3 repetitions.
+Values below are medians of the repetition summaries.
 
-| Metric | BEFORE: median across repetitions |
-| --- | ---: |
-| Measured prompt-cache hit rate | 0.304% |
-| Simulated prompt-cache hit rate | 0.304% |
-| Client TTFT p50 | 2.014 s |
-| Client TTFT p95 | 2.557 s |
+| Metric | BEFORE | AFTER candidate |
+| --- | ---: | ---: |
+| Measured prompt-cache hit rate | 0.304% | 80.599% |
+| Simulated prompt-cache hit rate | 0.304% | 80.599% |
+| Client TTFT p50 | 2.014 s | 1.319 s |
+| Client TTFT p95 | 2.557 s | 1.671 s |
+| GPU-window USD / 1k requests | $0.7893 | $0.7051 |
 
-This is a sequential client trace replay. Bursty arrivals waited at the client;
-the maximum recorded scheduling lag was 50.801 s, excluded from TTFT.
-It establishes baseline evidence, not open-loop load performance, a speedup or
-an approved fix. The generated saved-results table reports whether a matching AFTER run exists.
+This is sequential client replay. Bursty arrivals wait at the client; TTFT starts
+at send and excludes that queue delay. GPU-window USD excludes startup, warmup,
+reset, idle, CPU, memory and storage, so it is narrower than the complete bill.
+The immutable run records its measured source. Later approval-display changes
+preserve the prompt builder, helper and request bytes; the current binding is
+recorded in [source/input provenance](eval_results/current_benchmark_binding.json).
+Performance evidence and human behavioral approval are separate gates.
 
 Devin opened [the application-fix PR](https://github.com/mohi-devhub/cachekit/pull/2).
 Its original local review is saved in

@@ -32,6 +32,7 @@ export type TaskView = {
   task: { id: string; allowed_files: string[]; target_hit_rate: number; [key: string]: unknown };
   markdown: string; state: "prepared" | "candidate" | "stale";
   verification: Verification | null; verification_current: boolean;
+  approval?: { reviewer: string; timestamp: string; diff_sha256: string } | null;
   handoff: { status: string; task_id?: string; reference_only?: boolean; pr_url: string | null; session_url: string | null } | null;
   golden_cases: { id: string; category: string; assertions: string[]; expects_json: boolean }[];
   quality_outputs: { id: string; before: { text: string; tool_calls: unknown[] }; after: { text: string; tool_calls: unknown[] } }[];
