@@ -49,6 +49,8 @@ def temporary_bundle(tmp_path, tokenizer, config):
     repo.mkdir()
     ignored = shutil.ignore_patterns("__pycache__", "*.pyc")
     shutil.copytree(REPO / "demo_app", repo / "demo_app", ignore=ignored)
+    # Every isolated test starts from the planted BEFORE, regardless of the live app fix.
+    shutil.copyfile(repo / "demo_app/helpdesk/before.py", repo / "demo_app/helpdesk/prompt.py")
     shutil.copytree(REPO / "engine/cachekit", repo / "engine/cachekit", ignore=ignored)
     (repo / "fixture_tests.py").write_text("""from datetime import UTC, datetime
 from random import Random

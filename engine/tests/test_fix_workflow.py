@@ -274,3 +274,46 @@ def test_cli_unmodified_builder_remains_unapproved_and_devin_requires_permission
         app, ["fix", str(bundle / "fix_task.json"), "--repo", str(repo), "--fixer", "devin"]
     )
     assert result.exit_code == 1 and "explicitly approve" in result.output
+
+
+def test_fixture_baseline_is_independent_of_the_live_prompt_builder(
+    tmp_path, config, qwen_tokenizer, monkeypatch
+):
+    import shutil
+
+    import fix_helpers
+
+    original = fix_helpers.REPO
+    source = tmp_path / "live-source"
+    shutil.copytree(
+        original / "demo_app",
+        source / "demo_app",
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+    )
+    shutil.copytree(
+        original / "engine/cachekit",
+        source / "engine/cachekit",
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+    )
+    (source / "demo_app/helpdesk/prompt.py").write_text(
+        "def build_request(*args, **kwargs):\n"
+        '    raise AssertionError("Live candidate must not define a test baseline")\n'
+    )
+    monkeypatch.setattr(fix_helpers, "REPO", source)
+    isolated = tmp_path / "isolated"
+    isolated.mkdir()
+    _, _, baseline, _ = temporary_bundle(isolated, qwen_tokenizer, config)
+    assert baseline.task.findings
+    assert baseline.before_requests_sha256
+
+
+def test_exported_demo_data_does_not_invalidate_audited_source(tmp_path):
+    (tmp_path / "source.py").write_text("original")
+    output = tmp_path / "web/public/demo/workspace.json"
+    output.parent.mkdir(parents=True)
+    output.write_text('{"evidence": "earlier saved run"}')
+    before = snapshot(tmp_path)
+    output.write_text('{"evidence": "new saved run"}')
+    assert snapshot(tmp_path).sha256 == before.sha256
+    (tmp_path / "source.py").write_text("changed")
+    assert snapshot(tmp_path).sha256 != before.sha256

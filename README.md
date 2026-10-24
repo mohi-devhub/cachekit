@@ -50,6 +50,15 @@ the maximum recorded scheduling lag was 50.801 s, excluded from TTFT.
 It establishes baseline evidence, not open-loop load performance, a speedup or
 an approved fix. An actual AFTER fix and paired measurements remain pending.
 
+Devin opened [the application-fix PR](https://github.com/mohi-devhub/cachekit/pull/2).
+Its original local review is saved in
+[eval_results/pr2_preflight.json](eval_results/pr2_preflight.json). Content, scope,
+signature and simulated-reuse checks passed, but repository tests exposed a test
+fixture bug and golden evidence was missing. It is not an approved fix. The test
+harness now initializes isolated fixtures from the frozen BEFORE builder, so a
+real application fix no longer invalidates unrelated fixture setup. A fresh
+baseline and actual behavioral evidence are required after framework changes.
+
 The Phase 3 local preflight is saved in
 [eval_results/phase3_verify.json](eval_results/phase3_verify.json), with run
 provenance alongside it. It checks the unchanged application and remains
@@ -114,7 +123,8 @@ This validates the tokenizer's downloaded revision and checksums, renders the fu
 Qwen chat template, detects variable spans and structural breakers, and simulates
 the configured vLLM block pool. The report is deterministic; timestamp and run
 provenance go in a separate `.run.json` file. Analysis never downloads files or
-calls inference. Keep tokenizer download metadata alongside its files.
+calls inference. Keep tokenizer download metadata alongside its files. The tokenizer extra also
+installs Jinja2, required by Transformers chat-template rendering.
 
 Local dataset adapters are available through `cachekit ingest --source
 swe-agent|glaive|jsonl INPUT --out OUTPUT`. Dataset `--limit` counts source rows or
@@ -237,7 +247,8 @@ Modal invoice. Headline BEFORE/AFTER results still require actual saved runs.
 - Replay currently supports the documented helpdesk input adapter. Other apps
   need their own adapter or fresh capture; generic source tracing is stretch work.
 - Source identity uses content/mode manifests, excluding private data, generated
-  evaluation artifacts, caches, dependencies and hidden files except GitHub
+  evaluation artifacts (including the exported public demo JSON), caches,
+  dependencies and hidden files except GitHub
   workflows and the declared public ignore/env examples. Unsupported source
   symlinks fail explicitly. The diff hash binds audited source states, rather
   than Git patch text. Saved pre-Git runs record a null Git SHA and bind source

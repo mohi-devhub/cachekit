@@ -1,0 +1,14 @@
+{
+  "experiment": "scoped_devin_fix",
+  "recorded_at": "2026-10-24T17:42:22.967729+00:00",
+  "task_id": "391115f6d51ca8741ea5fea8",
+  "task_sha256": "7c0dcbda408c305d1e6710042f6bd7f25e7871ddcb57d9709f6f29869fdfd1eb",
+  "before_source_sha256": "dcd755ee52064ffe7f76d9728ad8bd067e439cb8fe3e2ce524211c8fb282237d",
+  "session_id": "devin-073b44e4e576425a8658d1273b613b5e",
+  "session_url": "https://app.devin.ai/sessions/073b44e4e576425a8658d1273b613b5e",
+  "repo": "https://github.com/mohi-devhub/cachekit",
+  "api_version": "v1",
+  "max_acu_limit": 1,
+  "initial_status": "running",
+  "note": "One explicitly authorized bounded session; task Markdown only. No raw logs, private baseline files, responses or credential values were sent in the task. This is handoff evidence, not a verification or quality pass."
+}

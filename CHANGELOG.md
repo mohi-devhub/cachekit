@@ -1,5 +1,27 @@
 # Change log
 
+## 2026-10-24T23:27:29+05:30 — Repair verification fixtures exposed by the actual fixer PR
+
+- Changed: isolated test repos now initialize the prompt target from frozen
+  `before.py`, independently of the live app's candidate. Added a regression
+  case with a deliberately unusable live builder to verify this separation.
+  Declared Jinja2 in the tokenizer extra; its requirement is present in the built
+  engine wheel. Exported public demo JSON is treated as generated evaluation
+  data, while its exporter and UI source remain audited.
+- Why: PR #2's source/content/prefix checks passed, but fixture setup incorrectly
+  required every fixed live builder to remain equal to BEFORE. Public demo
+  export must not itself invalidate the source-bound checks it displays.
+- Validation: reproduced the original PR's failed verification in an isolated
+  exact-source copy (`eval_results/pr2_preflight.*`). With these framework fixes,
+  that candidate passes 131 Python tests. Root focused workflow tests and Ruff
+  pass; engine wheel built and its Jinja2 extra inspected. No production gate or
+  golden assertion was removed or weakened.
+- Limitations: a fresh baseline is required after the framework change. The
+  original PR still truncates history and has no actual golden inference; it is
+  not approved or merged. One Devin session was used with a one-ACU creation cap;
+  creation/handoff evidence is sanitized and contains no raw request logs.
+
+
 ## 2026-10-24T23:09:55+05:30 — Save actual BEFORE replay and fix startup/teardown behavior
 
 - Changed: saved the real synthetic BEFORE benchmark and live deployment profile,
