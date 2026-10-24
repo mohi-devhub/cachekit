@@ -1,5 +1,23 @@
 # Change log
 
+## 2026-10-25T00:11:26+05:30 — Validate real current snapshots instead of demanding historical fixtures
+
+- Fixed: the public-demo test asserted verification_current must always be false.
+  A real current task export correctly set it true, causing one failure with 132
+  other tests passing. Replace that historical-only expectation with typed task
+  and candidate identity checks plus exact report/verification byte hashes.
+  Ignored local task bundles are not required for a public checkout's test.
+- Scope: no runtime content, quality, source-scope or approval gate changed.
+  Production still rejects stale/tampered evidence. The original failing date
+  outputs remain preserved; the timestamp-last layout remains unapproved.
+- Operations: stopped the second warming allocation before it generated any
+  golden request. Start a fresh baseline after this framework-only source change
+  and reuse the documented model/inputs/settings. Actual later quality outcomes
+  belong to the saved run, not a claimed pass in this entry.
+- Validation: the focused public-snapshot test and all 133 Python tests pass;
+  Ruff check and format pass. The saved current candidate exercises the positive
+  snapshot path. No actual behavioral pass is claimed.
+
 ## 2026-10-25T00:07:19+05:30 — Preserve the failed date case and move existing time context last
 
 - Observed: the first actual fixed suite passes four AFTER cases but fails the

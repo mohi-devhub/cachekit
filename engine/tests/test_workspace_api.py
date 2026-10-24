@@ -168,7 +168,28 @@ def test_public_demo_snapshot_matches_saved_evidence():
         assert artifact["sha256"] == file_sha(path)
         assert artifact["run"] == json.loads(path.read_text())
     assert any(a["run"]["variant"] == "before" for a in exported["bench"]["benchmarks"])
-    assert not exported["fix"]["verification_current"]
+    from cachekit.api_models import CandidateView, TaskView
+
+    task = TaskView.model_validate(exported["fix"])
+    if task.verification_current:
+        assert task.verification is not None
+        assert task.verification.task_id == task.task.id
+    if exported.get("after") is not None:
+        candidate = CandidateView.model_validate(exported["after"])
+        assert candidate.metadata.source_sha256 == candidate.verification.after_source_sha256
+        assert candidate.metadata.task_sha256 == candidate.verification.task_sha256
+        import hashlib
+
+        from cachekit.serialization import canonical_json
+
+        assert (
+            candidate.metadata.verify_sha256
+            == hashlib.sha256((canonical_json(candidate.verification) + "\n").encode()).hexdigest()
+        )
+        assert (
+            candidate.metadata.candidate_report_sha256
+            == hashlib.sha256((canonical_json(candidate.report) + "\n").encode()).hexdigest()
+        )
 
 
 def test_current_candidate_is_hash_bound_and_stale_source_is_not_served(
