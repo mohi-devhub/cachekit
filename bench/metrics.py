@@ -4,25 +4,12 @@ import json
 import math
 import re
 
-from cachekit.models import BoundaryModel
-from pydantic import Field
+from cachekit.benchmark_models import CacheSnapshot
 
 SAMPLE = re.compile(r"^([a-zA-Z_:][a-zA-Z0-9_:]*)(?:\{(.*)\})?\s+(\S+)(?:\s+\d+)?$")
 LABEL = re.compile(r'([a-zA-Z_][a-zA-Z0-9_]*)="((?:[^"\\]|\\.)*)"(?:,|$)')
 QUERIES = "vllm:prefix_cache_queries_total"
 HITS = "vllm:prefix_cache_hits_total"
-
-
-class CacheSnapshot(BoundaryModel):
-    queries: int = Field(ge=0)
-    hits: int = Field(ge=0)
-    queries_created: float
-    hits_created: float
-    block_size: int = Field(gt=0)
-    capacity_blocks: int = Field(gt=0)
-    capacity_tokens: int = Field(gt=0)
-    running: int = Field(ge=0)
-    waiting: int = Field(ge=0)
 
 
 def parse_metrics(text: str, model: str) -> CacheSnapshot:

@@ -1,5 +1,27 @@
 # Change log
 
+## 2026-10-24T23:53:51+05:30 — Connect real replay and candidate evidence to the UI
+
+- Changed: shared pure benchmark contracts power the read-only API, real replay
+  table and deterministic saved-results formatter. Paired status requires the
+  same original inputs, schedule, settings, price and serving profile. Missing or
+  mismatched runs stay explicit; GPU-window costs exclude the rest of the bill.
+- Changed: AFTER heatmaps require a current-source candidate with checksum-bound
+  report/verification provenance. The fix page displays actual public synthetic
+  golden outputs and preserves the identity of a referenced original Devin task.
+  Export can select a registered current task; stale network fallbacks are labeled.
+- Evidence: saved real BEFORE benchmark is exported; actual desktop/mobile report
+  and benchmark captures are in screenshots/. Browser Analyze completed against
+  the local engine. Root generated captures are excluded from code identity;
+  exporter/UI source and tests remain audited. README includes the architecture.
+- Validation: all 133 Python tests passed, including stale/tampered candidate,
+  golden-output identity and paired-run cases. Ruff, web typecheck, lint and
+  production build passed. No mock measurements were published.
+- Review: PR #2 was updated normally at 4979634, with all recorded history kept;
+  its combined candidate passes 131 tests and Ruff. Human review is pending. The
+  next live AFTER/golden collection requires a fresh baseline after these source
+  changes. This milestone starts no new Devin session and claims no quality pass.
+
 ## 2026-10-24T23:27:29+05:30 — Repair verification fixtures exposed by the actual fixer PR
 
 - Changed: isolated test repos now initialize the prompt target from frozen

@@ -253,6 +253,7 @@ class VerificationRun(BoundaryModel):
     config_sha256: SHA256
     inputs_sha256: SHA256
     verify_sha256: SHA256
+    candidate_report_sha256: SHA256 | None = None
     model: str
     revision: str
     tokenizer: JsonObject

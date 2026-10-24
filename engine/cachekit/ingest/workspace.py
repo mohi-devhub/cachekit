@@ -9,9 +9,24 @@ from datetime import UTC, datetime
 from pathlib import Path
 from threading import RLock
 
-from cachekit.api_models import DatasetOption, ReportBundle, ReportSummary, TaskView
-from cachekit.fix.models import FixResult, QualityReview, QualityRun, VerifyResult
-from cachekit.fix.task import task_markdown
+from cachekit.api_models import (
+    BenchmarkArtifact,
+    CandidateView,
+    DatasetOption,
+    ReportBundle,
+    ReportSummary,
+    TaskView,
+)
+from cachekit.benchmark_models import BenchmarkRun, matched_replays
+from cachekit.fix.models import (
+    Approval,
+    FixResult,
+    QualityReview,
+    QualityRun,
+    VerificationRun,
+    VerifyResult,
+)
+from cachekit.fix.task import digest, task_markdown
 from cachekit.ingest.fix import changes, file_sha, read_model, snapshot, write_model
 from cachekit.ingest.fix_workflow import default_allowed_files, load_bundle, prepare_task
 from cachekit.ingest.jsonl import parse_requests
@@ -238,11 +253,38 @@ class Workspace:
                     verification = result
                     break
         handoff = None
-        p = self.repo / "eval_results/fix_handoff.json"
-        if p.is_file():
-            saved = read_model(p, FixResult)
-            if saved.task_id == task_id:
-                handoff = saved.model_dump(mode="json")
+        for p in [
+            path.parent / "handoff.json",
+            self.repo / "eval_results/devin_handoff.json",
+            self.repo / "eval_results/fix_handoff.json",
+        ]:
+            if p.is_file():
+                saved = read_model(p, FixResult)
+                if saved.task_id == task_id:
+                    handoff = saved.model_dump(mode="json")
+                    break
+        reference = path.parent / "handoff_reference.json"
+        if handoff is None and reference.is_file():
+            # Operator-recorded lineage keeps the original task identity, never a claimed rerun.
+            saved = read_model(reference, FixResult)
+            handoff = saved.model_dump(mode="json")
+            handoff["reference_only"] = True
+        outputs = []
+        if verification and verification.quality_guard.result_sha256:
+            try:
+                quality_path = self.evidence_path(
+                    "quality", verification.quality_guard.result_sha256
+                )
+                run = read_model(quality_path, QualityRun)
+                if (
+                    suite.public_synthetic
+                    and run.dataset == "public-synthetic-helpdesk-goldens"
+                    and run.task_sha256 == digest(baseline.task)
+                    and {o.id for o in run.outputs} == {c.id for c in suite.cases}
+                ):
+                    outputs = [o.model_dump(mode="json") for o in run.outputs]
+            except FileNotFoundError:
+                pass
         return TaskView(
             task=baseline.task,
             markdown=task_markdown(baseline.task),
@@ -252,6 +294,7 @@ class Workspace:
                 verification and verification.after_source_sha256 == current.sha256
             ),
             handoff=handoff,
+            quality_outputs=outputs,
             golden_cases=[
                 {
                     "id": c.id,
@@ -267,6 +310,70 @@ class Workspace:
             ),
         )
 
+    def candidate_view(self, report_id: str) -> CandidateView | None:
+        before = self.bundle(report_id)
+        before_sha = file_sha(self.report_path(report_id))
+        tasks = list((self.private / "tasks").glob("*/fix_task.json"))
+        for path in sorted(tasks):
+            baseline, _ = load_bundle(path)
+            task_id = baseline.task.id
+            if baseline.task.report_sha256 != before_sha:
+                continue
+            result_path = self.results / "verifications" / f"{task_id}.latest.json"
+            if not result_path.is_file():
+                continue
+            result = read_model(result_path, VerifyResult)
+            if (
+                result.task_id != task_id
+                or result.task_sha256 != digest(baseline.task)
+                or result.after_source_sha256
+                != snapshot(self.repo, baseline.excluded_artifacts).sha256
+                or not result.scope_check.passed
+                or not result.signature_check.passed
+                or result.content_check is None
+                or not result.content_check.passed
+            ):
+                continue
+            report_path = self.results / "candidates" / f"{task_id}.json"
+            if not report_path.is_file():
+                report_path = result_path.with_suffix(".report.json")
+            metadata_path = result_path.parent / f"{file_sha(result_path)}.run.json"
+            if not metadata_path.is_file():
+                metadata_path = result_path.with_suffix(".run.json")
+            if not report_path.is_file() or not metadata_path.is_file():
+                continue
+            candidate = read_model(report_path, Report)
+            metadata = read_model(metadata_path, VerificationRun)
+            if (
+                metadata.verify_sha256 != file_sha(result_path)
+                or metadata.candidate_report_sha256 != file_sha(report_path)
+                or metadata.source_sha256 != result.after_source_sha256
+                or metadata.task_sha256 != result.task_sha256
+                or candidate.config_sha256 != before.report.config_sha256
+                or candidate.n_requests != before.report.n_requests
+            ):
+                raise ValueError("Candidate provenance mismatch")
+            approval = None
+            approval_path = self.results / "approvals" / f"{file_sha(result_path)}.json"
+            if approval_path.is_file():
+                saved = read_model(approval_path, Approval)
+                if (
+                    result.passed
+                    and saved.task_id == task_id
+                    and saved.verify_sha256 == file_sha(result_path)
+                    and saved.after_source_sha256 == result.after_source_sha256
+                    and saved.diff_sha256 == result.diff_sha256
+                ):
+                    approval = saved
+            return CandidateView(
+                task_id=task_id,
+                report=candidate,
+                verification=result,
+                metadata=metadata,
+                approval=approval,
+            )
+        return None
+
     def evidence_path(self, kind: str, evidence_id: str) -> Path:
         if not re.fullmatch(r"[a-f0-9]{64}", evidence_id):
             raise FileNotFoundError("Unknown evidence")
@@ -278,12 +385,35 @@ class Workspace:
         raise FileNotFoundError("Unknown evidence")
 
     def bench(self) -> dict:
+        benchmarks = []
+        for name, variant in [("before_replay.json", "before"), ("after_replay.json", "after")]:
+            path = self.repo / "eval_results" / name
+            if path.is_file():
+                run = read_model(path, BenchmarkRun)
+                if run.variant != variant or len(run.runs) != run.settings.repetitions:
+                    raise ValueError("Replay identity/repetition mismatch")
+                benchmarks.append(
+                    BenchmarkArtifact(source="eval_results/" + name, sha256=file_sha(path), run=run)
+                )
+        comparison_ready = False
+        if len(benchmarks) == 2:
+            old, new = [b.run for b in benchmarks]
+            comparison_ready = matched_replays(old, new)
+        if comparison_ready:
+            note = "Matched planned schedule and profile; behavioral approval is a separate gate."
+        elif len(benchmarks) == 1 and benchmarks[0].run.variant == "before":
+            note = "BEFORE baseline recorded. The AFTER replay is pending."
+        elif benchmarks:
+            note = "A matching BEFORE/AFTER pair is unavailable; no paired speedup is established."
+        else:
+            note = "No performance replay is saved yet."
         path = self.repo / "eval_results/modal_smoke.json"
         if not path.is_file():
             return {
                 "smoke": None,
-                "benchmarks": [],
-                "note": "No measured benchmark run is available.",
+                "benchmarks": [b.model_dump(mode="json") for b in benchmarks],
+                "comparison_ready": comparison_ready,
+                "note": note,
             }
         raw = json.loads(path.read_text())
         summary = raw["summary"]
@@ -310,6 +440,7 @@ class Workspace:
                 "source": "eval_results/modal_smoke.json",
                 "sha256": file_sha(path),
             },
-            "benchmarks": [],
-            "note": "Serving validation only; no measured BEFORE/AFTER speedup or cost savings.",
+            "benchmarks": [b.model_dump(mode="json") for b in benchmarks],
+            "comparison_ready": comparison_ready,
+            "note": note,
         }

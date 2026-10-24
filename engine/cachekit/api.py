@@ -16,6 +16,7 @@ from cachekit.api_models import (
     AnalyzeResponse,
     ApproveRequest,
     BenchView,
+    CandidateView,
     DatasetOption,
     ReportBundle,
     ReportSummary,
@@ -96,6 +97,10 @@ def create_app(
     def report_bundle(report_id: str):
         return workspace.bundle(report_id)
 
+    @api.get("/reports/{report_id}/after", response_model=CandidateView | None)
+    def candidate_view(report_id: str):
+        return workspace.candidate_view(report_id)
+
     @api.post("/analyze", response_model=AnalyzeResponse)
     def analyze_dataset(options: AnalyzeRequest):
         path = root / DATASETS[options.dataset_id][1]
@@ -151,6 +156,9 @@ def create_app(
         write_model(out, result)
         verification_id = file_sha(out)
         write_model(out.parent / f"{verification_id}.json", result)
+        candidate_path = workspace.results / "candidates" / f"{options.task_id}.json"
+        if candidate is not None:
+            write_model(candidate_path, candidate)
         baseline, _ = load_bundle(task_path)
         records = read_recorded(directory / "recorded_inputs.jsonl")
         provenance = VerificationRun(
@@ -162,6 +170,7 @@ def create_app(
             config_sha256=result.config_sha256,
             inputs_sha256=result.inputs_sha256,
             verify_sha256=verification_id,
+            candidate_report_sha256=file_sha(candidate_path) if candidate is not None else None,
             model=baseline.config.vllm.model,
             revision=baseline.config.vllm.revision,
             tokenizer=workspace.tokenizer().identity,
@@ -170,8 +179,6 @@ def create_app(
             seed={key: sorted({r[key] for r in records}) for key in ("rng_seed", "worker_seed")},
         )
         write_model(out.parent / f"{verification_id}.run.json", provenance)
-        if candidate is not None:
-            write_model(workspace.results / "candidates" / f"{options.task_id}.json", candidate)
         if after:
             write_requests(after, workspace.private / "candidates" / f"{options.task_id}.jsonl")
         return VerifyResponse(id=verification_id, result=result)
