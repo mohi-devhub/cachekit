@@ -131,7 +131,7 @@ def task_markdown(task: FixTask) -> str:
         "- Raw request logs, recorded private inputs and responses stay local or on Modal.",
         "- Do not read .env or credentials, upload data/, or call an external LLM with logs.",
         "- Keep docs/, private agent notes, CLAUDE.md and DECISIONS.md local; do not commit them.",
-        "- Preserve organizer files; update CHANGELOG.md and AI_USAGE.md with honest timestamps.",
+        "- Keep project documentation accurate and report the checks actually performed.",
         "- Report the branch/PR URL, changed files and actual checks. Do not invent results.",
         "- No source locator evidence exists yet; inspect the allowed builder source in the repo.",
         "- The reuse target is a simulation, not a measured latency or dollar-savings claim.",

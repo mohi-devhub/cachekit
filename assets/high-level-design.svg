@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="1000" viewBox="0 0 1680 1000">
+<title>cachekit: high-level design</title>
+<desc>Recorded requests enter a deterministic offline analysis pipeline. Local API and dashboard inspect saved evidence. Explicit bounded Devin handoff and model collectors operate outside the core. Human review remains separate.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#252525"/></marker></defs>
+<rect width="1680" height="1000" fill="#fff"/>
+<style>text{font-family:"Segoe Print","Bradley Hand",ui-sans-serif,system-ui,sans-serif;fill:#161616}.title{font-size:24px;font-weight:600}.label{font-size:16px;font-weight:600}.small{font-size:12px;fill:#555}.edge{fill:none;stroke:#252525;stroke-width:1.35;marker-end:url(#arrow)}.group{fill:none;stroke:#555;stroke-width:1.25;stroke-dasharray:6 5}.box{fill:#fff;stroke:#333;stroke-width:1.35}</style>
+<text x="840" y="34" text-anchor="middle" class="title">cachekit: High-Level Design</text>
+<rect class="group" x="340" y="65" width="520" height="555" rx="14"/>
+<text x="356" y="88" text-anchor="start" class="label">Offline engine · Python · no LLM or network calls</text>
+<rect class="box" x="365" y="105" width="470" height="64" rx="10"/>
+<text x="600.0" y="130" text-anchor="middle" class="label">Typed contracts and pinned configuration</text>
+<text x="600.0" y="151" text-anchor="middle" class="small">Pydantic · model/tokenizer revision · cache profile</text>
+<rect x="380" y="199" width="440" height="395" rx="13" fill="none" stroke="#222"/>
+<rect x="386" y="205" width="428" height="383" rx="9" fill="none" stroke="#777"/>
+<rect class="box" x="406" y="220" width="388" height="59" rx="10"/>
+<text x="600.0" y="245" text-anchor="middle" class="label">Ingest and validate</text>
+<text x="600.0" y="266" text-anchor="middle" class="small">Native JSONL / public-dataset adapters</text>
+<rect class="box" x="406" y="291" width="388" height="59" rx="10"/>
+<text x="600.0" y="316" text-anchor="middle" class="label">Render and tokenize</text>
+<text x="600.0" y="337" text-anchor="middle" class="small">Exact local Qwen chat template and token IDs</text>
+<rect class="box" x="406" y="362" width="388" height="59" rx="10"/>
+<text x="600.0" y="387" text-anchor="middle" class="label">Diagnose cache breakers</text>
+<text x="600.0" y="408" text-anchor="middle" class="small">Route grouping · stable/variable alignment · rules</text>
+<rect class="box" x="406" y="433" width="388" height="59" rx="10"/>
+<text x="600.0" y="458" text-anchor="middle" class="label">Simulate prefix reuse</text>
+<text x="600.0" y="479" text-anchor="middle" class="small">Sequential prompt-only block cache · bounded capacity</text>
+<rect class="box" x="406" y="504" width="388" height="59" rx="10"/>
+<text x="600.0" y="529" text-anchor="middle" class="label">Build report</text>
+<text x="600.0" y="550" text-anchor="middle" class="small">Findings · redacted preview · SIMULATED reuse</text>
+<path class="edge" d="M600 279 L600 291"/>
+<path class="edge" d="M600 350 L600 362"/>
+<path class="edge" d="M600 421 L600 433"/>
+<path class="edge" d="M600 492 L600 504"/>
+<path class="edge" d="M600 169 L600 220"/>
+<rect class="box" x="35" y="125" width="250" height="88" rx="10"/>
+<text x="160.0" y="150" text-anchor="middle" class="label">Recorded model requests</text>
+<text x="160.0" y="171" text-anchor="middle" class="small">Application-provided JSONL</text>
+<text x="160.0" y="188" text-anchor="middle" class="small">messages · tools · settings · route</text>
+<rect class="box" x="35" y="298" width="250" height="85" rx="10"/>
+<text x="160.0" y="323" text-anchor="middle" class="label">Public dataset adapters</text>
+<text x="160.0" y="344" text-anchor="middle" class="small">SWE-agent / Glaive</text>
+<text x="160.0" y="361" text-anchor="middle" class="small">converted locally; source timing is synthetic</text>
+<rect class="box" x="35" y="500" width="250" height="90" rx="10"/>
+<text x="160.0" y="525" text-anchor="middle" class="label">data/ · private local inputs</text>
+<text x="160.0" y="546" text-anchor="middle" class="small">Recorded clock/seeds and BEFORE requests</text>
+<text x="160.0" y="563" text-anchor="middle" class="small">Never sent to Devin or committed</text>
+<path class="edge" d="M285 169 L314 169 L314 250 L406 250"/>
+<rect x="289.15" y="229" width="113.69999999999999" height="17" fill="#fff"/>
+<text x="346" y="241" text-anchor="middle" class="small">validated records</text>
+<path class="edge" d="M285 340 L325 340 L325 265 L406 265"/>
+<rect class="group" x="965" y="65" width="675" height="282" rx="14"/>
+<text x="981" y="88" text-anchor="start" class="label">Local inspection · FastAPI + Next.js / React / TypeScript</text>
+<rect class="box" x="990" y="112" width="253" height="83" rx="10"/>
+<text x="1116.5" y="137" text-anchor="middle" class="label">Local REST API</text>
+<text x="1116.5" y="158" text-anchor="middle" class="small">Analyze files · read reports and evidence</text>
+<text x="1116.5" y="175" text-anchor="middle" class="small">Task / verify / approval endpoints</text>
+<rect class="box" x="1340" y="112" width="275" height="83" rx="10"/>
+<text x="1477.5" y="137" text-anchor="middle" class="label">Web dashboard</text>
+<text x="1477.5" y="158" text-anchor="middle" class="small">Findings · cache scanner · measured results</text>
+<text x="1477.5" y="175" text-anchor="middle" class="small">Fix task and behavioral review</text>
+<rect class="box" x="1340" y="251" width="275" height="65" rx="10"/>
+<text x="1477.5" y="276" text-anchor="middle" class="label">Saved public demo snapshot</text>
+<text x="1477.5" y="297" text-anchor="middle" class="small">Read-only fallback; matching evidence only</text>
+<path class="edge" d="M794 535 L910 535 L910 152 L990 152"/>
+<rect x="846.1" y="357" width="119.8" height="17" fill="#fff"/>
+<text x="906" y="369" text-anchor="middle" class="small">reports / evidence</text>
+<path class="edge" d="M1243 153 L1340 153"/>
+<rect x="1251.45" y="132" width="77.1" height="17" fill="#fff"/>
+<text x="1290" y="144" text-anchor="middle" class="small">HTTP / JSON</text>
+<path class="edge" d="M1478 251 L1478 195" stroke-dasharray="5 4"/>
+<rect x="1487.2" y="213" width="107.6" height="17" fill="#fff"/>
+<text x="1541" y="225" text-anchor="middle" class="small">offline fallback</text>
+<rect class="group" x="965" y="390" width="675" height="282" rx="14"/>
+<text x="981" y="413" text-anchor="start" class="label">Explicit source-fix workflow · external fixer stays outside the engine</text>
+<rect class="box" x="990" y="435" width="253" height="78" rx="10"/>
+<text x="1116.5" y="460" text-anchor="middle" class="label">Constrained task builder</text>
+<text x="1116.5" y="481" text-anchor="middle" class="small">Redacted structured findings</text>
+<text x="1116.5" y="498" text-anchor="middle" class="small">Allowed files · preserved baseline</text>
+<rect class="box" x="1340" y="435" width="275" height="78" rx="10"/>
+<text x="1477.5" y="460" text-anchor="middle" class="label">Devin · explicit capped session</text>
+<text x="1477.5" y="481" text-anchor="middle" class="small">Repository source + redacted task only</text>
+<text x="1477.5" y="498" text-anchor="middle" class="small">Fresh branch; no private prompt logs</text>
+<rect class="box" x="990" y="564" width="253" height="81" rx="10"/>
+<text x="1116.5" y="589" text-anchor="middle" class="label">Local deterministic verifier</text>
+<text x="1116.5" y="610" text-anchor="middle" class="small">Scope / content / roles / tests / reuse</text>
+<text x="1116.5" y="627" text-anchor="middle" class="small">Consumes saved golden outputs and reviews</text>
+<rect class="box" x="1340" y="564" width="275" height="81" rx="10"/>
+<text x="1477.5" y="589" text-anchor="middle" class="label">GitHub pull request</text>
+<text x="1477.5" y="610" text-anchor="middle" class="small">Actual changed source and checks</text>
+<text x="1477.5" y="627" text-anchor="middle" class="small">Saved comparison table; no automatic merge</text>
+<path class="edge" d="M794 550 L920 550 L920 474 L990 474"/>
+<rect x="848.15" y="454" width="113.69999999999999" height="17" fill="#fff"/>
+<text x="905" y="466" text-anchor="middle" class="small">selected findings</text>
+<path class="edge" d="M1243 474 L1340 474" stroke-dasharray="5 4"/>
+<rect x="1237.2" y="453" width="107.6" height="17" fill="#fff"/>
+<text x="1291" y="465" text-anchor="middle" class="small">approved handoff</text>
+<path class="edge" d="M1478 513 L1478 564" stroke-dasharray="5 4"/>
+<rect x="1483.1" y="530" width="119.8" height="17" fill="#fff"/>
+<text x="1543" y="542" text-anchor="middle" class="small">source change + PR</text>
+<path class="edge" d="M1340 605 L1243 605"/>
+<rect x="1242.3" y="582" width="95.39999999999999" height="17" fill="#fff"/>
+<text x="1290" y="594" text-anchor="middle" class="small">local checkout</text>
+<rect class="box" x="1280" y="713" width="335" height="64" rx="10"/>
+<text x="1447.5" y="738" text-anchor="middle" class="label">Human review and merge</text>
+<text x="1447.5" y="759" text-anchor="middle" class="small">Acceptance is bound to the exact verified source</text>
+<path class="edge" d="M1117 645 L1117 745 L1280 745"/>
+<rect x="1139.2" y="723" width="107.6" height="17" fill="#fff"/>
+<text x="1193" y="735" text-anchor="middle" class="small">passing evidence</text>
+<path class="edge" d="M1500 645 L1500 713"/>
+<rect x="1510.55" y="676" width="64.9" height="17" fill="#fff"/>
+<text x="1543" y="688" text-anchor="middle" class="small">review PR</text>
+<path d="M410 670 C410 650 800 650 800 670 L800 735 C800 755 410 755 410 735 Z" class="box"/>
+<ellipse cx="605" cy="670" rx="195" ry="17" fill="#fff" stroke="#333" stroke-width="1.35"/>
+<text x="605" y="709" text-anchor="middle" class="label">eval_results/ · saved artifacts</text>
+<text x="605" y="730" text-anchor="middle" class="small">Reports · hashes · counters · timings · public golden outputs</text>
+<path class="edge" d="M600 563 L600 653"/>
+<rect x="612.75" y="623" width="162.5" height="17" fill="#fff"/>
+<text x="694" y="635" text-anchor="middle" class="small">save deterministic report</text>
+<path class="edge" d="M800 700 L900 700 L900 620 L990 620"/>
+<rect x="841.15" y="681" width="113.69999999999999" height="17" fill="#fff"/>
+<text x="898" y="693" text-anchor="middle" class="small">recorded evidence</text>
+<path class="edge" d="M285 546 L310 546 L310 774 L955 774 L955 635 L990 635"/>
+<rect x="407.65" y="772" width="174.7" height="17" fill="#fff"/>
+<text x="495" y="784" text-anchor="middle" class="small">local recorded-input replay</text>
+<rect class="group" x="340" y="819" width="905" height="150" rx="14"/>
+<text x="356" y="842" text-anchor="start" class="label">Explicit measurement tools · separate from offline analysis</text>
+<rect class="box" x="365" y="858" width="235" height="82" rx="10"/>
+<text x="482.5" y="883" text-anchor="middle" class="label">Quality collector</text>
+<text x="482.5" y="904" text-anchor="middle" class="small">Fixed public BEFORE / AFTER cases</text>
+<text x="482.5" y="921" text-anchor="middle" class="small">Actual model answers; bounded assertions</text>
+<rect class="box" x="630" y="858" width="235" height="92" rx="10"/>
+<text x="747.5" y="883" text-anchor="middle" class="label">Matched replay runner</text>
+<text x="747.5" y="904" text-anchor="middle" class="small">Same inputs / schedule / settings</text>
+<text x="747.5" y="921" text-anchor="middle" class="small">MEASURED counters and TTFT</text>
+<text x="747.5" y="938" text-anchor="middle" class="small">GPU-window cost component</text>
+<rect class="box" x="960" y="858" width="260" height="82" rx="10"/>
+<text x="1090.0" y="883" text-anchor="middle" class="label">Modal + pinned vLLM / Qwen</text>
+<text x="1090.0" y="904" text-anchor="middle" class="small">One L4 · explicit inference allocation</text>
+<text x="1090.0" y="921" text-anchor="middle" class="small">Stop after the measurement block</text>
+<path class="edge" d="M600 877 L615 877 L615 850 L1090 850 L1090 858" stroke-dasharray="5 4"/>
+<rect x="750.9" y="829" width="144.2" height="17" fill="#fff"/>
+<text x="823" y="841" text-anchor="middle" class="small">explicit quality calls</text>
+<path class="edge" d="M865 906 L960 906" stroke-dasharray="5 4"/>
+<rect x="861.25" y="883" width="101.5" height="17" fill="#fff"/>
+<text x="912" y="895" text-anchor="middle" class="small">explicit replay</text>
+<path class="edge" d="M483 858 L483 752"/>
+<rect x="495.8" y="795" width="156.39999999999998" height="17" fill="#fff"/>
+<text x="574" y="807" text-anchor="middle" class="small">save actual observations</text>
+<rect class="box" x="1280" y="819" width="335" height="150" rx="10"/>
+<text x="1447.5" y="844" text-anchor="middle" class="label">Legend and boundaries</text>
+<text x="1447.5" y="865" text-anchor="middle" class="small">Double border: deterministic core</text>
+<text x="1447.5" y="882" text-anchor="middle" class="small">Solid arrow: primary data flow</text>
+<text x="1447.5" y="899" text-anchor="middle" class="small">Dashed arrow: explicit / secondary flow</text>
+<text x="1447.5" y="916" text-anchor="middle" class="small">Diagram describes implemented boundaries</text>
+</svg>

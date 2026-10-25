@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-10-25T00:36:56.155158+00:00",
+  "change": "Remove public template records, rewrite README with actual benchmark captures, add architecture SVG/PNG/source.",
+  "removed_public_template_files": [
+    "AGENTS.md",
+    "AI_USAGE.md",
+    "CHANGELOG.md",
+    "RULES.md",
+    "SUBMISSION.md",
+    ".github/pull_request_template.md"
+  ],
+  "originals_retained": "Ignored local archive; local agent guide remains ignored. Git history retained.",
+  "necessary_compatibility_fix": "Task default scope includes project records only when they exist; task text no longer requires template records.",
+  "focused_python_tests": "3 passed; optional-record unit cases plus existing task/quality-blocking API regression.",
+  "known_warning": "Starlette TestClient httpx deprecation.",
+  "ruff": "Passed on changed Python files. Initial renderer line-width failures corrected.",
+  "local_links_checked": [
+    "README.md",
+    "web/README.md",
+    "web/THIRD_PARTY_NOTICES.md"
+  ],
+  "svg_xml": "valid",
+  "benchmark_artifacts_unchanged": true,
+  "captures": "Actual saved benchmark table, cached-token fraction, TTFT p95 and GPU-window cost; no inference.",
+  "full_python_suite_run": false,
+  "current_source_quality_approval": "Not claimed. Prior accepted/model evidence remains tied to recorded source."
+}
