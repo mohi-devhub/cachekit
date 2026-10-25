@@ -282,10 +282,11 @@ def verify_bundle(
 
 
 def default_allowed_files(repo: Path) -> list[str]:
-    """Private planning is optional in a public checkout; public change records are not."""
-    paths = ["demo_app/helpdesk/prompt.py", "CHANGELOG.md", "AI_USAGE.md"]
-    if (repo / "DECISIONS.md").is_file():
-        paths.append("DECISIONS.md")
+    """The application target is required; local project records are optional."""
+    paths = ["demo_app/helpdesk/prompt.py"]
+    for name in ("CHANGELOG.md", "AI_USAGE.md", "DECISIONS.md"):
+        if (repo / name).is_file():
+            paths.append(name)
     return paths
 
 

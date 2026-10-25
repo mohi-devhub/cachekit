@@ -1,0 +1,683 @@
+{
+  "files": {
+    ".env.example": {
+      "sha256": "1447eb9def0167a8f94d02c1077d265ee08e56ac2bf26e9e2923dd343249032d",
+      "executable": false
+    },
+    ".gitignore": {
+      "sha256": "2b2dbb0fd4c341bbdef4d353b5b86694dfc0f8f5eea235621330a42b4e6bcf05",
+      "executable": false
+    },
+    "AGENTS.md": {
+      "sha256": "5e13a80874d0ee412bd23a2db3a7e2139eb904791e1a9f00eeb739f441c65e29",
+      "executable": false
+    },
+    "AI_USAGE.md": {
+      "sha256": "b6185fb3688986f0f09a0aa1bc3efc8311c2e2fd17a13538734c5091c933a953",
+      "executable": false
+    },
+    "CHANGELOG.md": {
+      "sha256": "56440400f7f4b073c6f76e667d92a1d09a539daabe826afe179092e66d1d2d18",
+      "executable": false
+    },
+    "CLAUDE.md": {
+      "sha256": "116bf97734ec0749630ad7fb1b942e6764a18dd921af812102881aa4c6a09b7e",
+      "executable": false
+    },
+    "DECISIONS.md": {
+      "sha256": "a1ba3b9dccaea08ac011d7ce0cce66647f2dac6627fa02c3f2ba56bb55aac236",
+      "executable": false
+    },
+    "README.md": {
+      "sha256": "65a21d952461b9326c7fa834e8c77f1764ca6b045251ddc0644dd9e9fa491744",
+      "executable": false
+    },
+    "RULES.md": {
+      "sha256": "9453535fb44f8fa32a760f54a2fbf0e1973395938ec35e2e4b9cbdfdcc1b2f3c",
+      "executable": false
+    },
+    "SUBMISSION.md": {
+      "sha256": "e7bb86eb25afe108dfbc0181a21cdd05d5f732ada3661d56ed83755184be9028",
+      "executable": false
+    },
+    "pyproject.toml": {
+      "sha256": "0fbe0a0a0d0f665f8a27dd091bc13d9cb130d103e6d883b98b479a304589cd0c",
+      "executable": false
+    },
+    "uv.lock": {
+      "sha256": "2317bf7dc5e0eebea1084052d0423e36378ed752fa47ca9c3957f31e56cd5223",
+      "executable": false
+    },
+    ".github/pull_request_template.md": {
+      "sha256": "a212af5d3c5d91dc3010d5d5dc441aa188f8c1347aa30b4c048fe3e4bb054581",
+      "executable": false
+    },
+    "bench/README.md": {
+      "sha256": "382726b3a17b13ca08d2d775678f92922dbd00f89b2453d4231b2181e6233da8",
+      "executable": false
+    },
+    "bench/__init__.py": {
+      "sha256": "e395f1b23b9cf4ce579582fd466e477cd8e7c8842b94daccf6784121ce3f6770",
+      "executable": false
+    },
+    "bench/gpt_researcher.py": {
+      "sha256": "58727bf2c42a8e5d5a450f73b221a70dd4907bfe39c3ebd10826c6ba13c21d98",
+      "executable": false
+    },
+    "bench/metrics.py": {
+      "sha256": "7c0ea3d7ff5a069bedfddb9829fd8b8ce59dc458eb9475ce74d6c63d48a342a5",
+      "executable": false
+    },
+    "bench/middleware.py": {
+      "sha256": "38742683d3d97d752f7b63ed341b06d4692efb110a89f1a780650c6c1f2e38df",
+      "executable": false
+    },
+    "bench/modal_vllm.py": {
+      "sha256": "d0c93d9a769f68e8b831b19e712118d9085dbc64e1bcb005d1836693ff7f99f7",
+      "executable": false
+    },
+    "bench/models.py": {
+      "sha256": "f6b471114908d6ef209e91d682b02cdfdaf7817ea85417bfe2dcf3b7b669b2f6",
+      "executable": false
+    },
+    "bench/quality.py": {
+      "sha256": "a69cb245e74d36c95fda33c3f618e4b1b86917f9518df7c4a21ed382c3478188",
+      "executable": false
+    },
+    "bench/replay.py": {
+      "sha256": "8ae17f519242fb76672e945ac354444dfad0f9d784a7fa21717d86ba2940d00b",
+      "executable": false
+    },
+    "bench/stream.py": {
+      "sha256": "db674610eb054fc98037946b6a8900a97b6772cc3e4b22d7d4612dc5049d42f7",
+      "executable": false
+    },
+    "bench/fixtures/gpt_researcher.json": {
+      "sha256": "6dcb11a87edae4823ef6383b3a649bbd98f91c71431bfd90a0f40ad70995998b",
+      "executable": false
+    },
+    "demo_app/__init__.py": {
+      "sha256": "00897430c098b9685b4a098d336ad8597a489bd55fd222e4bded4def5141ba19",
+      "executable": false
+    },
+    "demo_app/goldens.json": {
+      "sha256": "62b7c06494edccd0822a9ee63f8515f0d1ceea9b305908de7c9545c09f5f3e5c",
+      "executable": false
+    },
+    "demo_app/goldens.py": {
+      "sha256": "35dde9d3aa2f6f3e7a82bc5266e6563c51b91fa6fa17684f32460805526441a4",
+      "executable": false
+    },
+    "demo_app/traffic.py": {
+      "sha256": "1419067dc3d7c2353af1fcafe285a56a61b761de35846075e65510f463f5176f",
+      "executable": false
+    },
+    "demo_app/worker.py": {
+      "sha256": "28c795e1d176e17a0819e760c15bcfad5299817a78500be283606e161feb4bea",
+      "executable": false
+    },
+    "demo_app/helpdesk/__init__.py": {
+      "sha256": "d4ccb1967e85cb4ee471caba2b763dec56f5089a8ec88c8ea8131ab00ee57ed7",
+      "executable": false
+    },
+    "demo_app/helpdesk/before.py": {
+      "sha256": "e67e236f6e4e57a8bc1fefa0f306a61ed80fa5f98b6dba45288b6e26bb4e76ce",
+      "executable": false
+    },
+    "demo_app/helpdesk/catalog.py": {
+      "sha256": "9d8db3fa5b3f6a5399bbce6f4ad9df49eefd06ba7e17cd128f85d53e970386ca",
+      "executable": false
+    },
+    "demo_app/helpdesk/models.py": {
+      "sha256": "8972bd75853044c213fe2b656413344ae2d5c93e3d07e0c5a29ede4f7868ae05",
+      "executable": false
+    },
+    "demo_app/helpdesk/policy.txt": {
+      "sha256": "6478e2bf779fd29c72b6f8d8d4bd15f6289d9f2b112e608946a4a637a0c5717c",
+      "executable": false
+    },
+    "demo_app/helpdesk/prompt.py": {
+      "sha256": "0e5f62f6bfa90397c8af4d267b8b42ad6991fc018c1a4ce41e7a1e5c91deac3d",
+      "executable": false
+    },
+    "demo_app/helpdesk/tools.py": {
+      "sha256": "cd35fca62339be6e30f8018010c649be9b911181ec2cf10f94dd73ad210d8e90",
+      "executable": false
+    },
+    "demo_app/inputs/.gitignore": {
+      "sha256": "809e715b00595d4b1df86b9119e75547579c739da18ca9f7afba2af5dfe6776d",
+      "executable": false
+    },
+    "demo_app/inputs/README.md": {
+      "sha256": "967359f11a55c64be3d63cf5569a85966d6df39787f678ab4dfb60949323d8f3",
+      "executable": false
+    },
+    "demo_app/tests/test_demo.py": {
+      "sha256": "6fdeed7fd6b39a2a488430790bbf79dc756ccb07dcffcac4aabe98611725a20d",
+      "executable": false
+    },
+    "docs/01-OVERVIEW.md": {
+      "sha256": "bfbc6dfad99376b9bdd9e2a43287a3cc13c597e41eea6984bdd6841854d543f7",
+      "executable": false
+    },
+    "docs/02-ARCHITECTURE.md": {
+      "sha256": "f91e86e625b1922ed61dbca797df016c988ec5d841445d76f93f5f3461f738dd",
+      "executable": false
+    },
+    "docs/03-CACHE-RULES.md": {
+      "sha256": "cca0cae4598255d534fdb975b1a45888e2c97bc5fd9b0f070b3fe713f24b2167",
+      "executable": false
+    },
+    "docs/04-BREAKERS.md": {
+      "sha256": "609a83fbf2d14de736887936e15f9cab9b0684a604e435ef8f372ab64b8ea48e",
+      "executable": false
+    },
+    "docs/05-DATA-AND-LOGS.md": {
+      "sha256": "2caccb99d48790d0ffb5d027a92717a9075d6918fe1a18432544ef516228a63a",
+      "executable": false
+    },
+    "docs/06-BENCHMARKS.md": {
+      "sha256": "fc151dff6a00808def35ddf40435d1c03fd952869b72bb1cfe8be4f3366598db",
+      "executable": false
+    },
+    "docs/07-INFRA-MODAL.md": {
+      "sha256": "f326da61e94dffab6f1c3d5e67ec827249b1723027fcb75d9e704e0c925eaa58",
+      "executable": false
+    },
+    "docs/08-FIXER-AND-DEVIN.md": {
+      "sha256": "5266f076a10afd6577ee7f7a316762953de997b3b6670b11c77fa751a1e19a7e",
+      "executable": false
+    },
+    "docs/09-EDGE-CASES.md": {
+      "sha256": "785424377c1641a47c2ce33f5c6e88fd35f7efc0f85543044381fe8993070a92",
+      "executable": false
+    },
+    "docs/10-UI.md": {
+      "sha256": "a06019a5237cfa2cb87bbc8025445c026d88b90a9d209fc31e316c08b43c6e7a",
+      "executable": false
+    },
+    "docs/11-HOUR-BY-HOUR.md": {
+      "sha256": "ca71866377cb04a5720d4c3b13ec2f3f544787a9d11f577da4b3d98e18ac0bea",
+      "executable": false
+    },
+    "docs/12-PRE-EVENT-CHECKLIST.md": {
+      "sha256": "cbbea0adfbe597eaf65468cf407d551bd5b02680599428d7c67a8ddb92f99912",
+      "executable": false
+    },
+    "docs/13-PITCH-AND-QA.md": {
+      "sha256": "d0aa4e1baf9553a4efb3d3011cd8cf9f055b148d4ff7aa74d4bd84469e2fd1de",
+      "executable": false
+    },
+    "docs/14-OPEN-QUESTIONS.md": {
+      "sha256": "a8e28756cb8fac3824e17b9670ffa7990877700252e680d60b4b39f6dd4d4a68",
+      "executable": false
+    },
+    "engine/pyproject.toml": {
+      "sha256": "a452cf36f224a14bc61cf3999077f03857f3ad35b4f043954c061f63e6d0b366",
+      "executable": false
+    },
+    "engine/cachekit/__init__.py": {
+      "sha256": "9c6b53cfce23650ae8b3fc01b2eb8d52c854dacd71d8922818816ec30788dfb0",
+      "executable": false
+    },
+    "engine/cachekit/api.py": {
+      "sha256": "e8e5bc286a7b9ef1d0e06d25aecc67d9afc9075e800554c02acf40f0ff6a0f4e",
+      "executable": false
+    },
+    "engine/cachekit/api_models.py": {
+      "sha256": "2f069dd2485d807bb0c8d92ecb41aa2d1079375d86fec174c00f7f4463eb8190",
+      "executable": false
+    },
+    "engine/cachekit/benchmark_models.py": {
+      "sha256": "9674ef66d24443b24d85d0451afb92813536ae00e6f1d53c303dc8baae2d66ce",
+      "executable": false
+    },
+    "engine/cachekit/calendar.py": {
+      "sha256": "965b8bbb0f16bf3333ab3742c6027f8ed75734c1e1a5a5e03e6bae629856b981",
+      "executable": false
+    },
+    "engine/cachekit/cli.py": {
+      "sha256": "20ba0f3dcc62a8ce26f727961228857fa0a6c386823f518cc467bf6862d0da89",
+      "executable": false
+    },
+    "engine/cachekit/cli_fix.py": {
+      "sha256": "91f8ff9bca531e21f555a9d5cdfea07ce26d32cdacba828b2f623453dad1c65d",
+      "executable": false
+    },
+    "engine/cachekit/models.py": {
+      "sha256": "80fda05d5be2dcf08ba16e1734c4c0c5f06164a6e26d0ebfb32e32d44800c38e",
+      "executable": false
+    },
+    "engine/cachekit/privacy.py": {
+      "sha256": "8b64ad4c200edc14865211932a7010f069eacf209da8fae97221653ebf2ed5bb",
+      "executable": false
+    },
+    "engine/cachekit/py.typed": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "executable": false
+    },
+    "engine/cachekit/radix.py": {
+      "sha256": "2b0ae0ed60cebe11d727c9e88727e3aeeff326fa91c80ccc7a344381e467bac1",
+      "executable": false
+    },
+    "engine/cachekit/report.py": {
+      "sha256": "5f8c8ecd2f7ab8935064f827a50698cdf9e67a2bce38e7447befc6caa9537a1a",
+      "executable": false
+    },
+    "engine/cachekit/serialization.py": {
+      "sha256": "e9bd7a01fd35103e73b74c540c1db110f730a20b516452c0b31a0e515a66915a",
+      "executable": false
+    },
+    "engine/cachekit/settings.py": {
+      "sha256": "a188906b8dc6baecd23cc1719d4370ccf497039d0e4309013ee5836c7b811d31",
+      "executable": false
+    },
+    "engine/cachekit/analyze/__init__.py": {
+      "sha256": "ca9f6d9660a65079e6e441c81782698571836fe9a1ec25da393a9a16ddb7b29e",
+      "executable": false
+    },
+    "engine/cachekit/analyze/breakers.py": {
+      "sha256": "dba98ef8d694515be0863cc21393c34c5d3e189d5a08ff530a436cf310e6e9fc",
+      "executable": false
+    },
+    "engine/cachekit/analyze/classify.py": {
+      "sha256": "ec570751a8ff5e80fc95b4179b901bb4b6b330657e967bacb891abc216b954b5",
+      "executable": false
+    },
+    "engine/cachekit/analyze/routes.py": {
+      "sha256": "ad436376e6a832830234f4521445b4badaa55337f3e3efdbb80ccf108d24d433",
+      "executable": false
+    },
+    "engine/cachekit/analyze/template.py": {
+      "sha256": "c3256138f4058e98ee68a87dc696d8b03d1e339f4cca97c6a671d1d4abfcb0d1",
+      "executable": false
+    },
+    "engine/cachekit/config/analysis.yaml": {
+      "sha256": "efac5be70f78239f52cf4abef377eab4b464de6c598edcfdb67ffb908220f651",
+      "executable": false
+    },
+    "engine/cachekit/config/backends.yaml": {
+      "sha256": "6e38487c0ce6a5a55e09872493a28ea1b278a3817678359e3791798837f6a2bf",
+      "executable": false
+    },
+    "engine/cachekit/config/pricing.yaml": {
+      "sha256": "60bbd971f7702a19154ab7f1017c1c3c4d9e9ef9e36928d3250c2b2da5aa7b7e",
+      "executable": false
+    },
+    "engine/cachekit/fix/__init__.py": {
+      "sha256": "3225469afcfee6360778fb948c48b6a70293bfe6158cd0f8d91f1a19d3a5517c",
+      "executable": false
+    },
+    "engine/cachekit/fix/approve.py": {
+      "sha256": "7e305033748cd79d61edae9fe4feb48e4415fe93658ef6ae00fb94064fb16fff",
+      "executable": false
+    },
+    "engine/cachekit/fix/content.py": {
+      "sha256": "5ea7f644bdf6202eb8beec99e2268172bc4f857947018ede57a560e89bf92c20",
+      "executable": false
+    },
+    "engine/cachekit/fix/devin.py": {
+      "sha256": "8d9becde3368c85772ee907c35dd09578985fa6fc4e3218e51f4fbb612f35b24",
+      "executable": false
+    },
+    "engine/cachekit/fix/local_agent.py": {
+      "sha256": "5f3b85ad8af540da90776ef2c3d4cb668c23053e6f28e576eb273e05b5340ee6",
+      "executable": false
+    },
+    "engine/cachekit/fix/models.py": {
+      "sha256": "ac5b36c88511be6eb5e163a2e0a8ad9661570425fd1713de9df25e3f852351b8",
+      "executable": false
+    },
+    "engine/cachekit/fix/quality.py": {
+      "sha256": "6e9003f0d09b1a2f92655df6413711f7d5df91f9042f74b3c645a863cf0cc47f",
+      "executable": false
+    },
+    "engine/cachekit/fix/task.py": {
+      "sha256": "416af02a82caa638699b70fe61792c0e7ef917bc50d78380ea02dee148afe9d9",
+      "executable": false
+    },
+    "engine/cachekit/fix/verify.py": {
+      "sha256": "9ff3f3e96cdec86bd9f47ea17a5c3de476de7dece9698032e21db325d0ea06ab",
+      "executable": false
+    },
+    "engine/cachekit/ingest/__init__.py": {
+      "sha256": "e49fd3462b40f27670e91050fccc717b78a39b9962109890cf16c332a7d71c3d",
+      "executable": false
+    },
+    "engine/cachekit/ingest/config.py": {
+      "sha256": "f403a9df14da5204eff49996ef7c24b8239e202519546a1d91365242d220a33b",
+      "executable": false
+    },
+    "engine/cachekit/ingest/fix.py": {
+      "sha256": "5a53653cde6d521f8b494bf61eeecd800611493bcaf0469cd2eecc575a920d62",
+      "executable": false
+    },
+    "engine/cachekit/ingest/fix_workflow.py": {
+      "sha256": "a82359df0f7ef13d4300411db8e103fb3f7b19ea5afafb7e50405f8226382dde",
+      "executable": false
+    },
+    "engine/cachekit/ingest/glaive.py": {
+      "sha256": "3aba828fc08a7d9612a8986c9d418202731800a6c006da5ab5fd55eb6bc2b27e",
+      "executable": false
+    },
+    "engine/cachekit/ingest/jsonl.py": {
+      "sha256": "7c92dbce2028ef42094980dfa067f05803fc60af29f44de0ba353fba85763310",
+      "executable": false
+    },
+    "engine/cachekit/ingest/replay_worker.py": {
+      "sha256": "971625bb42fc4981a8b3bf0e006d519d41539b10fd87938ee7aab7aeec686213",
+      "executable": false
+    },
+    "engine/cachekit/ingest/swe_agent.py": {
+      "sha256": "d0c8848d92d7d529c1c0695c42ce6b2d9fe7bf4033881c7b2b08287d93a70fea",
+      "executable": false
+    },
+    "engine/cachekit/ingest/tokenizer.py": {
+      "sha256": "10705cca09de301f32c979d24d61de55a598667d235dc306f9ba8417584e9c5e",
+      "executable": false
+    },
+    "engine/cachekit/ingest/workspace.py": {
+      "sha256": "488c24910ba6b5988d144c897bd14fa104c9ef9ada0760f1952f59c4c21d2527",
+      "executable": false
+    },
+    "engine/cachekit/render/__init__.py": {
+      "sha256": "4ffa5297057205ca5a5dacfeaf961e3e1c514567c31fa24d3a90532e23ddc495",
+      "executable": false
+    },
+    "engine/cachekit/render/canonical.py": {
+      "sha256": "9e5a62ec13e21184f4fd0f6488979445d72aa064185b239ccaf581d0d05719f6",
+      "executable": false
+    },
+    "engine/cachekit/render/tokenize.py": {
+      "sha256": "8794e446f849672a40657ba3ea6a88212168f7dee48183a0b46f4621c52908e4",
+      "executable": false
+    },
+    "engine/cachekit/simulate/__init__.py": {
+      "sha256": "ca491d5d10d809bf1958873533b04b5ae2627f9896a27b3d955d5faa0566a9a6",
+      "executable": false
+    },
+    "engine/cachekit/simulate/rewrite.py": {
+      "sha256": "5beff7bb0d86774f3637aff7ece741cc254cbf1cd91c6ea998e342fe604db510",
+      "executable": false
+    },
+    "engine/cachekit/simulate/vllm.py": {
+      "sha256": "038152b35b4486a5306cb39efd368ec8d409795dca0a31e6a6aa54f7502213e6",
+      "executable": false
+    },
+    "engine/tests/conftest.py": {
+      "sha256": "01fb5baae17df9b055fd3ca62abda5414e914de2f2aa59a5334a2c0d9db26f31",
+      "executable": false
+    },
+    "engine/tests/fix_helpers.py": {
+      "sha256": "f3351948e61e8c9635332d8b607f3ae1d12e7757e13c7aebe58d40321fc2d264",
+      "executable": false
+    },
+    "engine/tests/test_analysis_cli.py": {
+      "sha256": "49825ee64b91d7390ac1c91f76a3e4d537e2f8efa8392519742f3b70abdd3ee5",
+      "executable": false
+    },
+    "engine/tests/test_benchmark.py": {
+      "sha256": "8d03b8f04e65ddd0f7b73141ebc161f1be1d846671949298ec3f3891c6c66173",
+      "executable": false
+    },
+    "engine/tests/test_calendar.py": {
+      "sha256": "210474289ec7a6af2fc4a5465a4e2055912119fd06018dcd6ccfa7d251974ce3",
+      "executable": false
+    },
+    "engine/tests/test_detection.py": {
+      "sha256": "9c685231f0c12706165c44b454e925d03a5f71a8809afcf087ebec71936369a1",
+      "executable": false
+    },
+    "engine/tests/test_fix_workflow.py": {
+      "sha256": "4402be3f3a00c2ea39bbab40dca252b596dafe5783d31e4fce0ef12fe4cffc3f",
+      "executable": false
+    },
+    "engine/tests/test_fixers.py": {
+      "sha256": "bbf2291efcf37d5e557896942af26d0d279f80c4a94bdd8765e3ed2fb6963634",
+      "executable": false
+    },
+    "engine/tests/test_gpt_researcher_experiment.py": {
+      "sha256": "593a41a1110b2303c988acfd960f92f37ce9acd9000737bbacc69228163761ca",
+      "executable": false
+    },
+    "engine/tests/test_ingest.py": {
+      "sha256": "c6991b8416babc8d06a5ddb5ee3ba53b170d4fdb83ccf06cb0bc130a3e71e686",
+      "executable": false
+    },
+    "engine/tests/test_models.py": {
+      "sha256": "8356dbaef4f3e1dbda47d90aaea53095e192b8ceb4bf510fd63b9406de1548cf",
+      "executable": false
+    },
+    "engine/tests/test_quality_guard.py": {
+      "sha256": "713ef668540e5e9f6c666b65073a873d591f835c12eb9bc56999eb6ddd3d2ccf",
+      "executable": false
+    },
+    "engine/tests/test_qwen_integration.py": {
+      "sha256": "bdd5fbb53dde438c0cad6b8d54790f14c67a2de0652e3c285242f7ad4352d232",
+      "executable": false
+    },
+    "engine/tests/test_simulator.py": {
+      "sha256": "2ace8d963affc17b58853e3ac50b7c12d5c166183c1044d2fd7e9c03344a4ae1",
+      "executable": false
+    },
+    "engine/tests/test_workspace_api.py": {
+      "sha256": "fbdbf316723c8157dc14d46f9d9b30d44989aeae916896175d719a73ed7b421b",
+      "executable": false
+    },
+    "scripts/check.sh": {
+      "sha256": "59a6cd1f3caff589f2dae68705c4480d6c9416aeb16a28ffc3b672e88df2b825",
+      "executable": false
+    },
+    "scripts/demo.sh": {
+      "sha256": "75cfb69cb86fe57cda236439765e4bbe597004a632e0c4f2abe3555ae5d9f89a",
+      "executable": false
+    },
+    "scripts/export_demo.py": {
+      "sha256": "6fbda6eb9ee955c57ef824cb3c1846e711cf2a363e3423d343f7e53d03fb424a",
+      "executable": false
+    },
+    "scripts/run-api.sh": {
+      "sha256": "3213dee7e52add0af705583295e3394ba922402793710353c7eceb91fea4fd07",
+      "executable": false
+    },
+    "scripts/run-web.sh": {
+      "sha256": "b3ffd6418eacf492ce98d08be2cbfa11f4791c5ce4bda584135f3f699bcedfa8",
+      "executable": false
+    },
+    "scripts/setup.sh": {
+      "sha256": "96c0ddc8915b3c7d93f7d35dfaab7626c93a850f4551a220f0d964b2abe2f95a",
+      "executable": false
+    },
+    "scripts/summarize_bench.py": {
+      "sha256": "59be55cfad5598fcc6d588fc51ce33fe58976a300d901e46f9b37a96f5875c96",
+      "executable": false
+    },
+    "tasks/todo.md": {
+      "sha256": "a13abf6aaf641561b40c79916246c1d230bd16001b29a7d24b4e4ab34080b722",
+      "executable": false
+    },
+    "web/README.md": {
+      "sha256": "59e9854113fc7e12282b1467e848dfa65d39c9608bae9f4ccc922594ce8f26eb",
+      "executable": false
+    },
+    "web/THIRD_PARTY_NOTICES.md": {
+      "sha256": "af4abdc6edd98ddb91cfae2e1b3abee50d32087b570037fb79101af5c29f4683",
+      "executable": false
+    },
+    "web/eslint.config.mjs": {
+      "sha256": "2de12a26290b55cdfcc9f969f2f887b4474fb2585ea6ee7658c7c1b4554b90d9",
+      "executable": false
+    },
+    "web/next.config.ts": {
+      "sha256": "ea17f22db6191e6edbfc5b5c1835abf6cf781434a6ca3ba63c00afd64c1c41b8",
+      "executable": false
+    },
+    "web/package-lock.json": {
+      "sha256": "207584385d56f280f9ab912e95c4af0a613366a5fa1eb5ed72ed72807040d0f7",
+      "executable": false
+    },
+    "web/package.json": {
+      "sha256": "89cf273215a767dd7b9b37cc4bfd697782b0b2b2372851c4e3962f4e1f33142a",
+      "executable": false
+    },
+    "web/postcss.config.mjs": {
+      "sha256": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde",
+      "executable": false
+    },
+    "web/tsconfig.json": {
+      "sha256": "f99c8af6f708f3a23b5569f14c6c23ce196c1a9d661b32781fbf23e4eaa85454",
+      "executable": false
+    },
+    "web/public/licenses/Geist-Mono-OFL.txt": {
+      "sha256": "cc815ed4fc045f0e991abb10395b7932bd028c6a067deb13316d6002105074e6",
+      "executable": false
+    },
+    "web/public/licenses/Inter-OFL.txt": {
+      "sha256": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345",
+      "executable": false
+    },
+    "web/public/licenses/Lenis-LICENSE.txt": {
+      "sha256": "7d1896b31f2eed9f286b05faca067c4e35b2f109ae7c4ed5105220e2d2820228",
+      "executable": false
+    },
+    "web/public/licenses/React-Bits-LICENSE.md": {
+      "sha256": "4bdd1fa59a6b7d5954bc3b213dbc34e455c635a94bbcecf9293553797d0fad02",
+      "executable": false
+    },
+    "web/public/licenses/Source-Serif-4-OFL.txt": {
+      "sha256": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3",
+      "executable": false
+    },
+    "web/src/app/error.tsx": {
+      "sha256": "4f3fa41b32bd474388a6414c5642904684307abcd42b75acb45c2d223272cc1b",
+      "executable": false
+    },
+    "web/src/app/fonts.css": {
+      "sha256": "d927a136a910d5d91e9e4fe7dd4ab6c622ba452ffb59aeaa899c66fe8188d571",
+      "executable": false
+    },
+    "web/src/app/globals.css": {
+      "sha256": "154ec083bcce262a6136e644154da6cbef783fa8ec5ba55ddfe82b5b4509b824",
+      "executable": false
+    },
+    "web/src/app/layout.tsx": {
+      "sha256": "492bc91c2a5b8e48bccb10c9bb57b652215664d7e61508eabd72699c21a08d26",
+      "executable": false
+    },
+    "web/src/app/page.tsx": {
+      "sha256": "90c6f728f4178163fabce50675ad3898d51da75bfe73b5fd19e27c37f8b9f54d",
+      "executable": false
+    },
+    "web/src/app/bench/page.tsx": {
+      "sha256": "faa612443e6f77fd94647756ebe60c12a3210bf2c1e9db0fb049b22aac99b265",
+      "executable": false
+    },
+    "web/src/app/fix/page.tsx": {
+      "sha256": "a38ae0ca84798731a4021aeca132a89d119456a49e8d741a964940f659e76091",
+      "executable": false
+    },
+    "web/src/app/fix/[id]/page.tsx": {
+      "sha256": "2668bd3162b79662fdaf7df5a9674065b60b37e6fa6353372ff2ba49c6bfe45f",
+      "executable": false
+    },
+    "web/src/app/how-it-works/page.tsx": {
+      "sha256": "b0cc9dca29161d4734e98db67af0a3a60e48f5bc78612d385bed36f4bb429854",
+      "executable": false
+    },
+    "web/src/app/report/[id]/page.tsx": {
+      "sha256": "2714b013d24908a2aa738332d21c43bb0a3682ae76f265a3968e908794ecaffa",
+      "executable": false
+    },
+    "web/src/app/report/[id]/heatmap/[route]/page.tsx": {
+      "sha256": "9a61b796ea06549cb75dda6f40d0d5a052514642b46a0e51b262f1d6faa21e70",
+      "executable": false
+    },
+    "web/src/components/benchmark-results.tsx": {
+      "sha256": "877e01ac2b65ffa358d898976307bed6c2171af36e1832284a0dc7251ac8de66",
+      "executable": false
+    },
+    "web/src/components/copy-hash.tsx": {
+      "sha256": "dc9556b671bf6b0c901e13e617e031e3559de993bf03d745251a33307c9a47b3",
+      "executable": false
+    },
+    "web/src/components/heatmap-metrics.tsx": {
+      "sha256": "a86d76d3de1bcbca488c3dfbc947b7ff3bcf3a21cb53ed9ffd8e735fa6523f15",
+      "executable": false
+    },
+    "web/src/components/measured-number.tsx": {
+      "sha256": "b05b6dd6cb224d45a084e782ff2e997e770cbf8a3152819a6ae8e27e1cc32810",
+      "executable": false
+    },
+    "web/src/components/overview-motion.tsx": {
+      "sha256": "83f4f74137258367a1708b49aac5d81cf4fa59cae8c125c198c209bf88a36f15",
+      "executable": false
+    },
+    "web/src/components/prefix-map.tsx": {
+      "sha256": "399a77b996e4037148869c8366d06a70fd8c9e0909aff1d166766d9d79e33757",
+      "executable": false
+    },
+    "web/src/components/replay-chart.tsx": {
+      "sha256": "fb130ad88088d0c89c456538fbda3bf148906cad9d19bfe5fa69488772cc1470",
+      "executable": false
+    },
+    "web/src/components/report-switcher.tsx": {
+      "sha256": "c1c53a7458d0a8069589a860b13c9f1c310652836ed1d0793d9e5875e92be92c",
+      "executable": false
+    },
+    "web/src/components/site-nav.tsx": {
+      "sha256": "8987d6b8eac6993bf55d19511d8647206764daaa22375305c8f107cfb86bc912",
+      "executable": false
+    },
+    "web/src/components/summary-reveal.tsx": {
+      "sha256": "9f290cf0be53dd1360c74f52ecca384f78af236a75fe8323fc5d4fbd926e002e",
+      "executable": false
+    },
+    "web/src/components/workspace.tsx": {
+      "sha256": "ec5a9262f9a0afd9a62af8757647a0a7654d2837da1639c9a949d77a63519437",
+      "executable": false
+    },
+    "web/src/components/cache-scanner/geometry.ts": {
+      "sha256": "b8c507af5462dfb5f4d5bea0d709869a00f18d9e3444de63d0bd676d6fcd272e",
+      "executable": false
+    },
+    "web/src/components/cache-scanner/scanner.module.css": {
+      "sha256": "90b94461ad5a20cc13d728a70e9435a12fde76c0748e7babc71f74789cb07c29",
+      "executable": false
+    },
+    "web/src/components/iso/LICENSE": {
+      "sha256": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "executable": false
+    },
+    "web/src/components/iso/iso-kit.ts": {
+      "sha256": "e9fc988c61a11bfac1f097e62419915ea86b2130ab091f1b50c0e019c907e253",
+      "executable": false
+    },
+    "web/src/components/react-bits/fade-content.tsx": {
+      "sha256": "1e2671fcc7693b25eb8aa37e7283bf35766e4251d65b26718eaf5e0a9c6c9c5c",
+      "executable": false
+    },
+    "web/src/lib/heatmap.ts": {
+      "sha256": "c79b46259fc2699ec3481e4d223f04eba366b85eaaca6680dc2717e54d6113d9",
+      "executable": false
+    },
+    "web/src/lib/report-selection.ts": {
+      "sha256": "0eff2dab9c73970afdd4a8aa7733150adb2716b57193a802333bcc050190a59a",
+      "executable": false
+    },
+    "web/src/lib/workspace.ts": {
+      "sha256": "39de250fc907cd422ca30692cc059a13c40247810f763245b6e8a9e64aad2a39",
+      "executable": false
+    },
+    "web/tests/heatmap.test.mjs": {
+      "sha256": "c9459ba0ebab991da9ffceaa50b4f91e5c20299aec88c14837393047d7cf392a",
+      "executable": false
+    },
+    "web/tests/report-selection.test.mjs": {
+      "sha256": "cb11ca804495de91dfd05652f80ee36d171fb90532bfedd510401e6afa3ad7ee",
+      "executable": false
+    }
+  },
+  "sha256": "ace08fbfb86f9f45a6e097ee489bcc9e1bf04f4b2c1ed1e0f61b1557bfb5dedd",
+  "git_sha": "da48b74d8b40a19ba8d052b493568b85ea1b21c8",
+  "method": "local_source_manifest_v1"
+}

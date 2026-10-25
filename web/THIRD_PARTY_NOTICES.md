@@ -23,3 +23,5 @@ within this application, not distributed as a component pack.
 
 The theme follows the participant's supplied palette and typography direction.
 No Cognition/Devin logos, proprietary fonts or copied marketing text are used.
+
+The original cache-scanner illustration uses the vendored [Anatomy geometry kit](https://github.com/wheresryan22/anatomy), copyright2026 Ryan, under its [MIT license](src/components/iso/LICENSE). Exact vendored bytes are identified in [the source record](../eval_results/setup/anatomy_source.json). No model/network/runtime dependency is added by this geometry.

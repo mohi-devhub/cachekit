@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-10-25T05:33:28+05:30",
+  "actual_github_readback": {
+    "body": "## What changed and why\n\nAdds `cachekit compare`, a small deterministic offline command that compares two saved `BenchmarkRun` replay artifacts. It runs no inference and makes no network calls. It reuses `cachekit.benchmark_models.BenchmarkRun` and `matched_replays`. If the pair is unmatched (variants, recorded inputs, schedule, request count, settings, tokenizer, price, deployment profile or 3 repetitions), it **refuses**: it exits 1, names the mismatches and writes nothing. Medians and min/max are computed from each repetition, not copied from `summary`. A metric missing from any repetition shows as `missing in N/3 repetitions`, never as zero. No new dependency.\n\nFiles: `engine/cachekit/cli_compare.py` (new), `engine/cachekit/cli.py` (registration only), `engine/tests/test_compare_cli.py` (new), `bench/SAVED_COMPARISON.md` (new usage), and new records in `CHANGELOG.md` and `AI_USAGE.md`. Measurement artifacts, quality results, prompts, docs/, web/ and `bench/gpt_researcher.py` are unchanged.\n\nExample command, run in this session:\n\n```bash\nuv run --no-sync cachekit compare eval_results/before_replay.json \\\n  eval_results/after_confirmation_replay.json --out comparison.md\n# Wrote saved-artifact comparison to comparison.md; no new measurement performed.\n```\n\n### Generated table (actual CLI output)\n\n**Existing saved experiments, not fresh benchmark results from this session:** Qwen/Qwen3-4B-Instruct-2507, one L4, vLLM 0.31.0, 27 requests per repetition, 3 sequential repetitions per view. Each cell is the median (min\u2013max) across repetitions.\n\n| Metric | BEFORE | AFTER |\n| --- | ---: | ---: |\n| Measured cache-hit rate | 0.304% (0.304%\u20130.304%) | 80.690% (80.690%\u201380.690%) |\n| Client TTFT p50 | 2.014 s (1.996 s\u20132.076 s) | 1.425 s (1.404 s\u20131.472 s) |\n| Client TTFT p95 | 2.557 s (2.523 s\u20133.362 s) | 2.475 s (1.756 s\u20132.524 s) |\n| Request latency p50 | 3.032 s (2.978 s\u20133.111 s) | 2.635 s (2.554 s\u20133.268 s) |\n| Request latency p95 | 4.998 s (4.804 s\u20135.180 s) | 4.072 s (3.866 s\u20134.374 s) |\n| GPU-window USD / 1k requests | $0.7893 ($0.7745\u2013$0.8328) | $0.7050 ($0.7038\u2013$0.7075) |\n\nThe computed medians agree with the provided cross-check values: hit rate 0.0030399579\u2026 / 0.8069048982\u2026; TTFT p50 2.01392\u2026 / 1.42499\u2026; TTFT p95 2.55671\u2026 / 2.47520\u2026; USD 0.78931\u2026 / 0.70496\u2026.\n\n### Source artifacts (at main `01f98ad`)\n\n- BEFORE [eval_results/before_replay.json](https://github.com/mohi-devhub/cachekit/blob/01f98adae8d51773e3606fc7d9c80075c2a97a2d/eval_results/before_replay.json): SHA-256 `0a72b8f8c73329128c1c674e4cf8546ea665726cf8e56bf4eabe7d11bef35bda`\n- AFTER [eval_results/after_confirmation_replay.json](https://github.com/mohi-devhub/cachekit/blob/01f98adae8d51773e3606fc7d9c80075c2a97a2d/eval_results/after_confirmation_replay.json): SHA-256 `aa0084e09193aeba4d169f0e4005874755210270b8e60b45338ea8b78ca8fd7d`\n\n## Validation\n\nThe environment was installed with the documented `uv sync --locked --all-packages --all-extras`. Only these checks were run:\n\n```\n$ uv run --no-sync python -m pytest -q engine/tests/test_compare_cli.py\n........                                                                 [100%]\n8 passed in 0.12s\n$ uv run --no-sync ruff check engine/cachekit/cli_compare.py engine/cachekit/cli.py engine/tests/test_compare_cli.py\nAll checks passed!\n$ uv run --no-sync ruff format --check engine/cachekit/cli_compare.py engine/cachekit/cli.py engine/tests/test_compare_cli.py\n3 files already formatted\n```\n\nTests: the real saved pair produces the expected medians, ranges and SHAs. Negative unmatched-pair cases cover a schedule, recorded-input or request-count mismatch, a settings plus deployment-profile mismatch, and swapped variants; each is rejected with no output file. A missing cost is reported explicitly, not as `$0.0000`. An invalid artifact is rejected.\n\n**Not run:** the full Python suite (out of scope by instruction), `cachekit verify`, and any web checks.\n\n## Limits\n\n- The cost is only the GPU-window base-rate component. It excludes startup, warmup, idle, CPU, memory and storage, so it is not an invoice.\n- TTFT and latency start at client send and exclude the client scheduling queue.\n- This is a small sequential trace with one request in flight. It makes no concurrency or production claim.\n- Model outputs are not recollected. Behavioral and quality acceptance remains tied to the recorded source, not to this CLI diff.\n- No claim of universal savings, one-click production automation, or fresh source-bound quality approval.\n\n## Documentation and handoff\n\n- [x] `CHANGELOG.md` records this change with its actual timestamp and validation.\n- [x] `README.md` is unchanged by instruction. Usage is in `bench/SAVED_COMPARISON.md`.\n- [x] `AI_USAGE.md` records the Devin assistance.\n- [x] The code uses simple patterns and includes no credentials or private data.\n\n\nLink to Devin session: https://app.devin.ai/sessions/04ae0c6e6976470a900f657c594326ac\nOpen in Devin Desktop: https://app.devin.ai/desktop/session/04ae0c6e6976470a900f657c594326ac?variant=devin\nRequested by: @mohi-devhub",
+    "files": [
+      {
+        "path": "AI_USAGE.md",
+        "additions": 1,
+        "deletions": 0
+      },
+      {
+        "path": "CHANGELOG.md",
+        "additions": 17,
+        "deletions": 0
+      },
+      {
+        "path": "bench/SAVED_COMPARISON.md",
+        "additions": 24,
+        "deletions": 0
+      },
+      {
+        "path": "engine/cachekit/cli.py",
+        "additions": 2,
+        "deletions": 0
+      },
+      {
+        "path": "engine/cachekit/cli_compare.py",
+        "additions": 121,
+        "deletions": 0
+      },
+      {
+        "path": "engine/tests/test_compare_cli.py",
+        "additions": 96,
+        "deletions": 0
+      }
+    ],
+    "headRefName": "fix/cachekit-saved-comparison",
+    "headRefOid": "a26984e2d83e165d0d6edec3ac1108c5de37f1af",
+    "state": "OPEN",
+    "title": "feat: compare saved cache replay evidence",
+    "url": "https://github.com/mohi-devhub/cachekit/pull/3"
+  },
+  "review": "Comparison table checked against saved replay summaries; head source not yet independently run or approved. No merge performed."
+}

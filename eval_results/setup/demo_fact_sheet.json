@@ -1,0 +1,144 @@
+{
+  "timestamp": "2026-10-24T23:52:25.515337+00:00",
+  "sources": {
+    "eval_results/before_replay.json": "0a72b8f8c73329128c1c674e4cf8546ea665726cf8e56bf4eabe7d11bef35bda",
+    "eval_results/after_confirmation_replay.json": "aa0084e09193aeba4d169f0e4005874755210270b8e60b45338ea8b78ca8fd7d",
+    "eval_results/current_fix_verify.json": "b109aedea0639460ac63e44eb5ecca81d5883a61571a8efbccd27f62da3ce567",
+    "eval_results/demo_before_report.json": "38d8dc7c909f8d1b84ae9c1f8266fb9978371dacfa8f9992e7a51836f3b5b2f5"
+  },
+  "requests": 27,
+  "repetitions": 3,
+  "findings": 6,
+  "reference_before_tokens": 4991,
+  "reference_after_tokens": 5019,
+  "first_divergence_before": 7,
+  "first_divergence_after": 4270,
+  "projection_target": 0.7316539521857724,
+  "metrics": {
+    "absolute_hit_rate_error": {
+      "before": {
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0
+      },
+      "after": {
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0
+      }
+    },
+    "allocated_gpu_seconds_per_1000": {
+      "before": {
+        "max": 3751.568506185086,
+        "median": 3555.4300540000745,
+        "min": 3488.519007740521
+      },
+      "after": {
+        "max": 3186.896527777814,
+        "median": 3175.489689814707,
+        "min": 3170.146066370459
+      }
+    },
+    "gpu_window_usd_per_1000": {
+      "before": {
+        "max": 0.832848208373089,
+        "median": 0.7893054719880166,
+        "min": 0.7744512197183956
+      },
+      "after": {
+        "max": 0.7074910291666746,
+        "median": 0.704958711138865,
+        "min": 0.7037724267342418
+      }
+    },
+    "latency_p50_s": {
+      "before": {
+        "max": 3.1107037920010043,
+        "median": 3.0319226250139764,
+        "min": 2.9783607920107897
+      },
+      "after": {
+        "max": 3.2684902920009336,
+        "median": 2.6345435840048594,
+        "min": 2.55426591700234
+      }
+    },
+    "latency_p95_s": {
+      "before": {
+        "max": 5.1800226418024975,
+        "median": 4.997758878798049,
+        "min": 4.803732592002779
+      },
+      "after": {
+        "max": 4.373783066292526,
+        "median": 4.072078300101566,
+        "min": 3.8663674748007906
+      }
+    },
+    "measured_hit_rate": {
+      "before": {
+        "max": 0.0030399579082751164,
+        "median": 0.0030399579082751164,
+        "min": 0.0030399579082751164
+      },
+      "after": {
+        "max": 0.8069048982165246,
+        "median": 0.8069048982165246,
+        "min": 0.8069048982165246
+      }
+    },
+    "simulated_hit_rate": {
+      "before": {
+        "max": 0.0030399579082751164,
+        "median": 0.0030399579082751164,
+        "min": 0.0030399579082751164
+      },
+      "after": {
+        "max": 0.8069048982165246,
+        "median": 0.8069048982165246,
+        "min": 0.8069048982165246
+      }
+    },
+    "throughput_requests_s": {
+      "before": {
+        "max": 0.2866545940501239,
+        "median": 0.28125992771955655,
+        "min": 0.26655517508245774
+      },
+      "after": {
+        "max": 0.3154428783607794,
+        "median": 0.31491206008555833,
+        "min": 0.31378489740214077
+      }
+    },
+    "ttft_p50_s": {
+      "before": {
+        "max": 2.0761295839911327,
+        "median": 2.0139214169903425,
+        "min": 1.9960451249935431
+      },
+      "after": {
+        "max": 1.4718553330021678,
+        "median": 1.4249898750131251,
+        "min": 1.4037193329859292
+      }
+    },
+    "ttft_p95_s": {
+      "before": {
+        "max": 3.3624002124051913,
+        "median": 2.5567084373906255,
+        "min": 2.523361370801285
+      },
+      "after": {
+        "max": 2.524480279299314,
+        "median": 2.475197304401081,
+        "min": 1.7555946706983376
+      }
+    }
+  },
+  "derived": {
+    "ttft_p50_reduction_percent": 29.243024926828188,
+    "gpu_window_cost_reduction_percent": 10.686199936851848
+  },
+  "scope": "Historical saved helpdesk pair. Final repaired candidate includes declared semantic changes. No new timing collection or universal savings claim."
+}

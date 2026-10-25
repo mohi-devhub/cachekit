@@ -23,6 +23,7 @@ dist/
 /docs/
 /CLAUDE.md
 /DECISIONS.md
+/tasks/
 /.agents/
 /.codex/
 /.claude/
@@ -33,7 +34,7 @@ dist/
 /eval_results/local/
 /eval_results/quickstart/
 
-# Additional protections inherited from the organizer template.
+# Private key and local build outputs.
 *.pem
 *.key
 *.log
@@ -41,3 +42,10 @@ dist/
 venv/
 coverage/
 Thumbs.db
+
+# Template records and agent guidance remain local.
+/AGENTS.md
+/AI_USAGE.md
+/CHANGELOG.md
+/RULES.md
+/SUBMISSION.md

@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-10-25T05:33:28+05:30",
+  "checks": {
+    "typecheck": {
+      "path": "eval_results/setup/declutter_typecheck.txt",
+      "sha256": "682986f8e626666ebb6b784fb5570597878aa625e779c801dd1ecbb2ecd2ed4d",
+      "exit_code": 0
+    },
+    "lint": {
+      "path": "eval_results/setup/declutter_lint.txt",
+      "sha256": "ccebfe3e648b85e2332cba06ffb37fb1cc3767d8514fb1d774f27ce1be487c04",
+      "exit_code": 0
+    },
+    "build": {
+      "path": "eval_results/setup/declutter_build.txt",
+      "sha256": "7edbddf830011086de310133a20922d061c5c7343bc09399889fee3504bb47b8",
+      "exit_code": 0
+    },
+    "web_tests": {
+      "path": "eval_results/setup/declutter_web_tests.txt",
+      "sha256": "b074a0ab5f168d55307376471f154faa9dd208d253bee12239586f79be49c274",
+      "exit_code": 0
+    }
+  },
+  "browser": "eval_results/setup/declutter_browser.json",
+  "full_python_tests_run": false,
+  "verification_action_run": false,
+  "source_scope": "UI code built before05:30; documentation/check records follow. Working tree contains separate OpenCode work; this commit excludes it. Final full-source quality approval not claimed.",
+  "demo_notes": "Three ignored local Markdown guides; not sent to external services.",
+  "fresh_devin_pr": "https://github.com/mohi-devhub/cachekit/pull/3"
+}

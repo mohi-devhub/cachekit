@@ -4,9 +4,7 @@ From the repository root, run `bash scripts/run-web.sh`; open
 `http://localhost:3000`. Install first with `bash scripts/setup.sh`.
 `npm --prefix web run typecheck`, `lint` and `build` validate the web source.
 
-The UI uses the existing green/light/dark theme and native SVG/HTML for the
-stability strip and comparison bars. No chart dependency, remote font, analytics
-or external inference is needed.
+The UI uses a warm light theme, an Anatomy SVG cache scanner, and native HTML/SVG comparison charts. Fonts are self-hosted; saved playback needs no external inference or analytics.
 
 | Route | Behavior |
 | --- | --- |
@@ -31,9 +29,8 @@ or GPU button. Review/approval is a local record and does not merge a PR.
 
 Without the API, the committed `public/demo/workspace.json` supplies only the
 reviewed synthetic report, saved candidate/task status, actual public golden
-outputs and measured counters. A network fallback is labeled SAVED. An available
-API returning no current candidate never falls back to a stale candidate.
-Task generation, verification and approval stay disabled. Refresh the snapshot
+outputs and measured counters. A network fallback is labeled SAVED. When current-source evidence is stale, a matching public helpdesk AFTER can be replayed as SAVED/read-only. Its BEFORE input hash must match; this never grants current-source approval.
+Without the API, task generation, verification and approval stay disabled. Advanced evidence/approval controls and prompt/diagnostic inspection are collapsed by default. Refresh the snapshot
 from the named synthetic report using `python scripts/export_demo.py --task-id <current-task-id>` in the
 project environment. Uploaded/dataset-derived runs are never exported.
 

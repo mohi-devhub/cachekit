@@ -28,9 +28,15 @@ export function BenchmarkResults({ data }: { data: BenchView }) {
   const title = data.comparison_ready ? "Paired sequential replay" : before && after ? "Runs are not a matched pair" : before ? "BEFORE baseline · AFTER pending" : after ? "AFTER candidate · BEFORE pending" : "Performance replay pending";
   return <section className="report-section">
     <div className="section-heading"><h2>{title}</h2><span className="badge">MEASURED EVIDENCE</span></div>
-    <p>{data.note}</p>
+    <p>{data.comparison_ready ? `Sequential replay: ${before?.n_requests} requests per repetition, ${before?.runs.length} saved repetitions per view. Results are medians with min–max ranges.` : data.note}</p>
     <ReplayChart data={data} />
     {data.benchmarks.length > 0 && <><div className="table-scroll"><table>
+      <caption>Key measurements for the saved BEFORE / AFTER pair</caption>
+      <thead><tr><th>Metric</th><th>BEFORE</th><th>AFTER</th></tr></thead><tbody>
+        {metrics.filter(([, key]) => ["measured_hit_rate", "ttft_p50_s", "ttft_p95_s", "gpu_window_usd_per_1000"].includes(key)).map(([label, key, format]) => <tr key={key}><td>{label}</td><td>{value(before, key, format)}</td><td>{value(after, key, format)}</td></tr>)}
+      </tbody></table></div>
+      <p className="supporting-text">GPU-window cost excludes startup, warmup, idle and other resources. It is not the full bill. TTFT excludes client queue delay.</p>
+      <details className="metadata"><summary>Detailed metrics and run provenance</summary><p>{data.note}</p><div className="table-scroll"><table>
       <caption>Median and min/max across the repetitions saved in each artifact. AFTER describes its recorded source; behavioral approval is separate.</caption>
       <thead><tr><th>Metric</th><th>BEFORE</th><th>AFTER</th></tr></thead><tbody>
         <tr><td>Requests per repetition</td><td>{before ? number(before.n_requests) : "Not recorded"}</td><td>{after ? number(after.n_requests) : "Not recorded"}</td></tr>
@@ -45,6 +51,6 @@ export function BenchmarkResults({ data }: { data: BenchView }) {
         </tbody></table></div>
         <dl><div><dt>Saved source</dt><dd><code>{source}</code></dd></div><div><dt>Artifact SHA-256</dt><dd><code>{sha256}</code></dd></div><div><dt>Recorded</dt><dd>{run.timestamp}</dd></div><div><dt>Model / GPU</dt><dd>{run.deployment.model} · {run.deployment.gpu}</dd></div><div><dt>Source SHA-256</dt><dd><code>{run.source_sha256}</code></dd></div><div><dt>Scope and limitations</dt><dd>{run.note}</dd></div></dl>
       </details>)}
-    </>}
+      </details></>}
   </section>;
 }

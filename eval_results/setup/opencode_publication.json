@@ -1,0 +1,11 @@
+{
+  "checks": {
+    "focused_python_command": "uv run --no-sync python -m pytest -q engine/tests/test_gpt_researcher_experiment.py",
+    "focused_python": "8 passed",
+    "ruff": "passed",
+    "web": "Previously checked combined working tree: 11 tests, typecheck/lint/build and actual report views."
+  },
+  "full_python_suite_repeated": false,
+  "experiment_status": "Unapproved; performance replay blocked; raw failed outputs preserved.",
+  "evidence": "eval_results/gpt_researcher/README.md"
+}
