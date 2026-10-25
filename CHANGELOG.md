@@ -1,5 +1,26 @@
 # Change log
 
+## 2026-10-25T05:33:28+05:30 — Declutter the dashboard and prepare the demo
+
+- Extracted the fix/verify view and kept the task/PR, three verification outcomes
+  and five expandable behavioral cases prominent. Moved evidence IDs and exact
+  diff approval into an advanced disclosure; backend approval rules unchanged.
+- Collapsed prompt inspection, technical benchmark metrics and the serving smoke
+  test; kept four key measured rows/ranges and the interactive chart visible.
+  Removed redundant overview explanations and the fixed read-only profile input.
+- Validation: web typecheck, ESLint, production build and11web tests pass; all six
+  pages checked on desktop/mobile with API/external services blocked. An initial
+  QA assumption about closed-details layout boxes was corrected using disclosure
+  state and actual accessibility visibility. No full Python suite or verification
+  action ran, as requested. Code edits completed before the05:30feature freeze.
+- Prepared ignored local demo/story, page/metric reference, integration journey
+  and judge Q&A notes. Derived facts are saved in eval_results/setup.
+- Mohith authorized one additional capped Devin session; it opened PR#3 with an
+  offline comparison command and measured table, left unmerged. Its reported
+  eight focused tests are separate from local checks and recorded-source quality.
+- Concurrent OpenCode report/GPT Researcher work remains outside this checkpoint;
+  final combined-source verification/submission SHA are not claimed complete.
+
 ## 2026-10-25T04:55:10+05:30 — Replace the tile grid with an Anatomy cache scanner
 
 - On Mohith's explicit follow-up, built an SVG optical comparator with the

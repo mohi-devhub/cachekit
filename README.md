@@ -129,6 +129,11 @@ under its [MIT license](web/src/components/iso/LICENSE). The exact source checks
 is saved in [the source record](eval_results/setup/anatomy_source.json). No new
 runtime package, WebGL or external runtime service is required.
 
+The main dashboard emphasizes findings, the cache scanner, key replay measurements
+and five behavioral cases. Prompt text, diagnostic tables, smoke-test details and
+manual evidence/approval controls are collapsed until requested. Collapsing the
+controls does not weaken verification or change approval requirements.
+
 The report cost field uses the matching measured replay median/range (GPU-window
 USD per 1k requests), rather than estimating dollars from simulated token counts.
 

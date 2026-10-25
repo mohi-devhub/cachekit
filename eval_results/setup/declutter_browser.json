@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-10-25T05:22:34.254626+05:30",
+  "captures": [
+    {
+      "route": "/",
+      "viewport": 1440,
+      "file": "screenshots/overview-desktop.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/report/demo-before",
+      "viewport": 1440,
+      "file": "screenshots/findings-desktop.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/report/demo-before/heatmap/helpdesk.answer",
+      "viewport": 1440,
+      "file": "screenshots/heatmap-before-polished-desktop.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/fix",
+      "viewport": 1440,
+      "file": "screenshots/fix-verify-desktop.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/bench",
+      "viewport": 1440,
+      "file": "screenshots/bench-desktop.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/how-it-works",
+      "viewport": 1440,
+      "file": "screenshots/method-desktop.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/",
+      "viewport": 390,
+      "file": "screenshots/overview-mobile.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/report/demo-before",
+      "viewport": 390,
+      "file": "screenshots/findings-mobile.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/report/demo-before/heatmap/helpdesk.answer",
+      "viewport": 390,
+      "file": "screenshots/heatmap-before-polished-mobile.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/fix",
+      "viewport": 390,
+      "file": "screenshots/fix-verify-mobile.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/bench",
+      "viewport": 390,
+      "file": "screenshots/bench-mobile.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    },
+    {
+      "route": "/how-it-works",
+      "viewport": 390,
+      "file": "screenshots/method-mobile.png",
+      "no_overflow": true,
+      "no_js_errors": true
+    }
+  ],
+  "checks": {
+    "approval_ui_collapsed_and_absent_from_accessibility_tree": true,
+    "five_golden_cases_available": true,
+    "devin_pr_link_preserved": true,
+    "four_key_benchmark_rows": true,
+    "prompt_inspection_collapsed": true
+  },
+  "network": "API/external blocked; public saved data only",
+  "full_python_tests_run": false,
+  "qa_correction": "A collapsed details descendant can retain a layout box in Chromium. Replaced incorrect zero-geometry assumption with details state plus actual accessibility-tree visibility."
+}

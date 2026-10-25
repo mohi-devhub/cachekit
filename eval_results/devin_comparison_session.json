@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-10-24T23:49:35.856367+00:00",
+  "state": "created",
+  "max_acu_limit": 1,
+  "approved_by": "Mohith, explicit go-ahead in current conversation",
+  "task_sha256": "f51639851b9d3e98a554edcabb05bdf2229ab8e5e03397b17da721208f0136c9",
+  "purpose": "Offline comparison CLI and evidence-rich PR; no raw logs or inference",
+  "new_sessions_requested": 1,
+  "session_id": "devin-04ae0c6e6976470a900f657c594326ac",
+  "session_url": "https://app.devin.ai/sessions/04ae0c6e6976470a900f657c594326ac",
+  "initial_status": null,
+  "latest": {
+    "status": "suspended",
+    "status_enum": "finished",
+    "pull_request": {
+      "url": "https://github.com/mohi-devhub/cachekit/pull/3"
+    }
+  }
+}
