@@ -8,12 +8,6 @@ Built at **Devin Hacks Kochi**. Python CLI, local web dashboard, explicit Devin 
 
 CacheKit reveals work that is easy to miss: small changes near the start of a prompt can cause thousands of unchanged tokens to be processed again. It makes those breaks visible, then turns detection into action through a scoped Devin code-fix task, a pull request, behavioral checks and measured BEFORE/AFTER results.
 
-## Submission snapshot
-
-Demo/code snapshot: [`dbebb6d`](https://github.com/mohi-devhub/cachekit/commit/dbebb6d6fbcacd3f7681aa6cc19f2a05e4643a9f). This snapshot is recorded by a later documentation commit; the saved model measurements and behavioral approvals remain tied to their original recorded source.
-
-Quick submission checks: [results and scope](eval_results/setup/submission_preflight.json). PR #3 is an optional, unmerged follow-up and is not required to run this demo.
-
 ## Overview
 
 An AI support assistant may send the same company handbook with every request. If a changing timestamp, customer identity or retrieved passage appears before that handbook, the inference server loses much of the shared input prefix and repeats work.
