@@ -40,6 +40,14 @@ cachekit reads recorded requests, identifies where reuse breaks, simulates a bet
 
 Prefix caching reuses input-processing computations, not a previous user's answer. The inference server implements the cache; cachekit diagnoses whether the application makes that cache reusable.
 
+## Why Devin is core to CacheKit
+
+Devin is the source-fixing part of the workflow. CacheKit identifies wasted prompt processing, but fixing it requires changes to the application's prompt builder, tool ordering or conversation handling. CacheKit turns those findings into a scoped task with allowed files, a reuse target and verification requirements. An explicitly authorized, capped Devin session can inspect the repository, make the change on a branch and open a PR. Private request logs stay local.
+
+I wanted to use Devin inside the product, beyond helping me build it: give it a concrete engineering problem and a way to check the result. In [PR #2](https://github.com/mohi-devhub/cachekit/pull/2), Devin produced the initial cache refactor. The behavior guard then exposed issues that I repaired and reviewed before merging. A second session produced [PR #3](https://github.com/mohi-devhub/cachekit/pull/3), an optional, unmerged command for comparing saved replay evidence, with eight focused tests.
+
+CacheKit provides the diagnosis and checks; Devin turns the task into a reviewable source change. Human review remains required. The current demo does not claim that Devin completed every repair or ran the full CacheKit verification loop autonomously.
+
 ## Measured results
 
 Controlled fictional helpdesk traffic: **27 requests per repetition, three sequential repetitions per view**, using unquantized **Qwen3-4B-Instruct-2507 on one L4**, vLLM **0.31.0**, and a **16,384-token context limit**.
@@ -106,6 +114,13 @@ Fonts are self-hosted; the saved demo needs no font/CDN service. UI dependency a
 
 ## Quick start
 
+Clone the repository and run the following commands from its root:
+
+```sh
+git clone https://github.com/mohi-devhub/cachekit.git
+cd cachekit
+```
+
 ### View the saved dashboard
 
 Requires **Node.js 22.18+**. No API key, tokenizer download, GPU or Python process is needed for read-only saved playback.
@@ -120,16 +135,16 @@ Open **http://localhost:3000**. Follow Findings → Heatmap → Verify → Bench
 
 ### Run local analysis
 
-Requires **Python 3.12+, uv and Node.js 22.18+**. Setup downloads dependencies and the pinned tokenizer; subsequent analysis is offline.
+Use **Python 3.12** (the validated version), **uv**, and **Node.js 22.18+**. Setup needs internet to download dependencies and the pinned tokenizer; subsequent analysis is offline. No model weights or API keys are required.
 
 ```sh
-bash scripts/setup.sh
+UV_PYTHON=3.12 bash scripts/setup.sh
 bash scripts/demo.sh
 ```
 
 The demo script writes a fresh synthetic CPU analysis under ignored `data/quickstart/` and `eval_results/quickstart/`; it does not overwrite the saved measured experiment.
 
-For interactive local uploads, start the API in another terminal:
+For interactive local uploads, keep the web server from the dashboard section running and start the API in another terminal:
 
 ```sh
 bash scripts/run-api.sh

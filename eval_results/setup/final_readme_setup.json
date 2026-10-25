@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-25T06:49:56+05:30",
+  "source_commit_before_documentation": "b37ceb75e7bc1be0961004757807a570fa3677ad",
+  "changes": "README explains Devin role and actual PR scope; clone step, validated Python 3.12 setup selection and separate API/web processes clarified. No application changes.",
+  "checks": {
+    "documented_cpu_demo": "bash scripts/demo.sh: exit 0; 27 requests, 6 findings; generated ignored quickstart report parsed successfully",
+    "locked_setup": "UV_PYTHON=3.12 uv sync --locked --all-packages --all-extras --dry-run: exit 0, no changes",
+    "schema": "uv run --no-sync cachekit schema: valid JSON",
+    "tokenizer_setup_command": "hf download help resolves in project environment; all three pinned tokenizer files present",
+    "shell_scripts": "bash -n passed for setup, demo, API, web and check scripts",
+    "installed_web_dependencies": "npm --prefix web ls --depth=0: exit 0; declared versions present; extra optional platform packages reported",
+    "api_startup": "CACHEKIT_API_PORT=18081 bash scripts/run-api.sh: /health HTTP 200, version 0.1.0",
+    "readme_links": "All relative targets exist"
+  },
+  "browser": {
+    "timestamp": "2026-10-25T06:48:39.425445+05:30",
+    "blocked": [
+      "local API",
+      "external HTTPS"
+    ],
+    "reduced_motion": true,
+    "checks": [
+      {
+        "width": 1440,
+        "before": [
+          "0.304%",
+          "2.557 s",
+          "$0.7893"
+        ],
+        "after": [
+          "80.690%",
+          "2.475 s",
+          "$0.7050"
+        ],
+        "saved_toggle": true,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "before": [
+          "0.304%",
+          "2.557 s",
+          "$0.7893"
+        ],
+        "after": [
+          "80.690%",
+          "2.475 s",
+          "$0.7050"
+        ],
+        "saved_toggle": true,
+        "no_horizontal_overflow": true
+      }
+    ]
+  },
+  "not_run": [
+    "fresh dependency reinstall or tokenizer redownload",
+    "new production build",
+    "full Python test suite",
+    "new inference or source-bound behavioral approval"
+  ],
+  "prior_clean_environment": "eval_results/setup/clean_environment.json records earlier fresh locked setup/demo/full checks; it is historical, not rerun here.",
+  "scope": "Final setup documentation check on installed local environment, not a fresh-clone installation or new quality certification."
+}
