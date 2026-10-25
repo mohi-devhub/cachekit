@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-10-25T06:41:09+05:30",
+  "demo_commit": "dbebb6d6fbcacd3f7681aa6cc19f2a05e4643a9f",
+  "checks": {
+    "main_pushed": "local HEAD matched origin main via git ls-remote",
+    "working_tree_before_documentation": "clean",
+    "web_tests": "11 passed",
+    "focused_python_tests": "3 passed; one known Starlette httpx deprecation warning",
+    "readme_local_links": "tracked and present",
+    "local_http_routes_200": [
+      "/",
+      "/report/demo-before",
+      "/report/demo-before/heatmap/helpdesk.answer",
+      "/fix",
+      "/bench"
+    ],
+    "private_paths": "env, local docs, raw data and tooling ignored and untracked"
+  },
+  "not_run": [
+    "full Python suite",
+    "fresh dependency installation",
+    "new production build",
+    "new offline browser walkthrough",
+    "new model or behavioral collection",
+    "new source-bound quality approval"
+  ],
+  "prior_checks": "See declutter_validation.json and readme_cleanup.json for earlier checks and their scopes. HTTP checks confirm page responses, not a fresh interactive browser audit.",
+  "optional_pr": "PR #3 remains unmerged; its comparison command is not included in main.",
+  "submission_action": "Repository snapshot prepared; organizer submission and backup video are user actions."
+}
