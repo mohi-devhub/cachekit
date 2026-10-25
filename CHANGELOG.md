@@ -21,6 +21,33 @@
 - Concurrent OpenCode report/GPT Researcher work remains outside this checkpoint;
   final combined-source verification/submission SHA are not claimed complete.
 
+## 2026-10-25T05:27:37+05:30 — Switch findings reports and evaluate a real upstream prompt
+
+- Added a local saved-report selector to findings, including the requested GPT
+  Researcher controlled-input capture and historical SWE-agent trajectories.
+  Report changes clear old evidence immediately; unavailable local reports never
+  substitute the public helpdesk snapshot. Dataset/report provenance is visible.
+- Added an explicit pinned GPT Researcher request-construction adapter, a
+  three-line context-last patch and fixed behavior fixtures. Original rendered
+  content, roles and paired settings are preserved. Sources/license and hashes
+  are retained; this executes selected upstream functions with controlled inputs.
+- Collected actual BEFORE/AFTER outputs on two sequential bounded L4 allocations.
+  The first 512-token run truncated all ten answers. A separate 2,048-token run
+  completed all ten, with the same candidate/cases/assertions. Three AFTER cases
+  pass; percentage/quoted-marker checks fail in BOTH variants. Offline inspection
+  identifies examples of rejected hypothetical accuracy and a rejected quoted
+  instruction, demonstrating conservative checker false positives. Original
+  failures are retained; no assertion was waived or source approved.
+- Performance replay was blocked by the failed gate. No latency, dollar savings
+  or measured cache improvement is claimed. Both apps are stopped with zero
+  tasks; Modal container listing is empty. No new Devin session was used.
+- Validation: 169 Python tests and 11 web tests, Ruff, typecheck, lint and build
+  passed during implementation; the budget-control revision passed its eight
+  focused tests and Ruff. Actual 1440/390px switching, matching counts, API-failure
+  behavior and offline helpdesk switching pass. Saved review packet and exact
+  failure contexts are in eval_results/gpt_researcher. Concurrent UI work retains
+  its own provenance; the experiment uses an isolated frozen source snapshot.
+
 ## 2026-10-25T04:55:10+05:30 — Replace the tile grid with an Anatomy cache scanner
 
 - On Mohith's explicit follow-up, built an SVG optical comparator with the

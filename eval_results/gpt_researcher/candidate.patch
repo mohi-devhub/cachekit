@@ -1,0 +1,22 @@
+--- a/gpt_researcher/prompts.py
++++ b/gpt_researcher/prompts.py
+@@ -291,9 +291,6 @@
+         tone_prompt = f"Write the report in a {tone.value} tone." if tone else ""
+ 
+         return f"""
+-Information: "{context}"
+----
+-Using the above information, answer the following query or task: "{question}" in a detailed report --
+ The report should focus on the answer to the query, should be well structured, informative,
+ in-depth, and comprehensive, with facts and numbers if available and at least {total_words} words.
+ You should strive to write the report as long as you can using all relevant and necessary information provided.
+@@ -313,6 +310,9 @@
+ You MUST write the report in the following language: {language}.
+ Please do your best, this is very important to my career.
+ Assume that the current date is {date.today()}.
++Information: "{context}"
++---
++Using the above information, answer the following query or task: "{question}" in a detailed report --
+ """
+ 
+     @staticmethod

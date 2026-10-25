@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { BenchmarkResults } from "@/components/benchmark-results";
+import { ReportSwitcher } from "@/components/report-switcher";
 import { PrefixMap } from "@/components/prefix-map";
 import { HeatmapMetrics } from "@/components/heatmap-metrics";
 import { prefixBoundary, matchingMeasurement, formatMetric } from "@/lib/heatmap";
@@ -12,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, candidate, demo, report, number, percent, words, type CandidateView, type BenchView, type Dataset,
   type Finding, type Loaded, type ReportBundle, type TaskView } from "@/lib/workspace";
+import { currentReportState, type ReportState } from "@/lib/report-selection";
 
 function Badge({ children, tone = "neutral" }: { children: React.ReactNode; tone?: string }) {
   return <span className={`badge ${tone}`}>{children}</span>;
@@ -22,6 +24,8 @@ function ErrorState({ message }: { message: string }) {
 function Loading() { return <p className="loading" role="status">Loading saved evidence…</p>; }
 function Metadata({ data }: { data: ReportBundle }) {
   return <details className="metadata"><summary>Run provenance</summary><dl>
+    <div><dt>Report ID</dt><dd><code>{data.id}</code></dd></div>
+    <div><dt>Dataset</dt><dd>{data.metadata.dataset.join(" · ") || "Unrecorded"}</dd></div>
     <div><dt>Saved</dt><dd>{data.metadata.timestamp}</dd></div>
     <div><dt>Model</dt><dd>{data.metadata.model}</dd></div>
     <div><dt>Tokenizer revision</dt><dd><code>{data.metadata.tokenizer.revision}</code></dd></div>
@@ -32,10 +36,10 @@ function Metadata({ data }: { data: ReportBundle }) {
   </dl></details>;
 }
 function useReport(id: string) {
-  const [state, setState] = useState<{ loaded?: Loaded<ReportBundle>; error?: string }>({});
-  useEffect(() => { let active = true; report(id).then(loaded => { if (active) setState({ loaded }); })
-    .catch(error => { if (active) setState({ error: error.message }); }); return () => { active = false; }; }, [id]);
-  return state;
+  const [state, setState] = useState<ReportState>({ id });
+  useEffect(() => { let active = true; report(id).then(loaded => { if (active) setState({ id, loaded }); })
+    .catch(error => { if (active) setState({ id, error: error.message }); }); return () => { active = false; }; }, [id]);
+  return currentReportState(id, state);
 }
 function useBench() {
   const [loaded, setLoaded] = useState<Loaded<BenchView>>(); const [error, setError] = useState("");
@@ -109,11 +113,16 @@ function FindingRow({ finding }: { finding: Finding }) {
 
 export function ReportWorkspace({ id }: { id: string }) {
   const { loaded, error } = useReport(id);
+  return <><Link href="/" className="back-link">← Workspace</Link>
+    <ReportSwitcher id={id} bundle={loaded?.data} />
+    {error ? <ErrorState message={error} /> : loaded ? <ReportContents key={id} id={id} loaded={loaded} /> : <Loading />}
+  </>;
+}
+
+function ReportContents({ id, loaded }: { id: string; loaded: Loaded<ReportBundle> }) {
   const { loaded: bench, error: benchError } = useBench();
   const router = useRouter();
   const [busy, setBusy] = useState(false); const [taskError, setTaskError] = useState("");
-  if (error) return <ErrorState message={error} />;
-  if (!loaded) return <Loading />;
   const { data, source } = loaded;
   const backend = data.report.backends.find(b => b.backend === "vllm");
   const measuredCost = matchingMeasurement(bench?.data, data.report, "before")?.run.summary.gpu_window_usd_per_1000;
@@ -122,7 +131,7 @@ export function ReportWorkspace({ id }: { id: string }) {
     try { const task = await api<TaskView>(`/reports/${encodeURIComponent(id)}/task`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }, 120000); router.push(`/fix/${task.task.id}`); }
     catch (error) { setTaskError(error instanceof Error ? error.message : "The task could not be prepared."); setBusy(false); }
   }
-  return <><Link href="/" className="back-link">← Workspace</Link><header className="report-header"><div><h1>Prompt reuse, explained.</h1><p className="lede">{data.report.routes.join(" · ")}</p></div><div className="badges"><Badge>{source}</Badge><Badge>SIMULATED</Badge></div></header>
+  return <><header className="report-header"><div><h1>Prompt reuse, explained.</h1><p className="lede">{data.report.routes.join(" · ")}</p></div><div className="badges"><Badge>{source}</Badge><Badge>SIMULATED</Badge></div></header>
     <SummaryReveal className="run-facts"><div><span>Requests</span><strong>{number(data.report.n_requests)}</strong></div><div><span>Routes</span><strong>{number(data.report.routes.length)}</strong></div><div><span>Findings</span><strong>{number(data.report.findings.length)}</strong></div><div><span>Profile</span><strong>vLLM</strong></div></SummaryReveal>
     <Reuse data={data} />
     {backend && <div className="recomputed"><p><span>Tokens recomputed · current</span><strong>{number(backend.tokens_recomputed_actual)}</strong></p><p><span>Tokens recomputed · projection</span><strong>{number(backend.tokens_recomputed_achievable)}</strong></p><p><span>GPU-window USD / 1k</span><strong className="cost-value">{measuredCost ? formatMetric(measuredCost.median, "usd") : benchError ? "Replay unavailable" : bench ? "No matching measured replay" : "Loading replay…"}</strong>{measuredCost && <><Badge>MEASURED</Badge><span className="measure-range">min {formatMetric(measuredCost.min, "usd")} · max {formatMetric(measuredCost.max, "usd")}</span></>}<Link className="cost-note" href="/bench">Replay details →</Link></p></div>}

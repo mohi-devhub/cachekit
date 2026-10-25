@@ -23,6 +23,7 @@ dist/
 /docs/
 /CLAUDE.md
 /DECISIONS.md
+/tasks/
 /.agents/
 /.codex/
 /.claude/

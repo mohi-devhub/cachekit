@@ -97,8 +97,69 @@ re-evaluates the saved artifact offline; it never starts inference. Missing,
 stale, failed or unreviewed output differences prevent fix approval.
 
 The existing `eval_results/modal_smoke.json` confirms serving and cache reuse
-only. Mocked protocol tests are not published measurements. Actual golden
-inference and an approved application fix are still pending.
+only. Mocked protocol tests are not published measurements. Saved helpdesk
+behavior/performance evidence and its exact-source approval are documented in
+the root README; later source changes require revalidation.
+
+## GPT Researcher prompt-order experiment
+
+This separate experiment uses Apache-2.0 GPT Researcher source pinned to
+`5cdad9cb434754188b78bd998df18dd8d502cf7e`. Preparation explicitly downloads four
+checksum-verified upstream files, retains the license, and produces a small patch
+moving the original research-context/task block after the original instructions.
+The selected original prompt/request functions execute with controlled inputs;
+the full research application and external search services are not launched.
+
+```sh
+uv run --no-sync python -m bench.gpt_researcher prepare
+```
+
+Original/patched source, the patch, recorded inputs and rendered requests live in
+ignored `data/gpt_researcher/`. Preparation refuses to overwrite that directory.
+It also registers separate BEFORE/AFTER analysis reports in the local workspace.
+The fixtures in `bench/fixtures/gpt_researcher.json` declare eight replay inputs
+and five behavioral cases before inference: facts/references, French, Markdown
+table, insufficient evidence and untrusted-context instructions.
+
+After deploying and inspecting the pinned server as above, collect the actual
+behavior outputs explicitly:
+
+```sh
+uv run --no-sync python -m bench.gpt_researcher quality \
+  --endpoint https://YOUR-SERVER.modal.direct \
+  --deployment-manifest eval_results/gpt_researcher/deployment.json \
+  --out eval_results/gpt_researcher/behavior
+```
+
+The command saves actual answers, token accounting, prompt hashes, completion
+checks and bounded assertions. It never grants approval. Changed answers still
+require human review, and a failed case is retained rather than waived.
+
+For each variant, use the existing replay runner with
+`--input data/gpt_researcher/replay_before.jsonl --variant before` or
+`--input data/gpt_researcher/replay_after.jsonl --variant after`, the same
+`--recorded-inputs data/gpt_researcher/inputs.json`, deployment manifest and
+`--exclusive-server`. Choose separate immutable result paths. The replay runner
+collects three repetitions, warms/resets between them and validates counters.
+Stop the deployment in a `finally` block or immediately after collection.
+
+Both variants deliberately use temperature 0 and seed 42 for this experiment,
+overriding the upstream action's temperature 0.35. Replay has a 64-token output
+budget; behavioral cases default to 2,048 tokens and request short reports. The
+initial 512-token run is retained separately because every answer was truncated;
+it does not count as a behavioral pass. No inference
+is retried. Generation controls, fixed date and inputs are identical within each
+BEFORE/AFTER pair. This is a controlled-input experiment, not production traffic
+or proof of savings for GPT Researcher's default hosted providers.
+
+The [recorded experiment](../eval_results/gpt_researcher/README.md) currently has
+no performance replay. After the truncated first attempt, the 2,048-token run
+completed all ten answers but two literal checks failed in both variants.
+Saved exact contexts show hypothetical percentages explicitly rejected as
+fabrication and quoted malicious instructions explicitly treated as irrelevant.
+These conservative checker false positives need review; the original failed
+results are retained without a waiver. Both allocations are stopped. Do not
+describe this candidate as approved or publish a measured savings claim.
 
 Implementation references: [Modal server example](https://modal.com/docs/examples/vllm_inference),
 [server scaling/lifecycle](https://modal.com/docs/guide/servers),

@@ -285,6 +285,22 @@ an exact diff. Run the traffic command above to make `data/demo/` available for
 fresh analysis and helpdesk task generation. Other applications still require
 a replay adapter; uploading arbitrary logs does not provide one.
 
+The findings page has a **Saved report** selector populated from the local API.
+It includes the saved GPT Researcher controlled-input report, historical SWE-agent
+traffic and any newly generated runs. The selected dataset and report identity
+stay visible, and heatmap links follow that report. External/local reports need
+the API; only the public helpdesk snapshot is available offline.
+
+An explicit [GPT Researcher experiment runner](bench/README.md#gpt-researcher-prompt-order-experiment)
+captures pinned upstream request construction, prepares a context-last reorder,
+and collects separate actual behavioral/performance evidence. It uses controlled
+inputs and a fixed Qwen/vLLM profile. A simulated report or passing bounded checks
+does not approve that upstream change or establish production savings.
+The [saved experiment outcome](eval_results/gpt_researcher/README.md) retains both
+actual generation attempts and their failures. Performance replay is blocked:
+literal percentage/quoted-marker checks flag rejected examples in both variants,
+and human review remains pending. Both experiment GPU deployments are stopped.
+
 Uploads are limited to 10 MiB and stored under ignored `data/api/`; reports,
 candidate artifacts, verification provenance and approvals created by the API
 stay under ignored `eval_results/local/`. API requests accept artifact identities,
